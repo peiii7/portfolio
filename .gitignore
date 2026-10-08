@@ -1,0 +1,15 @@
+# macOS
+.DS_Store
+
+# Superseded single-page prototypes — these predate the build.py site and
+# reference css/style.css, which no longer exists. ~11MB of dead weight.
+artifact.html
+peichi-portfolio.html
+artifact_src/
+about.html
+work.html
+playground.html
+project.html
+
+# Local Claude Code session config
+.claude/

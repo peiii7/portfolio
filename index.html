@@ -1,0 +1,9 @@
+<!DOCTYPE html>
+<html><head><meta charset="UTF-8">
+<script>
+var saved = localStorage.getItem("peichi-lang");
+var lang = saved || (navigator.language && navigator.language.toLowerCase().indexOf("zh") === 0 ? "zh" : "en");
+location.replace(lang + "/index.html");
+</script>
+<meta http-equiv="refresh" content="0; url=zh/index.html">
+</head><body><a href="zh/index.html">Peichi Lin — Product Designer</a></body></html>

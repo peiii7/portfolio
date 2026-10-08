@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>XnFun App · Peichi Design</title>
+<meta name="description" content="Untangling an existing system&#x27;s logic and building new modular features from 0 to 1">
+<link rel="stylesheet" href="../../../css/site.css?v=5757d2ed">
+</head>
+<body class="">
+<header class="site-header" data-header>
+  <a class="logo" href="../../../en/index.html">
+    <img class="logo-default" src="../../../assets/pei-logo-default.svg" alt="Peichi">
+    <img class="logo-black" src="../../../assets/pei-logo-black.svg" alt="Peichi">
+  </a>
+  <input type="checkbox" id="nav-toggle" class="nav-toggle-checkbox">
+  <label for="nav-toggle" class="nav-toggle-btn" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </label>
+  <div class="header-nav">
+    <nav>
+      <a href="../../../en/playground/index.html">Playground</a>
+      <a href="../../../en/about/index.html">About</a>
+      <a href="../../../resume/Peichi_Lin_Resume.pdf" target="_blank" rel="noopener">CV</a>
+    </nav>
+    <div class="lang-toggle-track">
+      <a href="../../../zh/work/xnfun-app/index.html" class="">中</a>
+      <a href="../../../en/work/xnfun-app/index.html" class="active">EN</a>
+    </div>
+  </div>
+</header>
+<div id="smooth-wrapper">
+<div id="smooth-content">
+<div class="page-shell">
+<div class="grid-bg" aria-hidden="true"></div>
+<main>
+  <div class="wrap cs-layout">
+    <div class="cs-content">
+    <section id="brief" class="cs-brief" data-anchor-section>
+      <div class="cs-brief-head" data-reveal>
+        <p class="cs-eyebrow">XnFun App｜Client: USI Global (Taiwan)</p>
+        <h1 class="cs-headline">Untangling an existing system&#x27;s logic and building new modular features from 0 to 1</h1>
+      </div>
+      <div class="cs-meta-row" data-reveal><div class="cs-meta-col"><p class="cs-meta-label">Project Type</p><div class="cs-meta-value"><span>Cloud Storage</span><span>Shared Album App</span></div></div><div class="cs-meta-col"><p class="cs-meta-label">Role</p><div class="cs-meta-value"><span>UI/UX Designer</span></div></div><div class="cs-meta-col"><p class="cs-meta-label">Team</p><div class="cs-meta-value"><span>Team of 4</span></div></div><div class="cs-meta-col"><p class="cs-meta-label">Timeline</p><div class="cs-meta-value"><span>2022.10–2023.05</span></div></div></div>
+    </section>
+
+    <div class="cs-hero" data-reveal><img src="../../../images/kFalKp6RbAvnYP1zIhRxjWzIdOo.jpg" alt="XnFun App" data-speed="0.98"></div>
+
+    <section id="contribution" class="cs-contribution" data-anchor-section data-reveal>
+      <div class="cs-contribution-col">
+        <p class="cs-minor-label">What I Did</p>
+        <ul class="cs-bullets"><li><strong>Audited the existing system and untangled cross-platform logic</strong><span>walked through iOS/Android and mapped a Functional Map, identifying shared logic across the Daily / Travel / Baby albums.</span></li><li><strong>Designed &quot;Travel Itinerary&quot; from 0 to 1</strong><span>based on guerrilla testing across four scenarios, designed &quot;memory keywords&quot; and a &quot;itinerary overview&quot; as the two core features.</span></li><li><strong>Consolidated design guidelines and IX flow</strong><span>folded low-frequency features into a secondary menu, unified styles across platforms, and wrote complete interaction documentation aligning design, engineering, and the client.</span></li></ul>
+      </div>
+      <div class="cs-contribution-col">
+        <p class="cs-minor-label">Impact</p>
+        <div class="cs-impact-grid"><div class="cs-impact-item"><span class="cs-impact-value">3</span><span class="cs-impact-label">Album modules sharing one core logic</span></div><div class="cs-impact-item"><span class="cs-impact-value">2</span><span class="cs-impact-label">Platforms unified in style and interaction</span></div><div class="cs-impact-item"><span class="cs-impact-value">0 → 1</span><span class="cs-impact-label">Travel itinerary built from scratch</span></div></div>
+      </div>
+    </section>
+
+    <section id="background" class="cs-split" data-anchor-section data-reveal>
+      <h2 class="cs-display">Project<br><span>Overview</span></h2>
+      <p class="cs-overview-body">XnFun is a shared photo album app paired with the XnBay smart storage server, letting users back up photos and share albums with others. This project handled both optimizing the existing interface and logic, and building new features like &quot;Travel Album&quot; and &quot;Baby Album&quot; from scratch.</p>
+    </section>
+
+    <section class="cs-section cs-problem-goal" data-reveal>
+      <div>
+        <h4>Problem</h4>
+        <ul class="cs-list"><li><strong>Inconsistent cross-platform interface</strong><p>iOS and Android differed in style and logic for actions like renaming albums or viewing members, raising learning and maintenance costs.</p></li><li><strong>No way to organize travel photos</strong><p>Photos from multi-day trips were scattered across the timeline, making it hard to find memories by date or location.</p></li><li><strong>Low-frequency features cluttered the main flow</strong><p>Actions like deleting an album sat alongside core browsing and sharing, inviting mis-taps and diluting the primary task.</p></li></ul>
+      </div>
+      <div>
+        <h4>Goal</h4>
+        <ul class="cs-list"><li><strong>Unify cross-platform interaction logic</strong><p>Make the same feature look and behave identically on both platforms to lower maintenance cost.</p></li><li><strong>Make travel memories retrievable in order</strong><p>Build retrieval logic around dates and custom keywords so multi-day trips are quick to search.</p></li><li><strong>Extend the existing system rather than start over</strong><p>New features carry forward existing interaction logic and visual style, auditing module reuse for future expansion.</p></li></ul>
+      </div>
+    </section>
+
+    <h2 class="cs-question" data-reveal>How do you build modular new features from 0 to 1 on top of an existing system?</h2>
+
+    <section id="outcomes" class="cs-outcomes" data-anchor-section><div class="cs-outcome" data-reveal>
+      <span class="cs-outcome-label">Outcome 01</span>
+      <h3>Auditing both platforms and competitors to find the system&#x27;s logic and opportunities</h3>
+      <p>I walked through the existing iOS/Android system and mapped a Functional Map, alongside analyzing competitors like We Album, Funliday, Wish Trip, Polar Steps, and Tripcast. The goal was to confirm the existing system&#x27;s boundaries before deciding what the new feature should build on.</p>
+      <div class="cs-outcome-imgs"><div class="cs-outcome-img cs-outcome-img--placeholder"></div><div class="cs-outcome-img cs-outcome-img--placeholder"></div></div>
+    </div><div class="cs-outcome" data-reveal>
+      <span class="cs-outcome-label">Outcome 02</span>
+      <h3>Guerrilla testing four scenarios to confirm real user needs</h3>
+      <p>I ran guerrilla tests across four scenarios: during travel, organizing photos, sharing photos, and browsing photos. Results converged on one thing—users didn&#x27;t want more albums, they wanted a way back to a specific day or leg of the trip.</p>
+      <div class="cs-outcome-imgs"><div class="cs-outcome-img cs-outcome-img--placeholder"></div><div class="cs-outcome-img cs-outcome-img--placeholder"></div></div>
+    </div><div class="cs-outcome" data-reveal>
+      <span class="cs-outcome-label">Outcome 03</span>
+      <h3>Designing the &quot;Travel Itinerary&quot; core feature from 0 to 1</h3>
+      <p>Built around two core features: &quot;memory keywords&quot; let users tag trip segments in their own words, and &quot;itinerary overview&quot; arranges memories by date into a jumpable structure. Though new, the feature carries forward the existing system&#x27;s interaction logic and visual language.</p>
+      <div class="cs-outcome-imgs"><div class="cs-outcome-img cs-outcome-img--placeholder"></div><div class="cs-outcome-img cs-outcome-img--placeholder"></div></div>
+    </div><div class="cs-outcome" data-reveal>
+      <span class="cs-outcome-label">Outcome 04</span>
+      <h3>Unifying interface style and writing guidelines as a shared language</h3>
+      <p>Unified interface style and interactions across both platforms, folding low-frequency actions like deleting albums into a &quot;more&quot; menu. I also wrote a complete IX flow covering date display rules, album members, scroll behavior, and component states, aligning design, engineering, and the client.</p>
+      <div class="cs-outcome-imgs"><div class="cs-outcome-img cs-outcome-img--placeholder"></div><div class="cs-outcome-img cs-outcome-img--placeholder"></div></div>
+    </div></section>
+
+    <section id="reflection" class="cs-split cs-takeaway" data-anchor-section data-reveal>
+      <h2 class="cs-display">Take away</h2>
+      <div class="cs-takeaway-list"><div class="cs-takeaway-item">
+      <h4>Persuading the client relies on logic, not how polished the deck looks</h4>
+      <p>The optimization direction was accepted by pointing out where current logic broke down and how maintenance cost would change—not by making screens prettier.</p>
+    </div><div class="cs-takeaway-item">
+      <h4>The specification document is itself a design</h4>
+      <p>How detailed the design system and IX flow are determines whether engineering and the client truly understand it—which directly determines whether the design gets implemented faithfully.</p>
+    </div></div>
+    </section>
+    </div>
+  </div>
+
+  <nav class="cs-nav">
+    <a class="cs-nav-item" href="../tea-island-tea-stories/index.html"><span>Previous</span><strong>Tea Island, Tea Stories</strong></a>
+    <a class="cs-nav-item cs-nav-item--next" href="../fubon-life-redesign/index.html"><span>Next</span><strong>Fubon Life Website Redesign</strong></a>
+  </nav>
+</main>
+<footer class="site-footer">
+  <div class="footer-top" data-reveal>
+    <div class="footer-left">
+      <p class="footer-eyebrow">Feel free to reach out</p>
+      <h2 class="footer-heading">Let&#x27;s create together!</h2>
+    </div>
+    <div class="footer-links">
+      <a href="http://www.linkedin.com/in/peichi-lin-463328235" target="_blank" rel="noopener">LinkedIn<img src="../../../assets/arrow-up-right.svg" alt=""></a>
+      <a href="https://medium.com/@its.peichilin" target="_blank" rel="noopener">Medium<img src="../../../assets/arrow-up-right.svg" alt=""></a>
+      <a href="mailto:its.peichilin@gmail.com">Email<img src="../../../assets/arrow-up-right.svg" alt=""></a>
+    </div>
+  </div>
+</footer>
+</div>
+</div>
+</div>
+<aside class="cs-anchor" data-anchor-rail>
+  <a class="cs-back" href="../index.html" aria-label="Back to Work">
+    <img src="../../../assets/arrow-back.svg" alt="">
+  </a>
+  <nav class="cs-anchor-menu"><a href="#brief" data-anchor-link class="is-active">Overview</a><a href="#contribution" data-anchor-link>Contribution</a><a href="#background" data-anchor-link>Background</a><a href="#outcomes" data-anchor-link>Outcomes</a><a href="#reflection" data-anchor-link>Reflection</a></nav>
+</aside>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollSmoother.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrambleTextPlugin.min.js"></script>
+<script src="../../../js/lang.js?v=5757d2ed"></script>
+<script src="../../../js/motion.js?v=5757d2ed" defer></script>
+</body>
+</html>

@@ -1,0 +1,1360 @@
+/* ============================================================
+   2026 Portfolio — design tokens + shared components
+   Source: Figma wireframe v1 (jp87CiDbsjx7MViAzzRWFr, node 15:30955)
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Noto+Sans+TC:wght@300;400;500;700&family=Inter:wght@400;500;600&display=swap');
+
+:root {
+  --bg: #080808;
+  --bg-soft: #202020;
+  --bg-panel: #1c1c1e;
+  --light-bg: #efefef;
+  --fg: #f0f0f0;
+  --fg-soft: rgba(240, 240, 240, 0.9);
+  --fg-muted: #919191;
+  --fg-muted-2: #767676;
+  --fg-on-light: #080808;
+  --white: #ffffff;
+  --hairline: rgba(255, 255, 255, 0.2);
+  --hairline-soft: rgba(255, 255, 255, 0.4);
+  --hairline-dashed: rgba(255, 255, 255, 0.3);
+
+  --font-display: 'Cormorant Garamond', 'Noto Serif TC', serif;
+  --font-body-zh: 'Noto Sans TC', 'Inter', sans-serif;
+  --font-body-en: 'Inter', 'Noto Sans TC', sans-serif;
+  --font-ui: 'Inter', 'Noto Sans TC', sans-serif;
+
+  --container: 1440px;
+  --gutter: 100px;
+  --radius-card: 24px;
+
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+@media (max-width: 900px) {
+  :root { --gutter: 24px; }
+}
+
+* { box-sizing: border-box; }
+/* No scroll-behavior:smooth and no overflow-x:hidden on html/body — both
+   fight ScrollSmoother, which needs to own the scroll and set body height
+   itself. Horizontal bleed is clipped on .page-shell instead (see below). */
+html { }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-body-zh);
+  -webkit-font-smoothing: antialiased;
+  width: 100%;
+}
+
+/* ScrollSmoother wrapper/content. Declared here so there's no layout jump
+   before the plugin initialises; the plugin sets the rest itself. */
+#smooth-wrapper { overflow: hidden; }
+html[lang^="en"] body { font-family: var(--font-body-en); }
+
+img { max-width: 100%; display: block; }
+a { color: inherit; text-decoration: none; }
+
+.wrap { max-width: var(--container); margin: 0 auto; padding: 0 var(--gutter); }
+
+/* .page-shell wraps header+main+footer so it sizes to the page's real
+   content height. .grid-bg then fills exactly that (inset:0), instead of
+   the fixed 4000px carried over from the Figma export — there, the frame's
+   own overflow-clip silently hid the excess; here nothing did, so it was
+   inflating every page's actual scrollable height to 4000px regardless of
+   real content length (a large dead-scroll zone below the footer). */
+/* overflow-x:clip (not hidden) — clip leaves overflow-y visible and does not
+   create a scroll container, so it can't interfere with the smooth scroller
+   or with position:sticky descendants the way hidden would.
+   The flex column + main{flex:1} pushes the footer to the bottom of the
+   viewport on pages whose content is shorter than one screen, so it always
+   fills out the view instead of floating with dead space beneath it. */
+.page-shell {
+  position: relative;
+  overflow-x: clip;
+  min-height: 100vh;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+}
+.page-shell > main { flex: 1 0 auto; }
+.page-shell > .site-footer { flex-shrink: 0; }
+.grid-bg {
+  position: absolute;
+  inset: 0;
+  background-image: url('../assets/grid-decoration.svg');
+  background-repeat: repeat-y;
+  background-size: 100% auto;
+  pointer-events: none;
+  /* No extra opacity here: the SVG's own lines are already fill-opacity 0.08,
+     which is the value in Figma (41:39377). An additional 0.5 was multiplying
+     with it and rendering the grid at 0.04 — half the design. */
+  z-index: 0;
+}
+
+/* ---------------- Header ---------------- */
+.site-header {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px var(--gutter);
+  transition:
+    top 0.45s var(--ease-in-out),
+    width 0.45s var(--ease-in-out),
+    padding 0.45s var(--ease-in-out),
+    border-radius 0.45s var(--ease-in-out),
+    background-color 0.35s ease,
+    backdrop-filter 0.35s ease;
+  will-change: top, width;
+}
+/* Two real logo files from Figma (Default = light wordmark, Black = dark
+   wordmark) cross-faded, rather than a CSS invert() filter — the artwork
+   differs between variants, so inverting the light one is not equivalent. */
+.site-header .logo {
+  position: relative;
+  display: block;
+  line-height: 0;
+  flex-shrink: 0;
+}
+.site-header .logo img {
+  height: 52px; /* Figma 50:694 — logo artboard is 80x52 */
+  width: 80px;
+  transition: opacity 0.35s ease;
+}
+.site-header .logo .logo-black {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+}
+.site-header.on-light .logo .logo-default { opacity: 0; }
+.site-header.on-light .logo .logo-black { opacity: 1; }
+.site-header .header-nav {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+}
+.site-header nav {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+}
+.site-header nav a {
+  font-family: var(--font-body-zh);
+  font-size: 16px;
+  color: var(--white);
+  white-space: nowrap;
+  opacity: 0.85;
+  transition: opacity 0.2s;
+}
+.site-header nav a:hover,
+.site-header nav a.active { opacity: 1; }
+
+.lang-toggle-track {
+  display: flex;
+  align-items: center;
+  background: var(--bg-panel);
+  border-radius: 16px;
+  padding: 4px;
+  width: 84px;
+  flex-shrink: 0;
+}
+.lang-toggle-track a {
+  flex: 1;
+  text-align: center;
+  padding: 4px 0;
+  border-radius: 13px;
+  font-family: var(--font-ui);
+  font-weight: 600;
+  font-size: 12px;
+  color: #71717a;
+}
+.lang-toggle-track a.active {
+  background: #f4f4f5;
+  color: #09090b;
+}
+
+/* header scroll-morph state, toggled by motion.js.
+   Same left:50% + translateX(-50%) centering as the default state (never
+   switches sizing model) so it tweens smoothly and stays centered at every
+   frame of the transition, not just at the two end states. */
+.site-header.is-scrolled {
+  top: 20px;
+  width: min(1086px, calc(100% - 48px));
+  padding: 16px 48px;
+  border-radius: 100px;
+  background-color: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+/* Figma's Scroll state keeps the logo and nav at their normal size — only the
+   container's width, padding and shape change. Scaling the type/button down
+   here made the whole header appear to shrink, which the design doesn't do. */
+/* Figma's Scroll state has no language toggle (State=Scroll variants omit it) */
+.site-header.is-scrolled .lang-toggle-track { display: none; }
+
+.nav-toggle-checkbox { display: none; }
+.nav-toggle-btn { display: none; }
+
+/* Size=M (Figma 50:725 / 50:738) — tablet: 40px gutter, narrower pill */
+@media (max-width: 1024px) {
+  .site-header { padding: 16px 40px; }
+  .site-header.is-scrolled { width: min(728px, calc(100% - 32px)); padding: 16px 48px; }
+  .site-header .header-nav { gap: 24px; }
+  .site-header nav { gap: 28px; }
+}
+
+/* Size=S (Figma 50:642) — phone: collapse the nav into a hamburger.
+   767px, not 768px: Figma's tablet (Size=M) frame is exactly 768 wide, so at
+   768 the tablet rules must still win. */
+@media (max-width: 767px) {
+  .site-header { padding: 18px var(--gutter); }
+  .site-header.is-scrolled { width: calc(100% - 24px); padding: 12px 20px; }
+  .site-header.is-scrolled .lang-toggle-track { display: flex; }
+  .nav-toggle-btn {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: 32px;
+    height: 32px;
+    cursor: pointer;
+    z-index: 2;
+  }
+  .nav-toggle-btn span {
+    display: block;
+    width: 100%;
+    height: 2px;
+    background: var(--white);
+    transition: transform 0.2s, opacity 0.2s;
+  }
+  .site-header.on-light .nav-toggle-btn span { background: var(--fg-on-light); }
+
+  .site-header .header-nav {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    margin-top: 8px;
+    background: var(--bg-panel);
+    border-radius: 16px;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    padding: 8px;
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: max-height 0.3s var(--ease-in-out), opacity 0.2s;
+  }
+  .site-header .header-nav nav {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
+    padding: 8px;
+  }
+  .site-header .header-nav nav a { padding: 10px 0; width: 100%; }
+  .site-header .lang-toggle-track { margin: 8px; width: calc(100% - 16px); }
+
+  .nav-toggle-checkbox:checked ~ .header-nav {
+    max-height: 320px;
+    opacity: 1;
+  }
+  .nav-toggle-checkbox:checked ~ .nav-toggle-btn span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .nav-toggle-checkbox:checked ~ .nav-toggle-btn span:nth-child(2) { opacity: 0; }
+  .nav-toggle-checkbox:checked ~ .nav-toggle-btn span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  /* keep the scrolled pill from clipping the open dropdown */
+  .site-header.is-scrolled { overflow: visible; }
+}
+
+/* Color=Black variant (Figma 41:40143 / 50:746) — applied by motion.js when
+   a light-background section sits under the header. Logo swap is handled by
+   the .logo-default/.logo-black cross-fade above. */
+.site-header.on-light nav a { color: var(--fg-on-light); }
+.site-header.on-light .lang-toggle-track { background: #1c1c1e; }
+.site-header.on-light .lang-toggle-track a { color: var(--white); }
+.site-header.on-light .lang-toggle-track a.active { background: #f4f4f5; color: #09090b; }
+
+/* ---------------- Footer ---------------- */
+.site-footer {
+  position: relative;
+  z-index: 1;
+  background: var(--bg);   /* opaque: the About/Playground pages end on a
+                              light section, which otherwise showed through */
+  padding: 100px 40px; /* Figma 15:31302: py-100 top and bottom */
+}
+.site-footer .footer-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 40px;
+  max-width: 1680px;
+  margin: 0 auto;
+  flex-wrap: wrap;
+}
+/* Allowed to shrink so the footer keeps its left/right split down to the
+   phone breakpoint. A fixed pair of widths (550 + 440) overflowed a ~840px
+   viewport and silently wrapped into a stack. */
+.site-footer .footer-left { flex: 1 1 320px; min-width: 0; max-width: 550px; }
+.site-footer .footer-eyebrow {
+  font-size: 20px;
+  margin: 0 0 24px;
+  font-weight: 400;
+}
+.site-footer .footer-heading {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 700;
+  font-size: 56px;
+  line-height: 1.2;
+  margin: 0;
+}
+.site-footer .footer-links {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 16px;
+  flex: 0 0 auto;   /* sized by its longest link, not a fixed 440px */
+}
+.site-footer .footer-links a {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-ui);
+  font-weight: 500;
+  font-size: 18px;
+  transition: opacity 0.2s;
+}
+.site-footer .footer-links a:hover { opacity: 0.7; }
+.site-footer .footer-links img { width: 16px; height: 16px; }
+
+/* ---------------- Reveal-on-scroll base state ---------------- */
+[data-reveal] { opacity: 0; transform: translateY(24px); }
+[data-reveal].in-view { opacity: 1; transform: none; transition: opacity 0.8s var(--ease-out), transform 0.8s var(--ease-out); }
+
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal] { opacity: 1 !important; transform: none !important; transition: none !important; }
+  .site-header { transition: none !important; }
+}
+
+/* ============================================================
+   Home
+   ============================================================ */
+main { position: relative; z-index: 1; }
+
+.hero-section {
+  padding: 180px var(--gutter) 120px;
+}
+.hero-title-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  position: relative;
+}
+.hero-title-row h1 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(32px, 5vw, 64px);
+  margin: 0;
+  white-space: nowrap;
+}
+/* Slot-machine role cycler: a fixed-height window with all roles stacked
+   vertically inside; motion.js steps .hero-slot-inner by -100% per tick.
+   Each span's height is exactly 1 line (1.15em) so the translateY math
+   lines up regardless of the h1's responsive font-size. */
+.hero-slot {
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+  height: 1.15em;
+  vertical-align: bottom;
+}
+.hero-slot-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* every word starts at the same left edge */
+}
+.hero-slot-inner span {
+  display: block;
+  height: 1.15em;
+  line-height: 1.15em;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 400;
+  color: var(--white);
+  white-space: nowrap;
+  text-align: left;
+}
+.hero-desc {
+  max-width: 771px;
+  margin: 24px 0 0;
+  font-family: var(--font-body-zh);
+  font-weight: 300;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+/* The marquee labels the Featured Works row, so it lives INSIDE that section
+   and is centred together with the cards as one group. It was previously a
+   sibling above the section, which left the section's own vertical centring
+   (~185px of dead space on a tall screen) sitting between the two. Nudging
+   that away with a negative margin does not work: the dead space scales with
+   viewport height, so any fixed value overlaps the cards on short screens.
+   -40px side margin cancels the section's gutter so the type still full-bleeds. */
+.marquee-wrap {
+  overflow: hidden;
+  margin: 0 -40px;
+  position: relative;
+  z-index: 0;   /* the fan sits above this — see .featured-works-fan */
+}
+.marquee-track {
+  display: flex;
+  width: max-content;
+  gap: 0.4em;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 500;
+  font-size: clamp(60px, 10vw, 150px);
+  color: rgba(255, 255, 255, 0.3);
+  opacity: 0.38;
+  white-space: nowrap;
+  will-change: transform;
+}
+
+/* Pinned while the fan sweeps (motion.js). overflow-x clip hides the cards
+   that swing off-frame without creating a scroll container, so it can't clip
+   the captions vertically the way overflow:hidden would. */
+.featured-works {
+  padding: 0 40px 100px;
+  overflow-x: clip;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0;
+  min-height: 100vh;
+  min-height: 100svh;
+}
+
+/* Stacked-fan carousel, after codepen.io/supah/pen/xxJMbbg.
+   Every card is absolutely centred on the SAME point; motion.js only sets one
+   custom property per card — --offset, the signed whole-number distance from
+   the active card — and all the geometry below is derived from it in CSS.
+   transform-origin at the bottom-left corner is what makes a rotation swing
+   the card out along an arc, like a hand of cards being fanned, instead of
+   spinning it in place. That single origin is the whole effect. */
+/* z-index pairing matters: the fan gets its own stacking context above the
+   marquee so the cards ride over the type, and the negative margin is what
+   pulls them up to overlap it. */
+.featured-works-fan {
+  position: relative;
+  z-index: 1;
+  margin-top: -64px;
+  height: min(64vh, 520px);
+  width: 100%;
+}
+.work-card {
+  --offset: 0;
+  --depth: 0;          /* abs(offset), set alongside it */
+  --card-w: clamp(240px, 30vw, 430px);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: var(--card-w);
+  margin-left: calc(var(--card-w) * -0.5);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  /* Sweep direction is deliberately the mirror of the reference pen: there,
+     scrolling forward walks the deck leftwards. Negating the three multipliers
+     is the whole flip — cards stack to the left and the deck travels right. */
+  transform-origin: 100% 100%;
+  transform:
+    translate(0, -50%)
+    translate(calc(var(--offset) * -74%), calc(var(--offset) * -17%))
+    rotate(calc(var(--offset) * -11deg));
+  /* The reference's long, near-flat curve is what gives the settle its weight. */
+  transition:
+    transform 0.8s cubic-bezier(0, 0.02, 0, 1),
+    opacity 0.8s cubic-bezier(0, 0.02, 0, 1);
+  /* The reference fades everything but the nearest 2 of its 10 cards. With
+     only 4 projects that would hide half the work, so the falloff is gentler:
+     all four stay legible, with a clear front-to-back order. */
+  opacity: calc(1 - var(--depth) * 0.28);
+  z-index: calc(100 - var(--depth));
+  will-change: transform;
+}
+.work-card.is-active { opacity: 1; }
+.work-card-caption { display: flex; flex-direction: column; gap: 4px; }
+@media (max-width: 640px) {
+  .featured-works-fan { height: min(70vh, 460px); }
+  .work-card { --card-w: 74vw; }
+}
+
+/* The /work/ index is a plain listing — no pin, no fan. */
+.work-list { padding: 0 var(--gutter) 100px; }
+.work-list-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 48px 24px;
+}
+.work-list-grid .work-card {
+  position: static;
+  width: auto;
+  margin: 0;
+  transform: none;
+  opacity: 1;
+  transition: none;
+}
+/* The fan tilt (rotationY/z) and its hover-flatten are set entirely by
+   motion.js/GSAP — see js/motion.js — because GSAP owns the whole
+   `transform` property once it animates any part of it, and it also
+   drives the entrance slide. A CSS transform here would just get
+   overwritten the instant the page loads. No-JS/no-GSAP: cards render
+   flat, which is a fine fallback. */
+
+/* Figma's "Overlay+Border-warp" (514x413): the image is masked into a gently
+   barrel-warped rectangle. The mask lives on .thumb ONLY — putting rounding
+   or clipping on .work-card itself is what cut off the captions before. */
+.work-card .thumb {
+  position: relative;
+  aspect-ratio: 514 / 413;
+  overflow: hidden;
+  background: var(--bg-soft);
+  border-radius: 4px;
+  mask-image: url('../assets/card-warp-mask.svg');
+  mask-size: 100% 100%;
+  mask-repeat: no-repeat;
+  -webkit-mask-image: url('../assets/card-warp-mask.svg');
+  -webkit-mask-size: 100% 100%;
+  -webkit-mask-repeat: no-repeat;
+}
+.work-card .thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s var(--ease-out);
+}
+.work-card:hover .thumb img { transform: scale(1.05); }
+.work-card .thumb.placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--fg-muted);
+  font-size: 13px;
+}
+.work-card .category {
+  font-family: var(--font-body-zh);
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--white);
+}
+.work-card .title {
+  display: block;
+  font-family: var(--font-body-zh);
+  font-size: 24px;
+  letter-spacing: -0.28px;
+  color: var(--fg);
+  line-height: 1.575; /* Figma: 37.8px on 24px */
+}
+
+@media (max-width: 640px) {
+  .hero-section { padding-top: 140px; padding-bottom: 72px; }
+  .marquee-wrap { margin: 0 -24px; }
+  .hero-title-row { flex-direction: column; align-items: flex-start; gap: 4px; }
+  /* Footer Size=S (Figma 50:642): heading stacks above the links, and the
+     three links sit in one horizontal row rather than a right-aligned column. */
+  .site-footer { padding: 60px 16px 24px; }
+  .site-footer .footer-top { flex-direction: column; gap: 60px; }
+  .site-footer .footer-links {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 24px;
+    width: 100%;
+  }
+  .site-footer .footer-heading { font-size: 44px; }
+}
+
+/* ============================================================
+   About
+   ============================================================ */
+.about-hero {
+  display: flex;
+  gap: 70px;
+  align-items: center;
+  padding: 180px var(--gutter) 60px;
+  flex-wrap: wrap;
+}
+.about-hero-text { flex: 1 1 400px; }
+.about-greeting {
+  font-family: var(--font-body-zh);
+  font-size: 32px;
+  margin: 0 0 12px;
+}
+.about-greeting em {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 500;
+  font-size: 64px;
+  margin-left: 8px;
+}
+.about-bio {
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--fg-soft);
+  max-width: 632px;
+  margin: 0 0 16px;
+}
+.about-photo {
+  flex: 0 0 380px;
+  max-width: 100%;
+  overflow: hidden;   /* still needed: it crops the parallax drift below */
+  aspect-ratio: 538 / 325;
+}
+.about-photo img { width: 100%; height: 100%; object-fit: cover; }
+/* Parallax images travel vertically inside their (overflow:hidden) frame, so
+   they need to be taller than it — otherwise the drift exposes a bare edge. */
+.about-photo img[data-speed],
+.cs-hero img[data-speed] { height: 132%; margin-top: -16%; }
+
+.about-history {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 60px;
+  padding: 60px var(--gutter);
+}
+
+/* Tool-icon cluster spilling out of a dice box. Figma comment on this node:
+   "hover 會散開" — the stack fans out on hover, so the cluster needs to
+   accept pointer events (the icons themselves stay non-interactive). */
+/* Figma: the Icons frame sits at x=193 / y=87 inside Experience Section,
+   which is itself inset 100/60 in the section — so 193px past the gutter and
+   147px down from .about-history's top edge. */
+.skills-cluster {
+  position: absolute;
+  left: calc(var(--gutter) + 193px);
+  top: 147px;
+  width: 190px;
+  height: 224px;
+  z-index: 1;
+}
+/* Box art is the unrotated source fill; Figma rotates it -9.89deg and sizes
+   it 156.9x199.7 inside the 188.9x223.7 cluster. */
+.skills-box {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 83.08%;
+  height: 89.28%;
+  object-fit: contain;
+  transform: translate(-50%, -50%) rotate(-9.89deg);
+  pointer-events: none;
+}
+.skills-icon {
+  position: absolute;
+  width: 25.41%;   /* 48px of the 188.9px cluster */
+  aspect-ratio: 1;
+  border-radius: 12px;
+  border: 4px solid #fff;
+  object-fit: cover;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.35);
+  pointer-events: none;
+  /* left/top below are each icon's CENTRE (from Figma 52:714), so the
+     centring translate is folded into the same transform as the resting
+     rotation and the --sx/--sy hover spread — one transform, no overwrites. */
+  --sx: 0px;
+  --sy: 0px;
+  transform: translate(-50%, -50%) translate(var(--sx), var(--sy)) rotate(var(--rot, 0deg));
+  transition: transform 0.55s var(--ease-out);
+}
+.si-1 { left: 29.60%; top: 32.91%; --rot: -9.15deg; }
+.si-2 { left: 70.80%; top: 67.26%; --rot: 18.36deg; }
+.si-3 { left: 45.92%; top: 43.12%; --rot: 18.36deg; }
+.si-4 { left: 63.26%; top: 29.60%; --rot: -5.24deg; }
+.si-5 { left: 33.51%; top: 57.66%; --rot: -13.3deg; }
+.si-6 { left: 70.64%; top: 47.00%; --rot: 0.06deg; }
+.si-7 { left: 46.82%; top: 73.37%; --rot: 0.06deg; }
+
+/* Two of the source logos are transparent PNGs that only read correctly over
+   the backing colour Figma paints behind them (52:720 black, 52:721 white).
+   Framer's mark is white-on-transparent, so without this it was invisible. */
+.si-5 { background: #000; }
+.si-6 { background: #fff; }
+
+/* Gentle fan-out on hover — enough to read as "the stack opens up" without
+   the icons flying off the artwork. */
+.skills-cluster:hover .si-1 { --sx: -26px; --sy: -20px; --rot: -13deg; }
+.skills-cluster:hover .si-2 { --sx:  30px; --sy:  15px; --rot: 22deg; }
+.skills-cluster:hover .si-3 { --sx: -15px; --sy: -31px; --rot: 22deg; }
+.skills-cluster:hover .si-4 { --sx:  18px; --sy: -28px; --rot: -9deg; }
+.skills-cluster:hover .si-5 { --sx: -32px; --sy:  10px; --rot: -17deg; }
+.skills-cluster:hover .si-6 { --sx:  33px; --sy:  -5px; --rot: 5deg; }
+.skills-cluster:hover .si-7 { --sx:  -4px; --sy:  34px; --rot: -5deg; }
+
+@media (prefers-reduced-motion: reduce) {
+  .skills-icon { transition: none; }
+  .skills-cluster:hover .skills-icon { --sx: 0px; --sy: 0px; }
+}
+@media (max-width: 1100px) { .skills-cluster { display: none; } }
+.about-history-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+.about-history-label {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 36px;
+  color: var(--fg-muted-2);
+  flex: 0 0 140px;
+}
+.about-history-list { flex: 1 1 500px; max-width: 607px; }
+.about-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 20px 0;
+  border-bottom: 1px solid var(--hairline-soft);
+  font-size: 16px;
+}
+.about-row-time { font-size: 14px; color: var(--fg-muted); white-space: nowrap; }
+
+.about-lang {
+  display: flex;
+  gap: 48px;
+  justify-content: center;
+  padding: 100px var(--gutter);
+  flex-wrap: wrap;
+}
+.lang-grid {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 36px;
+  min-width: 280px;
+}
+.lang-col {
+  border-left: 3px dashed var(--hairline-dashed);
+  padding-left: 12px;
+}
+.lang-name { font-size: 20px; margin: 0 0 8px; }
+.lang-level { font-size: 16px; margin: 0; color: var(--fg-soft); }
+.lang-caption {
+  max-width: 292px;
+  font-size: 24px;
+  line-height: 1.4;
+}
+.lang-caption em { font-family: var(--font-display); font-style: italic; font-weight: 500; font-size: 40px; display: block; }
+
+.shapes-me {
+  position: relative;
+  background: var(--light-bg);
+  color: var(--fg-on-light);
+  padding: 60px var(--gutter);
+  min-height: 480px;
+  display: flex;
+  align-items: center;
+  /* clip, not hidden: hidden would also crop a hovered stamp as it scales up */
+  overflow-x: clip;
+}
+.shapes-me-text {
+  position: relative;
+  z-index: 1;
+  font-family: var(--font-body-zh);
+  font-size: clamp(24px, 3vw, 40px);
+  line-height: 1.7;
+  max-width: 1100px;
+  margin: 0;
+}
+.shapes-em {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 500;
+  font-size: 1.4em;
+}
+/* Inline image carousel that follows each italic word. Frames are stacked on
+   top of each other so the box never resizes as they swap; motion.js
+   cross-fades .is-active between them. */
+.shapes-carousel {
+  position: relative;
+  display: inline-block;
+  width: 157px;
+  aspect-ratio: 157 / 134;
+  vertical-align: middle;
+  margin: 0 10px;
+  z-index: 2; /* a hovered stamp scales over the surrounding copy */
+  /* The hover zoom lives HERE, on the container, not on the image. Bound to
+     img.is-active it was torn down and rebuilt every time the carousel
+     advanced, so a stamp held under the cursor pulsed 2x -> 1x -> 2x on each
+     swap. The container's transform is untouched by the class moving. */
+  transition: transform 0.45s var(--ease-out);
+}
+.shapes-carousel:hover { transform: scale(2); }
+.shapes-carousel img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  opacity: 0;
+  /* The perforated stamp edge is transparent, so against the light section it
+     all but disappears. drop-shadow follows the real alpha silhouette (unlike
+     box-shadow, which would just outline the square box), tracing the
+     scalloped edge so the stamp shape reads. */
+  filter:
+    drop-shadow(0 0 0.5px rgba(8, 8, 8, 0.55))
+    drop-shadow(0 3px 8px rgba(8, 8, 8, 0.28));
+  /* fade well inside the 1s swap cadence so each frame is fully readable */
+  transition: opacity 0.35s var(--ease-out);
+}
+.shapes-carousel img.is-active { opacity: 1; }
+@media (prefers-reduced-motion: reduce) {
+  .shapes-carousel:hover { transform: none; }
+}
+@media (max-width: 1024px) { .shapes-carousel { width: 111px; margin: 0 8px; } }
+@media (max-width: 640px) { .shapes-carousel { width: 84px; margin: 0 6px; } }
+
+.coffee-chat {
+  background: var(--light-bg);
+  color: var(--fg-on-light);
+  text-align: center;
+  padding: 80px var(--gutter);
+  font-family: var(--font-display);
+}
+.coffee-chat-link { display: inline-block; transition: opacity 0.2s; }
+.coffee-chat-link:hover { opacity: 0.6; }
+.coffee-chat p { font-size: 28px; line-height: 1.5; margin: 0; }
+.matcha-icon { display: inline-block; width: 32px; height: 32px; vertical-align: middle; margin: 0 4px; }
+.coffee-chat-sub { font-size: 18px; opacity: 0.6; }
+
+/* About Size=M (Figma 50:437) — tablet: bio stacks above the photo, the
+   Experience/Award labels take a fixed 200px column, and the language grid
+   collapses to a single column with the caption alongside. */
+@media (max-width: 1024px) {
+  .about-hero { flex-direction: column; align-items: stretch; gap: 40px; padding: 160px 40px 60px; }
+  .about-photo { flex: none; width: 100%; max-width: 538px; align-self: center; }
+  .about-history { padding: 60px 40px; }
+  .about-history-row { gap: 36px; }
+  .about-history-label { flex: 0 0 200px; }
+  .about-history-list { flex: 1 1 auto; max-width: none; }
+  .about-lang { padding: 100px 40px; gap: 36px; }
+  .lang-grid { grid-template-columns: 1fr; gap: 36px; }
+  .shapes-me { padding: 60px 40px; }
+  .shapes-me-text { font-size: clamp(22px, 3vw, 32px); line-height: 2.2; }
+  .shapes-em { font-size: 1.25em; }
+  .coffee-chat { padding: 100px 40px; }
+  /* The skill cluster is absolutely placed against the desktop column
+     positions; at this width it would collide with the list text. */
+  .skills-cluster { display: none; }
+}
+
+@media (max-width: 640px) {
+  .about-hero { padding-top: 140px; }
+  .about-history-row { flex-direction: column; gap: 16px; }
+  .about-history-label { flex: none; }
+  .lang-grid { grid-template-columns: 1fr; }
+  .about-lang { flex-direction: column; }
+}
+
+/* ============================================================
+   Playground
+   ============================================================ */
+.lab-core {
+  position: relative;
+  background: var(--light-bg);
+  color: var(--fg-on-light);
+  min-height: 100vh;
+  min-height: 100svh;   /* fills one full screen */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  text-align: center;
+  padding: 220px 40px 80px;
+  overflow: hidden;
+}
+.lab-core-marquee {
+  position: absolute;
+  /* Clears the scrolled header pill (top 20px + 84px tall) — the section is
+     pinned to the viewport top, so this offset is measured against it. */
+  top: 148px;
+  left: 0;
+  display: flex;
+  width: max-content;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 500;
+  font-size: clamp(60px, 10vw, 150px);
+  color: rgba(8, 8, 8, 0.12);
+  white-space: nowrap;
+}
+.lab-core h1 {
+  position: relative;
+  z-index: 1;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(36px, 6vw, 64px);
+  letter-spacing: 2px;
+  margin: 0;
+}
+.lab-core p {
+  position: relative;
+  z-index: 1;
+  font-family: var(--font-body-zh);
+  font-weight: 300;
+  font-size: 18px;
+  margin: 12px 0 0;
+}
+/* Geometry taken from Figma's "rotate works" frame: it is 104.3% of the
+   section wide (bleeding 2.15% off each edge) with a 1501.98 x 618.72 box,
+   and sits absolutely so the arc can overlap the heading area the way the
+   design does, instead of pushing it down in flow. */
+/* Figma's "rotate works" band: 104.3% of the section wide (bleeding 2.15% off
+   each edge) at a 1501.98 x 618.72 ratio. Card slots are positioned as
+   percentages of THIS band, so the composition holds at any width. */
+/* The band is scaled to 82% of Figma's full-bleed width so the cards read at a
+   comfortable size. Slot x/y/width are percentages OF THIS BAND, so shrinking
+   it scales the whole composition uniformly — the arrangement is unchanged.
+   left is (100% - width) / 2 so the band stays centred. */
+.fan-wrap {
+  position: absolute;
+  left: 7.25%;
+  width: 85.5%;
+  top: 9%;
+  aspect-ratio: 1501.98 / 618.72;
+  z-index: 0;
+}
+/* Circular carousel: every card sits on a common arc, placed and spun by
+   motion.js, so there are no per-item offsets here. The card artwork is
+   upright (its baked-in Figma tilt was removed when the assets were built) —
+   the tilt now comes from the card's angle on the ring, which is what lets the
+   ring rotate without the images shearing or being cropped. */
+/* Position and width are set per-card by motion.js from the Figma slots. */
+.fan-item {
+  position: absolute;
+  left: 0;
+  top: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  transform-origin: 50% 50%;
+  will-change: transform;
+  -webkit-tap-highlight-color: transparent;
+}
+.fan-item img {
+  width: 100%;
+  height: auto;
+  display: block;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.22);
+  transition: transform 0.35s var(--ease-out), box-shadow 0.35s var(--ease-out);
+}
+.fan-item:hover img,
+.fan-item:focus-visible img {
+  transform: scale(1.05);
+  box-shadow: 0 26px 60px rgba(0, 0, 0, 0.32);
+}
+@media (max-width: 700px) {
+  .lab-core { min-height: 0; padding: 150px 24px 48px; }
+  .fan-item { width: 32%; }
+}
+
+/* ---------------- Playground detail modal (Figma 48:1155) ---------------- */
+.pg-modal { position: fixed; inset: 0; z-index: 200; }
+.pg-modal[hidden] { display: none; }
+.pg-modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(8, 8, 8, 0.72);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+/* Sits 24px under the header and 40px off the bottom, and never taller than
+   that gap — the panel scrolls internally instead of growing off-screen. */
+.pg-modal-shell {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: calc(var(--header-h, 88px) + 24px);
+  bottom: 40px;
+  width: min(1360px, calc(100% - 80px));
+  background: var(--bg);
+  border: 1px solid rgba(240, 240, 240, 0.12);
+  border-radius: 8px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+}
+.pgm-panel { padding: 0 40px 40px; }
+.pgm-panel[hidden] { display: none; }
+.pgm-head {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 40px 0;
+  background: var(--bg);
+}
+.pgm-titles { display: flex; flex-direction: column; gap: 16px; }
+.pgm-eyebrow { font-size: 16px; line-height: 1.5; color: rgba(139, 139, 139, 0.95); margin: 0; }
+.pgm-title { font-size: clamp(24px, 3vw, 36px); line-height: 1.05; color: var(--fg); font-weight: 400; margin: 0; }
+.pgm-close {
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  border: 0;
+  border-radius: 30px;
+  background: var(--bg-panel);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+}
+.pgm-close:hover { background: #2a2a2d; }
+.pgm-close img { width: 20px; height: 20px; }
+
+.pgm-body { display: flex; flex-direction: column; }
+.pgm-main { display: flex; gap: 36px; align-items: flex-start; }
+.pgm-hero {
+  flex: 1 1 0;
+  min-width: 0;
+  border: 1px solid rgba(240, 240, 240, 0.16);
+  background: var(--bg-soft);
+  aspect-ratio: 643 / 442;
+  overflow: hidden;
+}
+.pgm-hero img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.pgm-copy { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; gap: 36px; }
+.pgm-overview-heading {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: clamp(32px, 4vw, 64px);
+  line-height: 1.1;
+  color: var(--fg-muted-2);
+  margin: 0;
+}
+.pgm-overview { display: flex; flex-direction: column; gap: 8px; }
+.pgm-overview p { font-size: 16px; line-height: 1.7; color: var(--white); margin: 0; }
+.pgm-block { display: flex; flex-direction: column; gap: 16px; }
+.pgm-block-label { font-size: 16px; line-height: 1.6; color: var(--fg-muted); margin: 0; }
+.pgm-block-text { font-size: 16px; line-height: 1.7; color: var(--fg-soft); margin: 0; }
+.pgm-gallery { display: flex; gap: 24px; padding: 60px 0 0; }
+.pgm-tile { flex: 1 1 0; min-width: 0; aspect-ratio: 410 / 264; background: var(--bg-soft); overflow: hidden; }
+.pgm-tile img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+@media (max-width: 900px) {
+  .pg-modal-shell { width: calc(100% - 32px); bottom: 24px; }
+  .pgm-panel { padding: 0 24px 32px; }
+  .pgm-head { padding: 24px 0; }
+  .pgm-main { flex-direction: column; gap: 24px; }
+  .pgm-hero { width: 100%; }
+  .pgm-copy { gap: 24px; }
+  .pgm-gallery { flex-wrap: wrap; padding-top: 32px; }
+  .pgm-tile { flex: 1 1 45%; }
+}
+
+/* Figma scatters four illustrations around the centred sentence in a
+   1440x580 band; .illust-stage reproduces that band and the items are
+   placed by percentage so the scatter scales rather than collapsing. */
+.illust-section { position: relative; padding: 0; min-height: 0; }
+.illust-stage {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1440 / 580;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+/* Cursor-trail items: parked invisible until motion.js drops them at the
+   pointer as it sweeps the band. */
+.illust-item {
+  position: absolute;
+  width: clamp(160px, 17vw, 260px);
+  opacity: 0;
+  pointer-events: none;
+  will-change: transform, opacity;
+}
+.illust-item img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.illust-lead {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  font-family: var(--font-body-zh);
+  font-weight: 400;
+  font-size: clamp(20px, 2.5vw, 36px);
+  margin: 0;
+  padding: 0 24px;
+}
+.illust-lead em { font-family: var(--font-display); font-style: italic; font-weight: 600; font-size: 1.75em; }
+
+@media (max-width: 700px) {
+  /* No hover on touch, so the trail never fires — show the art in a grid
+     instead of leaving the band empty. */
+  .illust-stage {
+    aspect-ratio: auto;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    padding: 60px 24px;
+    align-items: center;
+  }
+  .illust-item { position: static; width: 100%; opacity: 1; }
+  .illust-lead { grid-column: 1 / -1; order: -1; margin-bottom: 8px; }
+}
+
+/* ============================================================
+   Case Study
+   ============================================================ */
+/* Layout (Figma 15:34038): a 185px anchor rail on the left, content column
+   starting at x=249. The rail is position:sticky rather than fixed — fixed
+   does not work inside ScrollSmoother's transformed content, while sticky
+   still pins it to the left of the viewport while the case study scrolls. */
+.cs-layout {
+  display: block;
+  padding-top: 140px;
+  /* Clear the fixed rail: page gutter + rail width (145) + column gap (64).
+     .wrap's own padding-left is overridden here, so the gutter is re-added. */
+  padding-left: calc(var(--gutter) + 209px);
+}
+/* Pinned to the viewport's top-left for the whole page — it lives outside the
+   smooth-scroll wrapper so position:fixed actually resolves against the
+   viewport. .cs-content carries matching left padding to make room. */
+.cs-anchor {
+  position: fixed;
+  top: calc(var(--header-h, 88px) + 32px);
+  left: var(--gutter);
+  width: 145px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  z-index: 90;
+}
+.cs-back {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  background: var(--bg-panel);
+  border-radius: 30px;
+  transition: background 0.2s, transform 0.2s;
+}
+.cs-back:hover { background: #2a2a2d; transform: translateX(-3px); }
+.cs-back img { width: 20px; height: 20px; }
+.cs-anchor-menu { display: flex; flex-direction: column; gap: 12px; }
+.cs-anchor-menu a {
+  position: relative;
+  padding-left: 20px;
+  font-size: 16px;
+  color: rgba(240, 240, 240, 0.32);
+  white-space: nowrap;
+  transition: color 0.3s;
+}
+.cs-anchor-menu a::before {
+  content: "";
+  position: absolute;
+  left: 4px;
+  top: 50%;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: currentColor;
+  transform: translateY(-50%);
+}
+.cs-anchor-menu a:hover { color: rgba(240, 240, 240, 0.7); }
+.cs-anchor-menu a.is-active { color: var(--fg); }
+.cs-content { min-width: 0; max-width: 1151px; }
+
+/* Brief header (Figma 17:36481): small eyebrow, oversized headline, then a
+   four-column meta row — not the label-bar the earlier build had. */
+.cs-brief { padding: 40px 0; }
+.cs-brief-head { display: flex; flex-direction: column; gap: 16px; margin-bottom: 48px; }
+.cs-eyebrow { font-size: 16px; line-height: 1.5; color: rgba(139, 139, 139, 0.95); margin: 0; }
+.cs-headline {
+  font-size: clamp(32px, 4.4vw, 64px);
+  line-height: 1.05;
+  color: var(--fg);
+  font-weight: 400;
+  margin: 0;
+}
+.cs-meta-row { display: flex; gap: 40px; align-items: flex-start; }
+.cs-meta-col { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; gap: 8px; }
+.cs-meta-label { font-size: 16px; line-height: 1.5; color: rgba(139, 139, 139, 0.95); margin: 0; }
+.cs-meta-value { font-size: 16px; line-height: 1.5; color: var(--white); }
+.cs-meta-value span { display: block; }
+
+.cs-hero {
+  aspect-ratio: 16/9;
+  overflow: hidden;
+  background: var(--bg-soft);
+  margin-bottom: 60px;
+}
+.cs-hero img { width: 100%; height: 100%; object-fit: cover; }
+.cs-hero--placeholder { display: flex; align-items: center; justify-content: center; color: var(--fg-muted); font-size: 14px; }
+
+.cs-section { margin-bottom: 60px; }
+.cs-section-label { display: block; font-size: 14px; color: var(--fg-muted); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
+
+/* Figma 25:36859 / 33:38940: these sections are a large italic serif display
+   heading on the left with the body column on the right, not a small
+   uppercase label stacked above the text. */
+.cs-split {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 64px 48px;
+  padding: 100px 0;
+}
+.cs-display {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(36px, 4.4vw, 64px);
+  line-height: 1.15;
+  color: var(--fg-muted-2);
+  margin: 0;
+  flex: 0 0 auto;
+  white-space: nowrap;
+}
+.cs-display span { padding-left: 0.5em; } /* Figma indents the second line */
+.cs-split > :not(.cs-display) { flex: 1 1 480px; max-width: 775px; }
+
+/* Contribution (Figma 25:36922): two equal columns, small grey labels. */
+.cs-contribution { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; padding: 60px 0; }
+.cs-contribution-col { display: flex; flex-direction: column; gap: 16px; }
+.cs-minor-label { font-size: 16px; line-height: 1.6; color: var(--fg-muted); margin: 0; }
+
+.cs-problem-goal { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; }
+.cs-problem-goal h4 { font-size: 15px; color: var(--fg-muted); font-weight: 400; margin: 0 0 16px; }
+.cs-bullets, .cs-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 16px; }
+.cs-bullets li {
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--fg-soft);
+  padding-left: 20px;
+  position: relative;
+}
+.cs-bullets li::before {
+  content: "";
+  position: absolute;
+  left: 4px;
+  top: 0.75em;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: currentColor;
+}
+.cs-bullets li strong { display: block; font-weight: 700; color: var(--fg); }
+.cs-list li strong { display: block; font-size: 16px; margin-bottom: 6px; }
+.cs-list li p { margin: 0; font-size: 14px; color: var(--fg-muted); line-height: 1.6; }
+
+/* Impact figures: oversized serif numerals, centred over their caption. */
+.cs-impact-grid { display: flex; flex-wrap: wrap; gap: 48px; align-items: flex-start; }
+.cs-impact-item { display: flex; flex-direction: column; align-items: center; gap: 16px; }
+.cs-impact-value {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(40px, 4.4vw, 64px);
+  line-height: 1;
+  color: var(--fg);
+  white-space: nowrap;
+}
+.cs-impact-label { font-size: 16px; color: var(--white); text-align: center; }
+.cs-overview-body { font-size: 16px; line-height: 1.8; color: var(--fg-soft); }
+
+.cs-question {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(24px, 3.5vw, 36px);
+  line-height: 1.4;
+  max-width: 900px;
+  margin: 80px 0 60px;
+}
+
+.cs-outcomes { display: flex; flex-direction: column; }
+.cs-outcome { padding: 60px 0; border-top: 1px solid var(--hairline); }
+.cs-outcome-label { font-size: 16px; color: var(--fg-muted); }
+.cs-outcome h3 { font-size: clamp(22px, 3vw, 36px); font-weight: 400; margin: 8px 0 16px; max-width: 700px; }
+.cs-outcome p { font-size: 16px; line-height: 1.8; color: var(--fg-soft); max-width: 900px; margin: 0 0 32px; }
+.cs-outcome-imgs { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.cs-outcome-img { aspect-ratio: 4/3; border-radius: 4px; overflow: hidden; background: var(--bg-soft); }
+.cs-outcome-img img { width: 100%; height: 100%; object-fit: cover; }
+@media (max-width: 700px) { .cs-outcome-imgs { grid-template-columns: 1fr; } }
+
+.cs-takeaway { border-top: 1px solid var(--hairline); }
+.cs-takeaway-list { display: flex; flex-direction: column; gap: 16px; }
+.cs-takeaway-item { display: flex; flex-direction: column; gap: 8px; }
+.cs-takeaway-item h4 { font-size: 20px; font-weight: 700; color: var(--fg-soft); margin: 0; }
+.cs-takeaway-item p { font-size: 16px; line-height: 1.7; color: var(--fg-soft); margin: 0; }
+
+.cs-nav {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+.cs-nav-item {
+  padding: 40px var(--gutter);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  transition: background 0.2s;
+}
+.cs-nav-item:hover { background: rgba(255, 255, 255, 0.03); }
+.cs-nav-item span { font-size: 13px; color: var(--fg-muted); }
+.cs-nav-item strong { font-size: 18px; font-weight: 400; font-family: var(--font-display); }
+.cs-nav-item--next { text-align: right; align-items: flex-end; }
+
+/* ---- Case study responsive ----
+   These blocks must sit AFTER every .cs-* base rule above: media queries add
+   no specificity, so when they were placed earlier in the file the later base
+   rules silently won and the tablet layout never applied. */
+
+/* Size=M (Figma 52:518, 768 wide): rail narrows to ~128px on a 24px gutter,
+   headline drops to 40px, meta wraps, Contribution stacks to one column and
+   each Outcome's images stack vertically. 768 itself is the tablet frame, so
+   this range has to include it. */
+@media (max-width: 1024px) {
+  .cs-layout { padding-top: 120px; padding-left: calc(var(--gutter) + 136px); }
+  .cs-anchor { width: 112px; }
+  .cs-headline { font-size: clamp(28px, 5.2vw, 40px); }
+  .cs-meta-row { flex-wrap: wrap; gap: 24px; }
+  .cs-meta-col { flex: 1 1 120px; }
+  .cs-contribution { grid-template-columns: 1fr; gap: 48px; }
+  .cs-split { padding: 60px 0; gap: 36px; }
+  .cs-display { font-size: clamp(30px, 5.2vw, 40px); }
+  .cs-split > :not(.cs-display) { flex: 1 1 300px; }
+  .cs-outcome-imgs { grid-template-columns: 1fr; gap: 24px; }
+  .cs-impact-grid { gap: 32px; }
+}
+
+/* Below the tablet frame: drop the rail's menu, keep just the back button. */
+@media (max-width: 767px) {
+  .cs-layout { padding-top: 110px; padding-left: 0; }
+  /* Too narrow for a fixed rail beside the copy — keep only the back button,
+     floating over the top-left. */
+  .cs-anchor { top: calc(var(--header-h, 88px) + 12px); left: 16px; width: auto; }
+  .cs-anchor-menu { display: none; }
+  .cs-content { max-width: none; width: 100%; }
+  .cs-meta-col { flex: 1 1 100%; }
+  .cs-split { flex-direction: column; gap: 24px; }
+  .cs-display { white-space: normal; }
+  .cs-problem-goal { grid-template-columns: 1fr; gap: 32px; }
+  .cs-nav { grid-template-columns: 1fr; }
+}

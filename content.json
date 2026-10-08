@@ -1,0 +1,1394 @@
+{
+  "SITE": {
+    "zh": {
+      "nav": {
+        "work": "Work",
+        "playground": "Playground",
+        "about": "About",
+        "cv": "CV"
+      },
+      "footer": {
+        "eyebrow": "Feel free to reach out",
+        "heading": "Let's create together!",
+        "linkedin": "LinkedIn",
+        "medium": "Medium",
+        "email": "Email",
+        "copy": "© 2026 Peichi Lin"
+      },
+      "prevProject": "Previous",
+      "nextProject": "Next",
+      "backToWork": "回到 Work",
+      "anchors": [
+        "基本介紹",
+        "貢獻",
+        "專案背景",
+        "設計成果",
+        "反思"
+      ],
+      "closeLabel": "關閉"
+    },
+    "en": {
+      "nav": {
+        "work": "Work",
+        "playground": "Playground",
+        "about": "About",
+        "cv": "CV"
+      },
+      "footer": {
+        "eyebrow": "Feel free to reach out",
+        "heading": "Let's create together!",
+        "linkedin": "LinkedIn",
+        "medium": "Medium",
+        "email": "Email",
+        "copy": "© 2026 Peichi Lin"
+      },
+      "prevProject": "Previous",
+      "nextProject": "Next",
+      "backToWork": "Back to Work",
+      "anchors": [
+        "Overview",
+        "Contribution",
+        "Background",
+        "Outcomes",
+        "Reflection"
+      ],
+      "closeLabel": "Close"
+    }
+  },
+  "SOCIAL": {
+    "linkedin": "http://www.linkedin.com/in/peichi-lin-463328235",
+    "medium": "https://medium.com/@its.peichilin",
+    "email": "mailto:its.peichilin@gmail.com",
+    "resume": "resume/Peichi_Lin_Resume.pdf",
+    "coffeeChat": "http://www.linkedin.com/in/peichi-lin-463328235"
+  },
+  "HOME": {
+    "zh": {
+      "heroLine1": "I'm Peichi, a",
+      "heroRoles": [
+        "Product Designer",
+        "AI Innovator",
+        "UI Designer"
+      ],
+      "heroDesc": "I always love exploring different media and tools, mixing interaction, imagination, and storytelling into digital experiences worth staying for.",
+      "marquee": "Featured Works"
+    },
+    "en": {
+      "heroLine1": "I'm Peichi, a",
+      "heroRoles": [
+        "Product Designer",
+        "AI Innovator",
+        "UI Designer"
+      ],
+      "heroDesc": "I always love exploring different media and tools, mixing interaction, imagination, and storytelling into digital experiences worth staying for.",
+      "marquee": "Featured Works"
+    }
+  },
+  "PROJECTS": [
+    {
+      "slug": "fubon-life-redesign",
+      "order": 1,
+      "hero": null,
+      "gallery": [],
+      "cardSubtitle": {
+        "zh": "從品牌定調視覺，模組化收斂龐大頁面",
+        "en": "Extending brand identity to consolidate a sprawling website"
+      },
+      "categoryLabel": {
+        "zh": "金融保險｜官方網站改版",
+        "en": "Finance & Insurance｜Corporate Website Redesign"
+      },
+      "title": {
+        "zh": "富邦人壽官網改版",
+        "en": "Fubon Life Website Redesign"
+      },
+      "role": {
+        "zh": "UI 設計師",
+        "en": "UI Designer"
+      },
+      "team": {
+        "zh": "1 Design Lead / 1 PM / 1 User Researcher / 2 UX / 2 UI",
+        "en": "1 Design Lead, 1 PM, 1 User Researcher, 2 UX Designers, 2 UI Designers"
+      },
+      "timeline": {
+        "zh": "2025.05–2026.01",
+        "en": "2025.05–2026.01"
+      },
+      "launch": {
+        "zh": "上架時間 2026.10",
+        "en": "Launch 2026.10"
+      },
+      "contribution": {
+        "zh": [
+          "主導視覺方向——延伸品牌精神與 Logo 視覺語彙，定調全站調性，強化官網與集團形象的連結。",
+          "依循品牌規範與設計系統——依官網需求延伸繪製新元件、補齊使用規範，與另一位 UI 共同將 255 頁收斂為 46 個版型。",
+          "支援提案與驗證——製作高擬真原型加速客戶決策；參與 12 場易用性測試觀察，依回饋調整元件視覺與資訊層級。"
+        ],
+        "en": [
+          "Led the visual direction—extended the brand spirit and the visual vocabulary of the logo to define the tone of the entire site, strengthening the link between the website and the group's corporate image.",
+          "Followed the brand guidelines and design system—drew new components based on the website's needs and completed their usage guidelines; together with another UI designer, consolidated 255 pages into 46 templates.",
+          "Supported proposals and validation—built high-fidelity prototypes to speed up client decision-making; observed 12 usability testing sessions and refined component visuals and information hierarchy based on feedback."
+        ]
+      },
+      "impact": [
+        {
+          "value": "180K",
+          "label": {
+            "zh": "每月活躍使用者",
+            "en": "Monthly active users"
+          }
+        },
+        {
+          "value": "255 → 46",
+          "label": {
+            "zh": "模組化版型收斂",
+            "en": "Templates consolidated"
+          }
+        }
+      ],
+      "overviewQuestion": {
+        "zh": "如何整合多元需求，打造一致且易用的數位體驗？",
+        "en": "How do we integrate diverse requirements into a consistent, easy-to-use digital experience?"
+      },
+      "overviewBody": {
+        "zh": "富邦人壽擁有多年品牌信任為核心資產，但官網歷經多年擴充，資訊架構複雜、視覺也未能充分傳遞應有的專業形象。我主導官網視覺優化與模組化版型，延伸品牌視覺語彙定調全站風格，收斂模組與版型，確保品牌體驗一致。",
+        "en": "Fubon Life's core asset is years of accumulated brand trust, yet after years of incremental expansion its website had grown into a complex information architecture, and the visual design no longer conveyed the professional image the brand deserved. I led the visual optimization and the modular templates of the website, extending the brand's visual vocabulary to set the tone across the site and consolidating modules and templates to ensure a consistent brand experience."
+      },
+      "problems": {
+        "zh": [
+          {
+            "title": "選單架構複雜，內容不易查找",
+            "body": "選單多達 5 層，同類型內容分散，相同商品重複出現在多個入口。"
+          },
+          {
+            "title": "專業術語過多，資訊難以吸收",
+            "body": "以企業內部視角溝通，用戶難判斷商品是否符合自身需求。"
+          },
+          {
+            "title": "視覺樣式未與集團形象一致",
+            "body": "官網元件與視覺未對齊集團規範，與金控旗下其他數位平台缺乏一致的形象。"
+          }
+        ],
+        "en": [
+          {
+            "title": "A complex menu structure made content hard to find",
+            "body": "The menu ran up to 5 levels deep, similar content was scattered, and the same products appeared under multiple entry points."
+          },
+          {
+            "title": "Too much jargon made information hard to absorb",
+            "body": "Content was written from an internal corporate perspective, making it hard for users to judge whether a product fit their needs."
+          },
+          {
+            "title": "Visual styles were inconsistent with the group's image",
+            "body": "The website's components and visuals were not aligned with the group's guidelines, leaving it visually disconnected from other platforms under the holding group."
+          }
+        ]
+      },
+      "goals": {
+        "zh": [
+          {
+            "title": "重構資訊架構，簡化選單加速分流",
+            "body": "整合多元視角、凸顯資訊優先順序，提升查找效率。"
+          },
+          {
+            "title": "以用戶視角溝通商品",
+            "body": "以易懂的白話說明降低理解阻力，讓用戶判斷商品是否符合自身需求。"
+          },
+          {
+            "title": "延伸金控調性，對齊視覺規範",
+            "body": "統一集團形象，並以更年輕、更親民的視覺與語言，傳遞品牌價值。"
+          }
+        ],
+        "en": [
+          {
+            "title": "Restructure the information architecture and simplify the menu",
+            "body": "Integrate multiple perspectives and highlight information priority to make content easier to find."
+          },
+          {
+            "title": "Communicate products from the user's perspective",
+            "body": "Use plain, easy-to-understand language so users can judge whether a product fits their needs."
+          },
+          {
+            "title": "Extend the holding group's tone and align with its visual guidelines",
+            "body": "Unify the group's image while delivering brand value through a younger, more approachable visual and verbal language."
+          }
+        ]
+      },
+      "outcomes": [
+        {
+          "label": {
+            "zh": "Outcome 01",
+            "en": "Outcome 01"
+          },
+          "title": {
+            "zh": "延伸品牌視覺語彙，提高品牌連結度",
+            "en": "Extending the brand's visual vocabulary to strengthen brand connection"
+          },
+          "body": {
+            "zh": "設計是藉由細節堆疊出來，我從富邦 Logo 拆出「圓、方、交疊」三個特徵，將它們轉化為頁面上的圖騰與畫面元素，全站共用同一套形狀語言。插畫也延伸同一套邏輯。我以富邦人壽 App 既有的插畫系統為基礎，為官網重新繪製一組商品情境插畫：保留原本的繪製邏輯與角色語彙，調整色彩層次與細節密度，讓它能承載官網較大的版面與較長的閱讀情境。",
+            "en": "Design is built up through details. I extracted three characteristics from the Fubon logo—circle, square, and overlap—and translated them into graphic motifs and page elements, so the whole site shares one shape language. Building on the existing illustration system of the Fubon Life app, I redrew a set of product scenario illustrations for the website, keeping the original drawing logic while adjusting color layering and detail for the site's larger layouts."
+          },
+          "images": []
+        },
+        {
+          "label": {
+            "zh": "Outcome 02",
+            "en": "Outcome 02"
+          },
+          "title": {
+            "zh": "模組化元件設計，建立集團一致的企業視覺",
+            "en": "Modular component design for a consistent corporate visual identity"
+          },
+          "body": {
+            "zh": "依循品牌規範與設計系統，依功能需求延伸新元件，建立元件類型、適用情境與使用規範，經客戶團隊討論後整併至設計系統；同時進行版型盤點，從不同頁面需求中收斂共通的模組與樣式，建立可複用的設計規則，讓後續需求能依循既有規範延伸，降低維運成本。",
+            "en": "Following the brand guidelines and design system, I extended new components based on functional needs and defined their types, scenarios, and usage rules, merged into the design system after discussion with the client's team. I also audited templates, consolidating shared modules into reusable design rules to lower future maintenance costs."
+          },
+          "images": []
+        },
+        {
+          "label": {
+            "zh": "Outcome 03",
+            "en": "Outcome 03"
+          },
+          "title": {
+            "zh": "無障礙頁面設計，建立符合 WCAG AA 的專屬版型",
+            "en": "Accessible page design meeting WCAG AA"
+          },
+          "body": {
+            "zh": "依 WCAG 與客戶既有的無障礙規範，針對樂齡與身心障礙用戶的使用需求，規劃金融友善服務專區的專屬版型，並依內容與使用情境調整既有元件的尺寸、間距與互動狀態，同時將 AA 級對比標準納入版型規劃，確保資訊具備良好的可讀性與操作性。",
+            "en": "Following WCAG and the client's accessibility guidelines, I designed dedicated templates for the Financial Friendly Services section around the needs of senior and disabled users, building AA-level contrast standards into the template planning to keep information readable and operable."
+          },
+          "images": []
+        },
+        {
+          "label": {
+            "zh": "Outcome 04",
+            "en": "Outcome 04"
+          },
+          "title": {
+            "zh": "參與12場易用性測試，驗證設計概念",
+            "en": "12 usability tests to validate the design concept"
+          },
+          "body": {
+            "zh": "易用性測試中，多數受測者認為新版官網是符合需求的、容易使用的、容易理解的，概念驗證獲得一致的正向回饋。測試過程中也發現，部分使用阻礙並非來自功能或資訊架構，而是受到視覺樣式、版面配置影響，因此同步觀察使用者反應並迭代視覺設計，降低理解與操作阻力。",
+            "en": "Most participants found the new website met their needs, was easy to use, and easy to understand. Testing also revealed that some friction came from visual style and layout rather than features or information architecture, so I iterated on the visual design in parallel."
+          },
+          "images": []
+        }
+      ],
+      "takeaways": [
+        {
+          "title": {
+            "zh": "設計不只是在解決問題，也是在協調不同立場",
+            "en": "Design is not only about solving problems, but reconciling different positions"
+          },
+          "body": {
+            "zh": "功能與頁面定案之後，客戶仍會針對視覺提出調整需求。改以維運成本、頁面目的與易用性作為判斷依據，才能讓對話回到問題本身。",
+            "en": "Even after features and pages are finalized, clients still raise requests to adjust the visuals. Judging by maintenance cost, page purpose, and usability brings the conversation back to the problem itself."
+          }
+        },
+        {
+          "title": {
+            "zh": "無障礙不應是最後的檢核項目，而是元件設計時的預設條件",
+            "en": "Accessibility should be a default condition, not a final checklist item"
+          },
+          "body": {
+            "zh": "過去銀行網站的無障礙設計多集中於「金融友善專區」，這次專案讓我更認同無障礙應成為整個網站的設計預設。",
+            "en": "In the past, accessibility work on banking websites mostly concentrated on the \"Financial Friendly\" section. This project convinced me accessibility should be a design default for the entire website."
+          }
+        }
+      ]
+    },
+    {
+      "slug": "ctbc-website-redesign",
+      "order": 2,
+      "hero": null,
+      "gallery": [],
+      "cardSubtitle": {
+        "zh": "AI 時代的官網定調，建立全站無障礙設計系統",
+        "en": "Defining an AI-era brand tone and a sitewide accessible design system"
+      },
+      "categoryLabel": {
+        "zh": "金融銀行｜官方網站改版",
+        "en": "Banking｜Corporate Website Redesign"
+      },
+      "title": {
+        "zh": "中國信託個金官網改版",
+        "en": "CTBC Personal Banking Website Redesign"
+      },
+      "role": {
+        "zh": "UI 設計師",
+        "en": "UI Designer"
+      },
+      "team": {
+        "zh": "PM ×1、UX ×3、UI ×3",
+        "en": "PM ×1, UX ×3, UI ×3"
+      },
+      "timeline": {
+        "zh": "2026.02–08",
+        "en": "2026.02–08"
+      },
+      "launch": {
+        "zh": "策略 → 概念設計 → 驗證（未進入開發實作）",
+        "en": "Strategy → Concept design → Validation (did not proceed to development)"
+      },
+      "contribution": {
+        "zh": [
+          "從 0 到 1 建立全站設計系統——客戶僅有一份範圍極小的首頁 guideline，我從色彩與字級 token 建起元件類型與使用規範，並將無障礙 AA 訂為元件的預設條件。",
+          "定調全站視覺方向——提出兩版立場互斥的視覺提案，與客戶前後收斂 5 次以上，在延續品牌理念的同時延伸至 AI 搜尋等關鍵頁面。",
+          "依 AEM 維運方式規劃模組版型——內容由 23 個產品部門各自上稿，以客戶端能自行更新為前提，將版型收斂為可重組的模組。"
+        ],
+        "en": [
+          "Built a sitewide design system from 0 to 1—starting from only a narrow homepage guideline, I established color and type tokens up through component types and usage rules, with WCAG AA built in as a default.",
+          "Defined the sitewide visual direction—proposed two mutually exclusive visual directions, converged with the client over 5+ rounds, extending the brand's tone into key pages like AI search.",
+          "Planned modular templates around the client's AEM workflow—content is authored independently by 23 product departments, so templates were consolidated into recombinable modules the client could maintain themselves."
+        ]
+      },
+      "impact": [
+        {
+          "value": "62 → 84",
+          "label": {
+            "zh": "易用性測試 SUS 分數（電腦版）",
+            "en": "Usability SUS score (desktop)"
+          }
+        },
+        {
+          "value": "100%",
+          "label": {
+            "zh": "六大任務情境全數成功完成",
+            "en": "Success rate across 6 task scenarios"
+          }
+        },
+        {
+          "value": "23",
+          "label": {
+            "zh": "個產品部門共用同一套設計規範",
+            "en": "Product departments sharing one design system"
+          }
+        }
+      ],
+      "overviewQuestion": {
+        "zh": "當使用者已經在站外找到答案，官網要如何重新變得新穎、好找且可擴充？",
+        "en": "When users already find answers off-site, how does the website become new, findable, and scalable again?"
+      },
+      "overviewBody": {
+        "zh": "中國信託個金官網橫跨 23 個產品部門，內容多年來各自疊加、樣式不一。客戶手上只有一份範圍極小的首頁 guideline，沒有一套可依循、可延伸的設計系統。專案目標是打造「新穎、好找、可擴充」且全站符合無障礙 WCAG AA 的官網。我在 3 位 UI 設計師中負責視覺方向定調、AI 搜尋等關鍵頁面，以及設計系統的建立。",
+        "en": "CTBC's personal banking website spans 23 product departments, with content accumulated over years in inconsistent styles. The client had only a narrow homepage guideline, with no extensible design system. The goal was a website that felt new, was easy to navigate, could scale, and met WCAG AA sitewide. Among 3 UI designers, I was responsible for the visual direction, key pages like AI search, and building the design system."
+      },
+      "problems": {
+        "zh": [
+          {
+            "title": "中年穩健的品牌形象，難以觸及年輕客群",
+            "body": "品牌調查顯示中信穩健但沒有明顯特色，防詐、防海外盜刷等領先市場的服務也被埋得太深。"
+          },
+          {
+            "title": "資訊架構複雜，使用者尋路困難",
+            "body": "內容依產品與部門權責分類，不符使用情境；站內搜尋成效不彰，需來回點擊才找得到。"
+          },
+          {
+            "title": "技術與權責限制，導致體驗不一致",
+            "body": "各頁面由不同部門自行以 AEM 上稿、Minisite 外連無統一規範，又缺乏可依循的設計系統。"
+          }
+        ],
+        "en": [
+          {
+            "title": "A steady but middle-aged brand image struggled to reach younger customers",
+            "body": "Brand research showed CTBC as stable but undifferentiated, with market-leading services like fraud protection buried too deep."
+          },
+          {
+            "title": "Complex information architecture made navigation hard",
+            "body": "Content was categorized by product and department rather than user context; on-site search underperformed, requiring repeated back-and-forth clicks."
+          },
+          {
+            "title": "Technical and organizational constraints led to inconsistent experiences",
+            "body": "Different departments authored pages independently via AEM with no unified rules for minisite links, and no design system to follow."
+          }
+        ]
+      },
+      "goals": {
+        "zh": [
+          {
+            "title": "形塑年輕、聰明、特色鮮明的形象",
+            "body": "以跳脫金融業的設計嘗試與呼應潮流的科技感，扭轉既有的「中年穩重」印象。"
+          },
+          {
+            "title": "提升資訊查找效率，推進使用者旅程",
+            "body": "以使用情境重組內容、強化互動引導，帶動流量、客戶滿意度與服務申辦率。"
+          },
+          {
+            "title": "建立可疊加、不會疊歪的設計規則",
+            "body": "妥善收納眾多產品與服務、預留未來業務發展的彈性，並全站符合無障礙設計規範。"
+          }
+        ],
+        "en": [
+          {
+            "title": "Shape a young, smart, distinctive brand image",
+            "body": "Break from typical financial-industry design and echo current tech aesthetics to shift the \"steady but middle-aged\" impression."
+          },
+          {
+            "title": "Improve findability and move the user journey forward",
+            "body": "Reorganize content by usage context and strengthen interaction guidance to drive traffic, satisfaction, and applications."
+          },
+          {
+            "title": "Establish design rules that can scale without drifting",
+            "body": "Accommodate many products and services with room for future growth, meeting accessibility guidelines sitewide."
+          }
+        ]
+      },
+      "outcomes": [
+        {
+          "label": {
+            "zh": "Outcome 01",
+            "en": "Outcome 01"
+          },
+          "title": {
+            "zh": "把抽象的品牌期待，收斂成可執行的視覺語彙",
+            "en": "Turning abstract brand aspirations into an executable visual vocabulary"
+          },
+          "body": {
+            "zh": "客戶要「現代、有智能感、夠劃時代」，又要扭轉「中年穩健」的印象。我把「智能感」拆成三個可被設計的知覺：色彩流動、視覺層次、動態運作，成為全站共用的語言。提案時我提出兩版立場互斥的方向：A 版「Life as it is 活如是」以使用者為主體；B 版「Precisely Yours 精準，挺你所想」以品牌為主體。視覺方向前後收斂 5 次以上。",
+            "en": "The client wanted \"modern, intelligent, era-defining\" while shifting away from \"steady but middle-aged.\" I broke \"intelligent\" into three designable qualities: color flow, visual depth, and dynamic motion. I proposed two mutually exclusive directions—A) \"Life as it is,\" user-centered with rounded, soft layers; B) \"Precisely Yours,\" brand-centered with dark tones and geometric rhythm—and converged with the client over 5+ rounds."
+          },
+          "images": []
+        },
+        {
+          "label": {
+            "zh": "Outcome 02",
+            "en": "Outcome 02"
+          },
+          "title": {
+            "zh": "重新定位官網在旅程中的角色，設計 AI 搜尋體驗",
+            "en": "Repositioning the website's role in the journey by designing AI search"
+          },
+          "body": {
+            "zh": "研究顯示，使用者幾乎不從首頁開始瀏覽，而是先在搜尋引擎、AI 工具或社群鎖定目標，再進站驗證細節。我規劃蓋板式全站搜尋的版型，以統一的星狀符號標示 AI 內容；結果以 CTA 為主、資訊為輔，並保留回原始資料頁的連結。",
+            "en": "Research showed users rarely start from the homepage, instead arriving from search engines, AI tools, or social media to verify details. I designed an overlay-style sitewide search with a consistent star icon marking AI content, prioritizing CTAs over raw information while preserving links back to source pages."
+          },
+          "images": []
+        },
+        {
+          "label": {
+            "zh": "Outcome 03",
+            "en": "Outcome 03"
+          },
+          "title": {
+            "zh": "從 0 到 1 建立設計系統，讓 23 個部門共用同一套規則",
+            "en": "Building a design system from 0 to 1 for 23 departments to share"
+          },
+          "body": {
+            "zh": "從色彩與字級 token 開始，往上建立元件類型、適用情境與使用規範，讓同一批模組重組就能對應不同產品的頁面。需求的優先順序來自共識工作坊，52 位成員分 7 組把功能做成牌卡排序。無障礙同樣是前提而非檢核，色彩對比、替代文字、表單標籤、鍵盤操作都寫進基礎元件規範。",
+            "en": "Starting from color and type tokens, I built up component types, scenarios, and usage rules so the same modules could recombine into different product pages. Priorities came from a workshop where 52 members in 7 groups sorted features by urgency vs. maintenance cost. Accessibility was a default, not a checklist—AA contrast, alt text, form labels, and keyboard operation were written into base component rules."
+          },
+          "images": []
+        },
+        {
+          "label": {
+            "zh": "Outcome 04",
+            "en": "Outcome 04"
+          },
+          "title": {
+            "zh": "參與易用性測試，依回饋迭代視覺",
+            "en": "Usability testing and iterating on visual design from feedback"
+          },
+          "body": {
+            "zh": "16 位受訪者以六個情境操作新舊版本，電腦版 SUS 從 62 提升至 84，手機版卻從 82 掉到 70，主因是導覽列改為漂浮置底，超過一半受訪者沒發現。我把導覽列調回符合預期的位置、拉開快捷區與行銷版位的差異，統一搜尋入口與 AI 標示。",
+            "en": "16 participants tested old vs. new across six scenarios. Desktop SUS rose from 62 to 84, but mobile dropped from 82 to 70—mainly because a floating bottom nav bar went unnoticed by over half the participants. I moved the nav back to an expected position, separated shortcut blocks from marketing placements, and unified the search entry point and AI labeling."
+          },
+          "images": []
+        }
+      ],
+      "takeaways": [
+        {
+          "title": {
+            "zh": "視覺討論需要一個大家都同意的判準",
+            "en": "Visual discussions need a judgment standard everyone agrees on"
+          },
+          "body": {
+            "zh": "視覺方向前後提了 5 次以上。改以品牌定位、維運成本與使用情境作為判斷依據，對話才會回到問題本身。",
+            "en": "The visual direction went through 5+ rounds. Judging by brand positioning, maintenance cost, and usage context—not personal taste—brought the conversation back to the actual problem."
+          }
+        },
+        {
+          "title": {
+            "zh": "無障礙不是專區的功能，而是全站元件的預設條件",
+            "en": "Accessibility is a default for every component, not a feature of one section"
+          },
+          "body": {
+            "zh": "這次專案要求全站符合 WCAG AA，讓我更確定無障礙應該是設計的預設，而不是完稿後才回頭檢核的項目。",
+            "en": "Requiring WCAG AA sitewide on this project confirmed that accessibility should be a design default, not something checked after the fact."
+          }
+        }
+      ]
+    },
+    {
+      "slug": "tea-island-tea-stories",
+      "order": 3,
+      "hero": "images/Vcu76U8qMwwfcPJzYDfgQcTDRk.jpg",
+      "gallery": [
+        "images/oWqsdRZp1XjEfR285hn2NxIGU.jpg",
+        "images/NdwizdYBJm7o7n2P6wVuwcMc13E.jpg",
+        "images/6JUrRP1XmafvZ17kv7HrqfSybMY.jpg",
+        "images/EaeL9ZIxpeBQB3rdhgeoglldCI.jpg",
+        "images/5i5NClGJQNODUsE09RrnublxI.jpg",
+        "images/HxBZFKZhDnJnEWG72VCYYgCmso.jpg",
+        "images/YXlfBhNXKQkGi7XTpbMidrZzA.png",
+        "images/u2ILkZQLoBsPqbTEAQazthgqKg.jpg",
+        "images/NBOLC0WKwyAAq9Gr1becTb267SE.jpg",
+        "images/ZP5evuPm18gMoRVfzhuK0GROCE.jpg"
+      ],
+      "cardSubtitle": {
+        "zh": "從服務藍圖釐清需求，打造沉浸式茶館服務設計",
+        "en": "Clarifying needs through service blueprints to design an immersive tea house experience"
+      },
+      "categoryLabel": {
+        "zh": "文化體驗｜服務設計與遊戲化系統",
+        "en": "Cultural Experience｜Service Design & Gamification"
+      },
+      "title": {
+        "zh": "茶嶼茶語 Tea Island, Tea Stories",
+        "en": "Tea Island, Tea Stories"
+      },
+      "role": {
+        "zh": "Product Designer／主美術",
+        "en": "Product Designer / Lead Artist"
+      },
+      "team": {
+        "zh": "PM 1（兼任開發）／UI/UX 與主視覺 1／3D 設計 1／開發 2（含 PM）",
+        "en": "1 PM (also dev), 1 UI/UX & art direction, 1 3D designer, 2 developers (incl. PM)"
+      },
+      "timeline": {
+        "zh": "2022.03–2023.05",
+        "en": "2022.03–2023.05"
+      },
+      "launch": {
+        "zh": "畢業專題，後續延伸經營",
+        "en": "Graduation project, continued afterward"
+      },
+      "contribution": {
+        "zh": [
+          "主導 3D 美術與世界觀設計——定調 Low Poly／Cartoon 風格，依六大茶類的產地特性建構六個探索場景與角色，讓茶葉知識長在場景裡而不是說明文字裡。",
+          "從服務藍圖推導雙軌點茶系統——走訪紫藤廬等傳統茶館繪製服務藍圖與同理心地圖，依兩類人物誌拆出「遊戲化點茶」與「一般點茶」兩條動線。",
+          "設計虛實整合的命名茶卡——依玩家在遊戲中的選擇生成專屬茶卡，隨茶飲一同出貨，並延伸經營 Instagram 科普茶文化。"
+        ],
+        "en": [
+          "Led 3D art direction and world-building—defined a Low Poly / Cartoon style and built six exploration scenes and characters based on the six major tea types, letting tea knowledge live in the scenes rather than in instructional text.",
+          "Derived a dual-track ordering system from a service blueprint—visited traditional tea houses to map the service blueprint and empathy maps, splitting two personas into \"gamified ordering\" and \"standard ordering\" flows.",
+          "Designed a phygital named tea card—generated a personalized tea card from the player's in-game choices, shipped with the drink, and extended the project on Instagram with tea-culture content."
+        ]
+      },
+      "impact": [
+        {
+          "value": "Silver",
+          "label": {
+            "zh": "2024 Indigo Award 互動設計組 銀獎",
+            "en": "2024 Indigo Award — Interaction Design, Silver"
+          }
+        },
+        {
+          "value": "Final List",
+          "label": {
+            "zh": "2023 Red Dot Design Award 入圍",
+            "en": "2023 Red Dot Design Award — Final List"
+          }
+        },
+        {
+          "value": "Nomination",
+          "label": {
+            "zh": "2023 VGW Award 跨領域組 提名",
+            "en": "2023 VGW Award — Interdisciplinary, Nomination"
+          }
+        }
+      ],
+      "overviewQuestion": {
+        "zh": "如何用雙軌系統，重新定義茶館的服務體驗？",
+        "en": "How might a dual-track system redefine the tea house service experience?"
+      },
+      "overviewBody": {
+        "zh": "傳統茶館有深厚的文化底蘊，卻同時面對兩種流失：年輕世代覺得它老派，而熟客又被過於文謅謅的選單和緩慢的出餐拖住。我們以雙鑽石流程從田野訪查出發，設計出一組雙軌系統，讓對茶認識深淺不同的顧客各走一條適合自己的路。",
+        "en": "Traditional tea houses carry deep cultural heritage, yet face two kinds of attrition: younger generations find them old-fashioned, while regulars are slowed down by overly literary menus and slow service. Using a double-diamond process starting from field research, we designed a dual-track system letting customers with different tea knowledge each take the path that fits them."
+      },
+      "problems": {
+        "zh": [
+          {
+            "title": "茶文化缺少進入的入口",
+            "body": "深厚的文化底蘊在年輕世代眼中容易被讀成「老派」，沒有一個輕鬆認識茶的起點。"
+          },
+          {
+            "title": "選單語言的理解門檻高",
+            "body": "品項命名與描述過於文謅謅，對茶認識有限的顧客難以判斷該點什麼。"
+          },
+          {
+            "title": "尖峰時段的服務效率不足",
+            "body": "點茶仰賴店員一對一說明，候位與等待時間長，體驗與效率互相排擠。"
+          }
+        ],
+        "en": [
+          {
+            "title": "Tea culture lacked an easy entry point",
+            "body": "Its cultural depth read as \"old-fashioned\" to younger generations, with no relaxed starting point for learning about tea."
+          },
+          {
+            "title": "The menu's language was hard to understand",
+            "body": "Product names and descriptions were overly literary, making it hard for less knowledgeable customers to decide what to order."
+          },
+          {
+            "title": "Service efficiency suffered at peak hours",
+            "body": "Ordering relied on one-on-one explanations from staff, leading to long waits that traded off against the experience."
+          }
+        ]
+      },
+      "goals": {
+        "zh": [
+          {
+            "title": "把知識放進體驗裡",
+            "body": "以遊戲化的採集流程取代單向說明，讓顧客在探索中認識茶的風味與功效。"
+          },
+          {
+            "title": "用顧客的語言重寫選單",
+            "body": "以直覺的分類與具體描述降低選擇門檻，讓新手也能自行完成決定。"
+          },
+          {
+            "title": "雙軌並行，體驗不犧牲效率",
+            "body": "熟客與新手各走一條動線，服務流程不因為多了遊戲而變慢。"
+          }
+        ],
+        "en": [
+          {
+            "title": "Put knowledge inside the experience",
+            "body": "Replace one-way explanations with a gamified gathering flow so customers learn tea's flavor and effects through exploration."
+          },
+          {
+            "title": "Rewrite the menu in the customer's language",
+            "body": "Use intuitive categories and concrete descriptions so even beginners can decide on their own."
+          },
+          {
+            "title": "Run two tracks in parallel without sacrificing efficiency",
+            "body": "Give regulars and newcomers separate flows so the added game never slows down service."
+          }
+        ]
+      },
+      "outcomes": [
+        {
+          "label": {
+            "zh": "Outcome 01",
+            "en": "Outcome 01"
+          },
+          "title": {
+            "zh": "走訪傳統茶館，用服務藍圖找出真實的斷點",
+            "en": "Visiting traditional tea houses to find real breakpoints via service blueprint"
+          },
+          "body": {
+            "zh": "實地體驗紫藤廬等茶館的完整服務流程，繪製四層服務藍圖與同理心地圖。斷點集中在同一個地方——顧客看不懂選單，於是把決定丟回給店員，尖峰時段的等待就是這樣累積出來的。",
+            "en": "We experienced the full service flow at tea houses like Wistaria Tea House and mapped a four-layer service blueprint and empathy maps. The breakpoints converged on one thing: customers couldn't read the menu, so they pushed decisions back onto staff—which is exactly how peak-hour waits accumulated."
+          },
+          "images": []
+        },
+        {
+          "label": {
+            "zh": "Outcome 02",
+            "en": "Outcome 02"
+          },
+          "title": {
+            "zh": "兩類人物誌，推導出「雙軌」而不是單一最佳解",
+            "en": "Two personas leading to a \"dual track,\" not a single best answer"
+          },
+          "body": {
+            "zh": "54 歲的企業主熟悉茶文化，卡住他的是命名與套餐組合太複雜；28 歲的教師想要安靜放鬆，卡住她的是對茶葉幾乎沒有認識。兩人的阻礙不同，把他們塞進同一條動線只會兩邊都不滿意。",
+            "en": "A 54-year-old business owner familiar with tea culture was blocked by overly complex naming and set combinations; a 28-year-old teacher seeking quiet relaxation was blocked by having almost no tea knowledge. Their obstacles differed—forcing both into one flow would satisfy neither."
+          },
+          "images": []
+        },
+        {
+          "label": {
+            "zh": "Outcome 03",
+            "en": "Outcome 03"
+          },
+          "title": {
+            "zh": "設計雙軌點茶系統，讓熟客與新手各走一條路",
+            "en": "Designing a dual-track ordering system for regulars and newcomers"
+          },
+          "body": {
+            "zh": "遊戲化點茶讓顧客扮演冒險者，在探索場景中採集材料、組成自己的茶；一般點茶則保留直覺的選擇流程，支援 LINE Pay 與現金付款。兩條路最終匯入同一套出餐邏輯，後台不需要維護兩套流程。",
+            "en": "Gamified ordering lets customers play an adventurer, gathering ingredients to compose their own tea; standard ordering keeps an intuitive flow supporting LINE Pay and cash. Both paths converge into one fulfillment logic, so the backend never has to maintain two systems."
+          },
+          "images": []
+        },
+        {
+          "label": {
+            "zh": "Outcome 04",
+            "en": "Outcome 04"
+          },
+          "title": {
+            "zh": "定調 3D 美術風格，把六大茶類變成六個場景",
+            "en": "Defining a 3D art style, turning six tea types into six scenes"
+          },
+          "body": {
+            "zh": "作為主美術，我選定 Low Poly／Cartoon 風格——它在有限的專案時程內能維持辨識度，同時把建模成本壓在可執行的範圍。六個探索場景依紅茶、綠茶、黑茶、黃茶、烏龍茶、白茶的實際產地特性設計。",
+            "en": "As lead artist, I chose a Low Poly / Cartoon style that stayed recognizable within a tight timeline while keeping modeling cost feasible. The six exploration scenes were designed around the real growing regions of black, green, dark, yellow, oolong, and white tea."
+          },
+          "images": []
+        }
+      ],
+      "takeaways": [
+        {
+          "title": {
+            "zh": "遊戲化不是加法，而是重新設計服務的骨架",
+            "en": "Gamification isn't an add-on—it's redesigning the service's skeleton"
+          },
+          "body": {
+            "zh": "真正有效的做法是回到服務藍圖，讓遊戲機制去承擔原本由店員承擔的說明工作——它要解決效率問題，而不只是有趣。",
+            "en": "The effective approach was returning to the service blueprint and letting game mechanics take over the explanation work staff used to do—solving an efficiency problem, not just adding fun."
+          }
+        },
+        {
+          "title": {
+            "zh": "美術風格要同時服務品牌與製作現實",
+            "en": "Art style must serve both the brand and production reality"
+          },
+          "body": {
+            "zh": "身為主美術，我學到風格決策不能只看美感。Low Poly 是在辨識度與建模工時之間權衡後的結果。",
+            "en": "As lead artist, I learned style decisions can't be based on aesthetics alone. Low Poly was the result of weighing recognizability against modeling hours available."
+          }
+        }
+      ]
+    },
+    {
+      "slug": "xnfun-app",
+      "order": 4,
+      "hero": "images/kFalKp6RbAvnYP1zIhRxjWzIdOo.jpg",
+      "gallery": [
+        "images/BXF0CBBHbIjtqRGd31BRMA1MXs.jpg",
+        "images/wlmW6GhT9We1eR0y3oomWgr0.jpg",
+        "images/fmJooqdkivF5L3ptvDbjQLnW4.jpg",
+        "images/Nr8M0YCrzJFzpaNq4tQgbTrN8.jpg",
+        "images/53vv3yHapCpUoQxxeH6MvTFI.jpg",
+        "images/H3SRRAaLihJ7L2BLiV4BOIBdGKs.jpg",
+        "images/HsGblrcqPtNY08gwnZw4891Wjgs.jpg",
+        "images/IZ6iUpvkhfEmOwe1MKLTUTAgt8.jpg",
+        "images/Z7rG7G6Wrcz4GqraqoEhLDsnDo.jpg",
+        "images/mqSoTbqm10O9OPBbnmt8gyChsFM.jpg"
+      ],
+      "cardSubtitle": {
+        "zh": "從既有系統理清邏輯，從0到1打造模組化新功能",
+        "en": "Untangling an existing system's logic and building new modular features from 0 to 1"
+      },
+      "categoryLabel": {
+        "zh": "雲端儲存｜共享相簿 App",
+        "en": "Cloud Storage｜Shared Album App"
+      },
+      "title": {
+        "zh": "XnFun App",
+        "en": "XnFun App"
+      },
+      "role": {
+        "zh": "UI/UX 設計師",
+        "en": "UI/UX Designer"
+      },
+      "team": {
+        "zh": "4 人小組",
+        "en": "Team of 4"
+      },
+      "timeline": {
+        "zh": "2022.10–2023.05",
+        "en": "2022.10–2023.05"
+      },
+      "launch": {
+        "zh": "客戶：USI Global (Taiwan)",
+        "en": "Client: USI Global (Taiwan)"
+      },
+      "contribution": {
+        "zh": [
+          "盤點既有系統，理清跨平台邏輯——走查 iOS／Android 雙平台並繪製 Functional Map，整理出日常／旅遊／寶貝三大相簿的共用邏輯。",
+          "從 0 到 1 設計「旅遊日程」——依游擊測試四大情境的發現，設計「回憶關鍵字」與「日程分類總覽」兩項核心功能。",
+          "統整設計規範與 IX Flow——收整低頻功能、統一雙平台樣式，並撰寫完整互動邏輯文件，讓設計、工程與業主三方對齊。"
+        ],
+        "en": [
+          "Audited the existing system and untangled cross-platform logic—walked through iOS/Android and mapped a Functional Map, identifying shared logic across the Daily / Travel / Baby albums.",
+          "Designed \"Travel Itinerary\" from 0 to 1—based on guerrilla testing across four scenarios, designed \"memory keywords\" and a \"itinerary overview\" as the two core features.",
+          "Consolidated design guidelines and IX flow—folded low-frequency features into a secondary menu, unified styles across platforms, and wrote complete interaction documentation aligning design, engineering, and the client."
+        ]
+      },
+      "impact": [
+        {
+          "value": "3",
+          "label": {
+            "zh": "大模組共用同一套底層邏輯",
+            "en": "Album modules sharing one core logic"
+          }
+        },
+        {
+          "value": "2",
+          "label": {
+            "zh": "平台介面樣式與操作邏輯統一",
+            "en": "Platforms unified in style and interaction"
+          }
+        },
+        {
+          "value": "0 → 1",
+          "label": {
+            "zh": "旅遊日程從無到有",
+            "en": "Travel itinerary built from scratch"
+          }
+        }
+      ],
+      "overviewQuestion": {
+        "zh": "如何在既有系統上，從 0 到 1 打造模組化新功能？",
+        "en": "How do you build modular new features from 0 to 1 on top of an existing system?"
+      },
+      "overviewBody": {
+        "zh": "XnFun 是搭配 XnBay 智慧儲存伺服器的共享相簿 App，讓使用者備份相片、與他人共享相簿。這次專案要同時處理既有系統的介面與邏輯優化，以及「旅遊相簿」「寶貝相簿」等新功能的從 0 到 1 建置。",
+        "en": "XnFun is a shared photo album app paired with the XnBay smart storage server, letting users back up photos and share albums with others. This project handled both optimizing the existing interface and logic, and building new features like \"Travel Album\" and \"Baby Album\" from scratch."
+      },
+      "problems": {
+        "zh": [
+          {
+            "title": "跨平台介面不一致",
+            "body": "iOS／Android 在變更相簿名稱、查看成員等操作上樣式與邏輯不同，增加學習與維運成本。"
+          },
+          {
+            "title": "旅遊照片缺乏整理方式",
+            "body": "多天行程的照片被打散在時間軸裡，使用者難以依日期或地點回頭找到當時的回憶。"
+          },
+          {
+            "title": "低頻功能佔據主要動線",
+            "body": "刪除相簿等操作與核心的瀏覽、分享並列，既容易誤觸，也稀釋了主要任務的清晰度。"
+          }
+        ],
+        "en": [
+          {
+            "title": "Inconsistent cross-platform interface",
+            "body": "iOS and Android differed in style and logic for actions like renaming albums or viewing members, raising learning and maintenance costs."
+          },
+          {
+            "title": "No way to organize travel photos",
+            "body": "Photos from multi-day trips were scattered across the timeline, making it hard to find memories by date or location."
+          },
+          {
+            "title": "Low-frequency features cluttered the main flow",
+            "body": "Actions like deleting an album sat alongside core browsing and sharing, inviting mis-taps and diluting the primary task."
+          }
+        ]
+      },
+      "goals": {
+        "zh": [
+          {
+            "title": "統一跨平台的操作邏輯",
+            "body": "讓同一個功能在兩個平台上長得一樣、做起來也一樣，降低維護成本。"
+          },
+          {
+            "title": "讓旅遊回憶可被有序檢索",
+            "body": "以日期與自訂關鍵字建立檢索邏輯，多天旅遊也能快速找到特定片段。"
+          },
+          {
+            "title": "在既有系統上延伸，而非另起爐灶",
+            "body": "新功能延續原有的操作邏輯與視覺風格，並盤點模組共用性以利後續擴充。"
+          }
+        ],
+        "en": [
+          {
+            "title": "Unify cross-platform interaction logic",
+            "body": "Make the same feature look and behave identically on both platforms to lower maintenance cost."
+          },
+          {
+            "title": "Make travel memories retrievable in order",
+            "body": "Build retrieval logic around dates and custom keywords so multi-day trips are quick to search."
+          },
+          {
+            "title": "Extend the existing system rather than start over",
+            "body": "New features carry forward existing interaction logic and visual style, auditing module reuse for future expansion."
+          }
+        ]
+      },
+      "outcomes": [
+        {
+          "label": {
+            "zh": "Outcome 01",
+            "en": "Outcome 01"
+          },
+          "title": {
+            "zh": "走查雙平台與競品，理清系統邏輯與機會點",
+            "en": "Auditing both platforms and competitors to find the system's logic and opportunities"
+          },
+          "body": {
+            "zh": "走查 iOS／Android 既有系統，盤點介面與跨平台差異並繪製 Functional Map；同時分析 We Album、Funliday、Wish Trip、Polar Steps、Tripcast 等旅遊相簿類 App。這一步的目的是先確認既有系統的邊界，新功能才知道要接在什麼上面。",
+            "en": "I walked through the existing iOS/Android system and mapped a Functional Map, alongside analyzing competitors like We Album, Funliday, Wish Trip, Polar Steps, and Tripcast. The goal was to confirm the existing system's boundaries before deciding what the new feature should build on."
+          },
+          "images": []
+        },
+        {
+          "label": {
+            "zh": "Outcome 02",
+            "en": "Outcome 02"
+          },
+          "title": {
+            "zh": "游擊測試四大情境，確認真實的使用需求",
+            "en": "Guerrilla testing four scenarios to confirm real user needs"
+          },
+          "body": {
+            "zh": "針對「旅遊過程」「整理旅遊照片」「分享旅遊相片」「瀏覽旅遊照片」四個情境進行游擊測試。測試結果指向同一件事——使用者要的不是更多相簿，而是能回到特定那一天、那一段路的方式。",
+            "en": "I ran guerrilla tests across four scenarios: during travel, organizing photos, sharing photos, and browsing photos. Results converged on one thing—users didn't want more albums, they wanted a way back to a specific day or leg of the trip."
+          },
+          "images": []
+        },
+        {
+          "label": {
+            "zh": "Outcome 03",
+            "en": "Outcome 03"
+          },
+          "title": {
+            "zh": "從 0 到 1 設計「旅遊日程」核心功能",
+            "en": "Designing the \"Travel Itinerary\" core feature from 0 to 1"
+          },
+          "body": {
+            "zh": "以「回憶關鍵字」與「日程分類總覽」兩項功能為核心：前者讓使用者用自己的語言標記行程片段，後者依日期把回憶排成可跳轉的結構。功能雖然是新的，但操作邏輯與視覺語彙都延續既有系統。",
+            "en": "Built around two core features: \"memory keywords\" let users tag trip segments in their own words, and \"itinerary overview\" arranges memories by date into a jumpable structure. Though new, the feature carries forward the existing system's interaction logic and visual language."
+          },
+          "images": []
+        },
+        {
+          "label": {
+            "zh": "Outcome 04",
+            "en": "Outcome 04"
+          },
+          "title": {
+            "zh": "統一介面樣式，把規範寫成三方的共同語言",
+            "en": "Unifying interface style and writing guidelines as a shared language"
+          },
+          "body": {
+            "zh": "統一雙平台的介面樣式與操作，將刪除相簿等低頻功能收整進「更多功能」列表；同時撰寫日期顯示規則、相簿成員、Scroll 模式、元件三態示意等完整 IX Flow，讓設計、工程、業主三方對互動行為有一致認知。",
+            "en": "Unified interface style and interactions across both platforms, folding low-frequency actions like deleting albums into a \"more\" menu. I also wrote a complete IX flow covering date display rules, album members, scroll behavior, and component states, aligning design, engineering, and the client."
+          },
+          "images": []
+        }
+      ],
+      "takeaways": [
+        {
+          "title": {
+            "zh": "說服業主靠的是邏輯，不是提案的好看程度",
+            "en": "Persuading the client relies on logic, not how polished the deck looks"
+          },
+          "body": {
+            "zh": "優化方向被接受，靠的是能指出現在的邏輯在哪裡對不起來、改動之後維運成本會怎麼變化，而不是把畫面做得更漂亮。",
+            "en": "The optimization direction was accepted by pointing out where current logic broke down and how maintenance cost would change—not by making screens prettier."
+          }
+        },
+        {
+          "title": {
+            "zh": "規範文件本身就是一種設計",
+            "en": "The specification document is itself a design"
+          },
+          "body": {
+            "zh": "Design System 與 IX Flow 要寫到多細，決定了工程與業主是不是真的看得懂，直接決定設計有沒有被完整實作。",
+            "en": "How detailed the design system and IX flow are determines whether engineering and the client truly understand it—which directly determines whether the design gets implemented faithfully."
+          }
+        }
+      ]
+    }
+  ],
+  "ABOUT": {
+    "zh": {
+      "greetingPlain": "嗨～我是 ",
+      "greetingName": "Peichi",
+      "bio": [
+        "我是一名專注於視覺、UI 與動效設計的產品設計師，具備 3+ 年橫跨金融、保險與跨領域產品的實務經驗。我主修互動設計，曾前往德國 FHP 交換，學習介面設計，這段跨文化的經驗讓我在設計時更懂得跳脫框架，從不同角度思考問題。",
+        "也因為這樣，我喜歡不斷嘗試新的媒材與工具，讓每個作品都帶點實驗性與故事感；同時擅長把複雜的資訊架構，轉化為清晰、模組化的系統，在自由與規則之間找到平衡。"
+      ],
+      "photo": "assets/about-photo.png",
+      "experienceLabel": "Experience",
+      "experience": [
+        {
+          "role": "AJA Creative｜UI 設計師",
+          "time": "2025 – 現在"
+        },
+        {
+          "role": "Freelancer",
+          "time": "2023 – 現在"
+        },
+        {
+          "role": "遊石設計｜UI/UX 設計實習生",
+          "time": "2022 – 2023"
+        },
+        {
+          "role": "MIFLY米菲多媒體｜文章撰寫與翻譯",
+          "time": "2021"
+        }
+      ],
+      "awardLabel": "Award",
+      "awards": [
+        {
+          "title": "Indigo Design Award — 銀獎",
+          "time": "2024"
+        },
+        {
+          "title": "Red Dot: Design Concept — 決選",
+          "time": "2023"
+        },
+        {
+          "title": "VGW Award — 提名",
+          "time": "2023"
+        },
+        {
+          "title": "教育部留學獎學金 — 得獎",
+          "time": "2023"
+        }
+      ],
+      "languageLabel": "Language",
+      "languageSub": "is a window into culture",
+      "languages": [
+        {
+          "name": "中文",
+          "level": "Native"
+        },
+        {
+          "name": "英文",
+          "level": "Fluent in professional and academic settings"
+        },
+        {
+          "name": "日文",
+          "level": "Comfortable with reading and listening"
+        },
+        {
+          "name": "德文",
+          "level": "Familiar with basic phrases and expressions"
+        }
+      ],
+      "coffeeChat": [
+        "Wanna know me more?",
+        "How about a matcha chat with me",
+        "Beer is welcome too <3"
+      ],
+      "shapesMeSegments": [
+        {
+          "text": "One year in Germany made me an "
+        },
+        {
+          "em": "adaptable soul",
+          "carousel": "adaptable"
+        },
+        {
+          "text": " I am also a "
+        },
+        {
+          "em": "challenger",
+          "carousel": "challenger"
+        },
+        {
+          "text": " who loves stepping out of the comfort zone. Outside of work, I am a "
+        },
+        {
+          "em": "traveller",
+          "carousel": "traveller"
+        },
+        {
+          "text": " who enjoys adventures. 📷🎧✨"
+        }
+      ]
+    },
+    "en": {
+      "greetingPlain": "Hi there, I am ",
+      "greetingName": "Peichi",
+      "bio": [
+        "I'm a Product Designer specializing in visual, UI, and motion design, with 3+ years of experience across finance, insurance, and cross-disciplinary products. I studied Interaction Design in Taiwan and spent an exchange year in Interface Design at FHP, Germany, an experience that taught me to think beyond the frame and approach problems from different angles.",
+        "That mindset carries into how I work. I love experimenting with new media and tools, letting each project carry its own sense of experimentation and story, while staying skilled at turning complex information architecture into clear, modular systems, finding balance between freedom and structure."
+      ],
+      "photo": "assets/about-photo.png",
+      "experienceLabel": "Experience",
+      "experience": [
+        {
+          "role": "AJA Creative｜UI Designer",
+          "time": "2025 – Now"
+        },
+        {
+          "role": "Freelancer",
+          "time": "2023 – Now"
+        },
+        {
+          "role": "UXI Design Co.｜UI/UX Design Intern",
+          "time": "2022 – 2023"
+        },
+        {
+          "role": "MIFLY Multimedia｜Article Writing & Translation",
+          "time": "2021"
+        }
+      ],
+      "awardLabel": "Award",
+      "awards": [
+        {
+          "title": "Indigo Design Award — Silver",
+          "time": "2024"
+        },
+        {
+          "title": "Red Dot: Design Concept — Final List",
+          "time": "2023"
+        },
+        {
+          "title": "VGW Award — Nomination",
+          "time": "2023"
+        },
+        {
+          "title": "Ministry of Education (MOE) Scholarship — Winner",
+          "time": "2023"
+        }
+      ],
+      "languageLabel": "Language",
+      "languageSub": "is a window into culture",
+      "languages": [
+        {
+          "name": "Mandarin",
+          "level": "Native"
+        },
+        {
+          "name": "English",
+          "level": "Fluent in professional and academic settings"
+        },
+        {
+          "name": "Japanese",
+          "level": "Comfortable with reading and listening"
+        },
+        {
+          "name": "German",
+          "level": "Familiar with basic phrases and expressions"
+        }
+      ],
+      "coffeeChat": [
+        "Wanna know me more?",
+        "How about a matcha chat with me",
+        "Beer is welcome too <3"
+      ],
+      "shapesMeSegments": [
+        {
+          "text": "One year in Germany made me an "
+        },
+        {
+          "em": "adaptable soul",
+          "carousel": "adaptable"
+        },
+        {
+          "text": " I am also a "
+        },
+        {
+          "em": "challenger",
+          "carousel": "challenger"
+        },
+        {
+          "text": " who loves stepping out of the comfort zone. Outside of work, I am a "
+        },
+        {
+          "em": "traveller",
+          "carousel": "traveller"
+        },
+        {
+          "text": " who enjoys adventures. 📷🎧✨"
+        }
+      ]
+    }
+  },
+  "PLAYGROUND": {
+    "zh": {
+      "subtitle": "Lab Core",
+      "description": "Here's a playground of my ideas and experiments, born out of curiosity.",
+      "illustLead": "In my free time, I also enjoy",
+      "illustEmph": "illustrating"
+    },
+    "en": {
+      "subtitle": "Lab Core",
+      "description": "Here's a playground of my ideas and experiments, born out of curiosity.",
+      "illustLead": "In my free time, I also enjoy",
+      "illustEmph": "illustrating"
+    }
+  },
+  "ILLUST_IMAGES": [
+    "images/gfqJJJHcyDm4FaechmT8BGUIvgE.png",
+    "images/Y0mYZRZgPFXCOn5gYD5UmaLwNBU.png",
+    "images/RDxCRkXqC7s6xPXWezkKQ2TczNE.png",
+    "images/SNPx1WFlvq1Cjju55t2Dx9RV6Zo.png",
+    "images/MHnVGRUTjiB2WQHP1y1FdjxihgE.png",
+    "images/YeBDXf1UzBzFTRQTUETq7SfOLw.png",
+    "images/O7IhRNIHSfT2EMK5VVdHBZRqQ.png",
+    "images/4PZ9ErWb9oZGWwPjbwbIkdeCEY.png",
+    "images/HTfSHs31AT7SUnhCAcAS9sE5WY.jpg",
+    "images/mB36RbuvylVnOe3qmtGL3Vpe8.png",
+    "images/BjstQ31L27g3D9AnyHMD9FlktTU.png",
+    "images/XW3IPR5XBOTokThxoukQTaCiQEg.png"
+  ],
+  "SHAPES_CAROUSEL": {
+    "adaptable": [
+      "assets/adatable01.png",
+      "assets/adatable02.png",
+      "assets/adatable03.png"
+    ],
+    "challenger": [
+      "assets/challenger01.png",
+      "assets/challenger02.png",
+      "assets/challenger03.png",
+      "assets/challenger04.png"
+    ],
+    "traveller": [
+      "assets/traveler01.png",
+      "assets/traveler02.png",
+      "assets/traveler03.png",
+      "assets/traveler04.png"
+    ]
+  },
+  "PLAYGROUND_WORKS": [
+    {
+      "slug": "interaction-lab",
+      "card": "assets/pg-card-1.png",
+      "eyebrow": {
+        "zh": "互動裝置｜2022",
+        "en": "Interactive Installation | 2022"
+      },
+      "title": {
+        "zh": "裙子底下有",
+        "en": "Under the Skirt"
+      },
+      "hero": "assets/pg-card-1.png",
+      "overview": {
+        "zh": [
+          "以攝影機與感測器串起的互動裝置，觀者的動作會即時改變投影畫面。",
+          "我負責視覺設計與互動流程規劃，並與工程夥伴一起完成實作。"
+        ],
+        "en": [
+          "An interactive installation linking camera and sensors, where the viewer's movement reshapes the projection in real time.",
+          "I led the visual design and interaction flow, building it together with an engineering partner."
+        ]
+      },
+      "blocks": [
+        {
+          "label": {
+            "zh": "關於",
+            "en": "About"
+          },
+          "text": {
+            "zh": "課堂實驗作品，探索身體與投影之間的關係。",
+            "en": "A class experiment exploring the relationship between the body and projected image."
+          }
+        }
+      ],
+      "gallery": []
+    },
+    {
+      "slug": "fowl-justice",
+      "card": "assets/pg-card-2.png",
+      "eyebrow": {
+        "zh": "PC 遊戲｜2021",
+        "en": "PC Game | 2021"
+      },
+      "title": {
+        "zh": "Fowl Justice",
+        "en": "Fowl Justice"
+      },
+      "hero": "assets/pg-card-2.png",
+      "overview": {
+        "zh": [
+          "一款 2D 直向捲軸動作遊戲，共四個關卡。玩家扮演斑鳩戰士，對抗入侵者、守護家園。",
+          "我擔任遊戲主視覺，負責角色設計、故事發想與動畫，並與程式夥伴協作完成開發。"
+        ],
+        "en": [
+          "A 2D vertical scrolling action game with four levels. The player fights as a turtledove warrior to defend their home from invaders.",
+          "As the game's main visualizer I did character design, story and animation, collaborating with a programmer on development."
+        ]
+      },
+      "blocks": [
+        {
+          "label": {
+            "zh": "故事",
+            "en": "Story"
+          },
+          "text": {
+            "zh": "某天鴿子入侵了斑鳩的領地，以數量優勢欺壓、掠奪食物。寡不敵眾的斑鳩決定放手一搏——派出最強的戰士，迎戰鴿群，奪回原本屬於他們的家園……",
+            "en": "One day pigeons invaded the turtledoves' territory, using sheer numbers to dominate, bully and steal food. Outnumbered, the turtledoves made a final stand — sending their strongest warrior to reclaim their rightful home."
+          }
+        }
+      ],
+      "gallery": []
+    },
+    {
+      "slug": "digital-nomads",
+      "card": "assets/pg-card-3.png",
+      "eyebrow": {
+        "zh": "資料視覺化｜2024",
+        "en": "Data Visualisation | 2024"
+      },
+      "title": {
+        "zh": "Digital Nomads",
+        "en": "Digital Nomads"
+      },
+      "hero": "assets/pg-card-3.png",
+      "overview": {
+        "zh": [
+          "與 UJN 合作的資料視覺化課程作品，從既有資料中挖掘敘事，探討數位游牧族的興起與其對在地社群的影響。"
+        ],
+        "en": [
+          "A data-visualisation course project with UJN, uncovering narratives in existing data about the rise of digital nomads and their impact on local communities."
+        ]
+      },
+      "blocks": [],
+      "gallery": []
+    },
+    {
+      "slug": "qishi-zine",
+      "card": "assets/pg-card-4.png",
+      "eyebrow": {
+        "zh": "平面設計｜2021",
+        "en": "Graphic Design | 2021"
+      },
+      "title": {
+        "zh": "其實…",
+        "en": "Actually…"
+      },
+      "hero": "assets/pg-card-4.png",
+      "overview": {
+        "zh": [
+          "以黑白印刷與拼貼手法製作的實驗刊物，探索文字與影像之間的張力。"
+        ],
+        "en": [
+          "An experimental zine in black-and-white print and collage, exploring the tension between text and image."
+        ]
+      },
+      "blocks": [],
+      "gallery": []
+    },
+    {
+      "slug": "projection-play",
+      "card": "assets/pg-card-5.png",
+      "eyebrow": {
+        "zh": "空間投影｜2022",
+        "en": "Projection | 2022"
+      },
+      "title": {
+        "zh": "光的練習",
+        "en": "Studies in Light"
+      },
+      "hero": "assets/pg-card-5.png",
+      "overview": {
+        "zh": [
+          "以投影為媒材的空間實驗，測試光線、材質與觀者位置之間的互動。"
+        ],
+        "en": [
+          "A spatial experiment using projection as material, testing how light, surface and viewer position interact."
+        ]
+      },
+      "blocks": [],
+      "gallery": []
+    }
+  ],
+  "PLAYGROUND_ILLUSTS": [
+    "assets/illust-01.png",
+    "assets/illust-02.png",
+    "assets/illust-03.png",
+    "assets/illust-04.png",
+    "assets/illust-05.png",
+    "assets/illust-06.png",
+    "assets/illust-07.png",
+    "assets/illust-08.png",
+    "assets/illust-09.png",
+    "assets/illust-10.png",
+    "assets/illust-11.png",
+    "assets/illust-12.png",
+    "assets/illust-13.png",
+    "assets/illust-14.png",
+    "assets/illust-15.png",
+    "assets/illust-16.png"
+  ]
+}

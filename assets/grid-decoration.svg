@@ -1,0 +1,48 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="1440" height="4000" viewBox="0 0 1440 4000" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Grid Decoration" clip-path="url(#clip0_0_130)">
+<rect id="vline-1" x="160" width="1" height="4000" fill="white" fill-opacity="0.08"/>
+<rect id="vline-3" x="480" width="1" height="4000" fill="white" fill-opacity="0.08"/>
+<rect id="vline-5" x="800" width="1" height="4000" fill="white" fill-opacity="0.08"/>
+<rect id="vline-7" x="1120" width="1" height="4000" fill="white" fill-opacity="0.08"/>
+<rect id="vline-9" x="1440" width="1" height="4000" fill="white" fill-opacity="0.08"/>
+<rect id="vline-10" x="1600" width="1" height="4000" fill="white" fill-opacity="0.08"/>
+<rect id="vline-11" x="1760" width="1" height="4000" fill="white" fill-opacity="0.08"/>
+<rect id="hline-1" y="160" width="1920" height="1" fill="white" fill-opacity="0.08"/>
+<rect id="hline-3" y="480" width="1920" height="1" fill="white" fill-opacity="0.08"/>
+<rect id="hline-5" y="800" width="1920" height="1" fill="white" fill-opacity="0.08"/>
+<rect id="hline-7" y="1120" width="1920" height="1" fill="white" fill-opacity="0.08"/>
+<rect id="hline-9" y="1440" width="1920" height="1" fill="white" fill-opacity="0.08"/>
+<rect id="hline-11" y="1760" width="1920" height="1" fill="white" fill-opacity="0.08"/>
+<rect id="hline-13" y="2080" width="1920" height="1" fill="white" fill-opacity="0.08"/>
+<rect id="hline-15" y="2400" width="1920" height="1" fill="white" fill-opacity="0.08"/>
+<rect id="hline-17" y="2720" width="1920" height="1" fill="white" fill-opacity="0.08"/>
+<rect id="hline-19" y="3040" width="1920" height="1" fill="white" fill-opacity="0.08"/>
+<rect id="hline-21" y="3360" width="1920" height="1" fill="white" fill-opacity="0.08"/>
+<rect id="hline-23" y="3680" width="1920" height="1" fill="white" fill-opacity="0.08"/>
+<path id="Rectangle 10" d="M161 160H176C167.965 159.426 161.574 153.035 161 145V160Z" fill="white" fill-opacity="0.08"/>
+<path id="Rectangle 15" d="M481 1120H496C487.965 1119.43 481.574 1113.03 481 1105V1120Z" fill="white" fill-opacity="0.08"/>
+<path id="Rectangle 23" d="M481 2081H496C487.965 2080.43 481.574 2074.03 481 2066V2081Z" fill="white" fill-opacity="0.08"/>
+<path id="Rectangle 27" d="M481 2720H496C487.965 2719.43 481.574 2713.03 481 2705V2720Z" fill="white" fill-opacity="0.08"/>
+<path id="Rectangle 28" d="M1121 2720H1136C1127.97 2719.43 1121.57 2713.03 1121 2705V2720Z" fill="white" fill-opacity="0.08"/>
+<path id="Rectangle 24" d="M1121 2080H1136C1127.97 2079.43 1121.57 2073.03 1121 2065V2080Z" fill="white" fill-opacity="0.08"/>
+<path id="Rectangle 11" d="M481 480H496C487.965 479.426 481.574 473.035 481 465V480Z" fill="white" fill-opacity="0.08"/>
+<path id="Rectangle 18" d="M1121 480H1136C1127.97 479.426 1121.57 473.035 1121 465V480Z" fill="white" fill-opacity="0.08"/>
+<path id="Rectangle 19" d="M161 1440H176C167.965 1439.43 161.574 1433.03 161 1425V1440Z" fill="white" fill-opacity="0.08"/>
+<path id="Rectangle 25" d="M1121 1440H1136C1127.97 1439.43 1121.57 1433.03 1121 1425V1440Z" fill="white" fill-opacity="0.08"/>
+<path id="Rectangle 12" d="M800 160H785C793.035 159.426 799.426 153.035 800 145V160Z" fill="white" fill-opacity="0.08"/>
+<path id="Rectangle 13" d="M1120 800H1105C1113.03 799.426 1119.43 793.035 1120 785V800Z" fill="white" fill-opacity="0.08"/>
+<path id="Rectangle 16" d="M801 1121H816C807.965 1121.57 801.574 1127.97 801 1136V1121Z" fill="white" fill-opacity="0.08"/>
+<path id="Rectangle 14" d="M160 800H145C153.035 799.426 159.426 793.035 160 785V800Z" fill="white" fill-opacity="0.08"/>
+<path id="Rectangle 20" d="M160 1121H145C153.035 1121.57 159.426 1127.97 160 1136V1121Z" fill="white" fill-opacity="0.08"/>
+<path id="Rectangle 17" d="M800 800H785C793.035 799.426 799.426 793.035 800 785V800Z" fill="white" fill-opacity="0.08"/>
+<path id="Rectangle 21" d="M800 1760H785C793.035 1759.43 799.426 1753.03 800 1745V1760Z" fill="white" fill-opacity="0.08"/>
+<path id="Rectangle 29" d="M800 2400H785C793.035 2399.43 799.426 2393.03 800 2385V2400Z" fill="white" fill-opacity="0.08"/>
+<path id="Rectangle 22" d="M160 1760H145C153.035 1759.43 159.426 1753.03 160 1745V1760Z" fill="white" fill-opacity="0.08"/>
+<path id="Rectangle 26" d="M160 2400H145C153.035 2399.43 159.426 2393.03 160 2385V2400Z" fill="white" fill-opacity="0.08"/>
+</g>
+<defs>
+<clipPath id="clip0_0_130">
+<rect width="1440" height="4000" fill="white"/>
+</clipPath>
+</defs>
+</svg>
