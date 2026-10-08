@@ -1,0 +1,4 @@
+# Site is still being finished — keep it out of search results for now.
+# To allow indexing: delete this file and set NOINDEX = False in build.py.
+User-agent: *
+Disallow: /

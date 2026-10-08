@@ -113,9 +113,17 @@ def footer(lang, depth=0):
 </footer>"""
 
 
+# Set to False and rebuild when the site is ready to be found in Google.
+# While True every page carries <meta name="robots" content="noindex">
+# and robots.txt disallows everything. The site still works and the URL can
+# still be shared — it just will not be indexed.
+NOINDEX = True
+
+
 def shell(lang, title, description, active, depth, alt_path, content, body_class="", after_wrapper=""):
     prefix = "../" * depth
     html_lang = "zh-Hant" if lang == "zh" else "en"
+    noindex_meta = '<meta name="robots" content="noindex, nofollow">\n' if NOINDEX else ""
     return f"""<!DOCTYPE html>
 <html lang="{html_lang}">
 <head>
@@ -123,7 +131,7 @@ def shell(lang, title, description, active, depth, alt_path, content, body_class
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>{esc(title)}</title>
 <meta name="description" content="{esc(description)}">
-<link rel="stylesheet" href="{prefix}css/site.css?v={ASSET_VERSION}">
+{noindex_meta}<link rel="stylesheet" href="{prefix}css/site.css?v={ASSET_VERSION}">
 </head>
 <body class="{body_class}">
 {header(lang, active, depth, alt_path)}
