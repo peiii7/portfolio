@@ -32,11 +32,16 @@ const Reveal = ({ children, delay = 0 }: { children: React.ReactNode; delay?: nu
   </motion.div>
 );
 
+// a fig/hero can be a plain path or a { en, zh } pair; resolve by language
+const pickMedia = (v: string | { en: string; zh: string } | undefined, lang: string): string =>
+  !v ? "" : typeof v === "string" ? v : lang === "en" ? v.en : v.zh;
+const isVideo = (s: string) => /\.(mp4|webm|mov)($|\?)/i.test(s);
+
 function Fig({ value, ratio = 1.5 }: { value?: string; ratio?: number }) {
   const v = value || "";
   const box: React.CSSProperties = { borderRadius: 16, overflow: "hidden", background: "#141416", aspectRatio: String(ratio) };
   const media: React.CSSProperties = { width: "100%", height: "100%", objectFit: "cover", display: "block" };
-  if (/\.mp4($|\?)/i.test(v)) return <div style={box}><video src={v} autoPlay muted loop playsInline style={media} /></div>;
+  if (/\.(mp4|webm|mov)($|\?)/i.test(v)) return <div style={box}><video src={v} autoPlay muted loop playsInline style={media} /></div>;
   if (/\.(jpe?g|png|webp|svg|gif|avif)($|\?)/i.test(v)) return <div style={box}><img src={v} alt="" style={media} /></div>;
   return (
     <div style={{ ...box, display: "flex", alignItems: "center", justifyContent: "center", padding: 24 }}>
@@ -139,11 +144,17 @@ export default function CaseStudy() {
               </div>
             </Reveal>
             <Reveal>
-              <div style={{ borderRadius: 20, overflow: "hidden", background: "#141416", aspectRatio: m ? "1.4" : "2.2", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                {proj?.hero && !proj.hero.endsWith(".svg")
-                  ? <img src={proj.hero} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
-                  : <span style={{ color: "rgba(244,244,245,0.25)", fontSize: 14 }}>Image coming soon</span>}
-              </div>
+              {(() => {
+                const heroSrc = pickMedia(cs.hero, lang) || (proj?.hero && !proj.hero.endsWith(".svg") ? proj.hero : "");
+                const cover: React.CSSProperties = { width: "100%", height: "100%", objectFit: "cover", display: "block" };
+                return (
+                  <div style={{ borderRadius: 20, overflow: "hidden", background: "#141416", aspectRatio: m ? "1.4" : "2.2", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                    {!heroSrc ? <span style={{ color: "rgba(244,244,245,0.25)", fontSize: 14 }}>Image coming soon</span>
+                      : isVideo(heroSrc) ? <video src={heroSrc} autoPlay muted loop playsInline style={cover} />
+                      : <img src={heroSrc} alt="" style={cover} />}
+                  </div>
+                );
+              })()}
             </Reveal>
           </section>
 
@@ -217,7 +228,7 @@ export default function CaseStudy() {
                   <h3 style={{ fontFamily: SANS, fontWeight: 700, fontSize: "clamp(1.4rem,2.3vw,2rem)", lineHeight: 1.3, margin: "0 0 18px" }}>{s.title}</h3>
                   <p style={{ fontSize: 15, lineHeight: 1.85, color: "rgba(244,244,245,0.82)", margin: "0 0 28px" }}>{s.body}</p>
                   {(() => {
-                    const figs = s.figs && s.figs.length ? s.figs : [""];
+                    const figs = (s.figs && s.figs.length ? s.figs : [""]).map((f) => pickMedia(f, lang));
                     const single = figs.length === 1;
                     return (
                       <div style={{ display: single ? "block" : "grid", gridTemplateColumns: single || m ? undefined : "1fr 1fr", gap: 20 }}>

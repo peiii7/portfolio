@@ -14,16 +14,27 @@ import teaShow2 from "/images/u2ILkZQLoBsPqbTEAQazthgqKg.jpg";
 import teaShow3 from "/images/NBOLC0WKwyAAq9Gr1becTb267SE.jpg";
 import teaShow4 from "/images/ZP5evuPm18gMoRVfzhuK0GROCE.jpg";
 import teaVideo from "/images/tea-video.mp4";
+// XnFun media (peichidesign.framer.website/work/xnfun-app)
+import xnMap from "/images/Nr8M0YCrzJFzpaNq4tQgbTrN8.jpg";
+import xnBefore from "/images/53vv3yHapCpUoQxxeH6MvTFI.jpg";
+import xnCompete from "/images/H3SRRAaLihJ7L2BLiV4BOIBdGKs.jpg";
+import xnInterface from "/images/BXF0CBBHbIjtqRGd31BRMA1MXs.jpg";
+import xnTravel from "/images/wlmW6GhT9We1eR0y3oomWgr0.jpg";
+import xnShow1 from "/images/HsGblrcqPtNY08gwnZw4891Wjgs.jpg";
+import xnModular from "/images/fmJooqdkivF5L3ptvDbjQLnW4.jpg";
+import xnShow2 from "/images/Z7rG7G6Wrcz4GqraqoEhLDsnDo.jpg";
 
 export interface Metric { value: string; label: string; }
 export interface PG { h: string; p: string; }
-export interface Step { n: string; title: string; body: string; figs?: string[]; }
+export type Media = string | { en: string; zh: string };   // lang-aware when object
+export interface Step { n: string; title: string; body: string; figs?: Media[]; }
 export interface Takeaway { h: string; points: string[]; }
 
 export interface CaseStudy {
   slug: string;
   title: string;
   eyebrow?: string;                    // short line above the title
+  hero?: Media;                        // overrides proj.hero; can be a video / lang-aware
   industry: string;
   role: string;
   team: string;
@@ -43,6 +54,7 @@ export const CASE_STUDIES: Record<string, CaseStudy> = {
   "fubon-life": {
     slug: "fubon-life",
     eyebrow: "富邦人壽官網改版｜2026 上線",
+    hero: "/case/fubon/hero.mp4",
     title: "從品牌定調視覺，模組化收斂龐大頁面",
     industry: "金融保險｜官方網站改版",
     role: "UI 設計師",
@@ -72,10 +84,10 @@ export const CASE_STUDIES: Record<string, CaseStudy> = {
     ],
     question: "如何整合多元需求，打造一致且易用的數位體驗？",
     steps: [
-      { n: "01", title: "延伸品牌視覺語彙，提高品牌連結度", body: "設計是藉由細節堆疊出來，我從富邦 Logo 拆出「圓、方、交疊」三個特徵，將它們轉化為頁面上的圖騰與畫面元素，全站共用同一套形狀語言。插畫也延伸同一套邏輯：以富邦人壽 App 既有的插畫系統為基礎，為官網重新繪製一組商品情境插畫，保留原本的繪製邏輯與角色語彙，調整色彩層次與細節密度，讓它能承載官網較大的版面與較長的閱讀情境。" },
-      { n: "02", title: "模組化元件設計，建立集團一致的企業視覺", body: "依循品牌規範與設計系統，依功能需求延伸新元件，建立元件類型、適用情境與使用規範，經客戶團隊討論後整併至設計系統；同時進行版型盤點，從不同頁面需求中收斂共通的模組與樣式，建立可複用的設計規則，讓後續需求能依循既有規範延伸，降低維運成本。" },
-      { n: "03", title: "無障礙頁面設計，建立符合 WCAG AA 的專屬版型", body: "依 WCAG 與客戶既有的無障礙規範，針對樂齡與身心障礙用戶的使用需求，規劃金融友善服務專區的專屬版型，並依內容與使用情境調整既有元件的尺寸、間距與互動狀態，同時將 AA 級對比標準納入版型規劃，確保資訊具備良好的可讀性與操作性。" },
-      { n: "04", title: "參與 12 場易用性測試，驗證設計概念", body: "易用性測試中，多數受測者認為新版官網是符合需求的、容易使用的、容易理解的，概念驗證獲得一致的正向回饋。過程中也發現，部分使用阻礙並非來自功能或資訊架構，而是受到視覺樣式、版面配置影響，因此同步觀察使用者反應並迭代視覺設計，降低理解與操作阻力。" },
+      { n: "01", title: "延伸品牌視覺語彙，提高品牌連結度", body: "設計是藉由細節堆疊出來，我從富邦 Logo 拆出「圓、方、交疊」三個特徵，將它們轉化為頁面上的圖騰與畫面元素，全站共用同一套形狀語言。插畫也延伸同一套邏輯：以富邦人壽 App 既有的插畫系統為基礎，為官網重新繪製一組商品情境插畫，保留原本的繪製邏輯與角色語彙，調整色彩層次與細節密度，讓它能承載官網較大的版面與較長的閱讀情境。", figs: ["/case/fubon/o1.mov"] },
+      { n: "02", title: "模組化元件設計，建立集團一致的企業視覺", body: "依循品牌規範與設計系統，依功能需求延伸新元件，建立元件類型、適用情境與使用規範，經客戶團隊討論後整併至設計系統；同時進行版型盤點，從不同頁面需求中收斂共通的模組與樣式，建立可複用的設計規則，讓後續需求能依循既有規範延伸，降低維運成本。", figs: ["/case/fubon/o2.webm"] },
+      { n: "03", title: "無障礙頁面設計，建立符合 WCAG AA 的專屬版型", body: "依 WCAG 與客戶既有的無障礙規範，針對樂齡與身心障礙用戶的使用需求，規劃金融友善服務專區的專屬版型，並依內容與使用情境調整既有元件的尺寸、間距與互動狀態，同時將 AA 級對比標準納入版型規劃，確保資訊具備良好的可讀性與操作性。", figs: ["/case/fubon/o3.jpg"] },
+      { n: "04", title: "參與 12 場易用性測試，驗證設計概念", body: "易用性測試中，多數受測者認為新版官網是符合需求的、容易使用的、容易理解的，概念驗證獲得一致的正向回饋。過程中也發現，部分使用阻礙並非來自功能或資訊架構，而是受到視覺樣式、版面配置影響，因此同步觀察使用者反應並迭代視覺設計，降低理解與操作阻力。", figs: [{ en: "/case/fubon/o4-1-en.png", zh: "/case/fubon/o4-1-zh.png" }, "/case/fubon/o4-2.mp4"] },
     ],
     takeaways: [
       { h: "設計不只是在解決問題，也是在協調不同立場", points: [
@@ -120,9 +132,9 @@ export const CASE_STUDIES: Record<string, CaseStudy> = {
     ],
     question: "當使用者已經在站外找到答案，官網要如何重新變得新穎、好找且可擴充？",
     steps: [
-      { n: "01", title: "把抽象的品牌期待，收斂成可執行的視覺語彙", body: "官網作為驗證的終點，必須在幾秒內讓人認知所在網站。我們 UI 團隊針對現代風格銀行網站與 AI 產品風格進行競品分析，從中提取出色彩流動、視覺層次、動態運作三個視覺要素，並依此提出兩個方向。", figs: ["三個視覺轉化重點與實際套用的元件對照", "A／B 版 Moodboard 與首頁視覺提案並排"] },
-      { n: "02", title: "在 Figma 中製作動態與高擬真原型，加速雙方對焦", body: "受 AI Flow 的開發限制，這階段聚焦在視覺與互動的優化。我以帶呼吸感的有機漸層光體、圖示旋轉等微動效，視覺化「AI 正在運算」的過程，並用 Figma Animate 製作動效快速呈現，再以 Figma Sites 串接整段為高擬真原型，串接首頁到 L2 的可操作原型，對焦雙方想像並提供大小網同步交付。", figs: ["高擬真互動原型／Figma Sites 實作的漸層與 AI loading 動態"] },
-      { n: "03", title: "從 0 到 1 建立設計系統，依 AEM 系統邏輯進行模組設計", body: "初期沿用首頁設計規範建立元件與色彩規則；後期依客戶新版色彩系統設定對應 token 提升調整效率，並更新元件確保全站通過無障礙 AA。模組依 AEM 上稿邏輯切分，並確保同一套模組在大小網都成立，全站收斂為 40＋ 版型與 45＋ 模組，供 23 個部門自行更新內容。", figs: ["色彩／字級 token 與元件規範", "功能牌卡矩陣＋「同一批模組 → 不同版型」重組示意"] },
+      { n: "01", title: "把抽象的品牌期待，收斂成可執行的視覺語彙", body: "官網作為驗證的終點，必須在幾秒內讓人認知所在網站。我們 UI 團隊針對現代風格銀行網站與 AI 產品風格進行競品分析，從中提取出色彩流動、視覺層次、動態運作三個視覺要素，並依此提出兩個方向。", figs: [{ en: "/case/ctbc/o1-1-en.webm", zh: "/case/ctbc/o1-1-zh.webm" }, "/case/ctbc/o1-2.png"] },
+      { n: "02", title: "在 Figma 中製作動態與高擬真原型，加速雙方對焦", body: "受 AI Flow 的開發限制，這階段聚焦在視覺與互動的優化。我以帶呼吸感的有機漸層光體、圖示旋轉等微動效，視覺化「AI 正在運算」的過程，並用 Figma Animate 製作動效快速呈現，再以 Figma Sites 串接整段為高擬真原型，串接首頁到 L2 的可操作原型，對焦雙方想像並提供大小網同步交付。", figs: ["/case/ctbc/o2-1.webm", "/case/ctbc/o2-2.webm"] },
+      { n: "03", title: "從 0 到 1 建立設計系統，依 AEM 系統邏輯進行模組設計", body: "初期沿用首頁設計規範建立元件與色彩規則；後期依客戶新版色彩系統設定對應 token 提升調整效率，並更新元件確保全站通過無障礙 AA。模組依 AEM 上稿邏輯切分，並確保同一套模組在大小網都成立，全站收斂為 40＋ 版型與 45＋ 模組，供 23 個部門自行更新內容。", figs: ["/case/ctbc/o3-1.jpg", "/case/ctbc/o3-2.jpg"] },
       { n: "04", title: "專案範圍與交付", body: "由於本案止於驗證階段，未進入開發，因此團隊收斂已交付的內容，包含歷次視覺方向提案原稿、首頁與 AI 搜尋等關鍵頁面概念設計、設計系統、模組化版型規範，以及全站無障礙 WCAG AA 設計規範。" },
     ],
     takeaways: [
@@ -220,10 +232,10 @@ export const CASE_STUDIES: Record<string, CaseStudy> = {
     ],
     question: "如何在既有系統上，從 0 到 1 打造可延伸的新功能？",
     steps: [
-      { n: "01", title: "盤點雙平台差異，建立一致的互動基準", body: "走查 iOS／Android 14 項關鍵流程，對比 4 種權限層級，整理平台間的介面與操作差異。重新設計聚焦防錯、權限與跨平台一致性：為不可逆操作加入確認與復原機制，以按鈕狀態與提示呈現權限限制，並依循兩平台規範統一核心互動邏輯。", figs: ["Functional Map／雙平台系統盤點", "日常相簿介面 Before／After"] },
-      { n: "02", title: "透過使用者測試與競品分析，定義旅遊相簿的需求", body: "我參與游擊測試訪談 4 位使用者，並分析 8 項競品，了解使用者如何整理與回顧旅遊回憶。研究發現，使用者主要依靠「時間」與「地點」理解與整理照片，而旅遊照片也常被重新瀏覽。這些洞察讓旅遊相簿同時支援「快速搜尋」與「以旅程脈絡瀏覽內容」。", figs: ["使用者測試紀錄／Insight 整理", "競品分析與功能比較"] },
-      { n: "03", title: "從 0 到 1 設計「旅遊日程」資訊架構", body: "以「日期 × 地點」作為主要資訊維度，從 0 到 1 設計「旅遊日程」，重新組織多日行程的照片；搭配回憶關鍵字、旅遊備註、景點標籤與旅遊地圖功能，提供不同方式的回顧與瀏覽，以應對使用者在搜尋與整理時的不同情境。", figs: ["旅遊日程完整功能總覽", "核心功能操作流程／關鍵畫面"] },
-      { n: "04", title: "建立產品設計系統，支援後續功能擴充", body: "從色彩、Icon、元件狀態到跨平台操作規則建立共用規範，並整理日期、成員、Scroll 等情境的 IX Flow，形成設計、工程與業主共用的規格。日常、旅遊、寶貝三種相簿皆可沿用同一套模組與規則。", figs: ["Design System／色彩、Icon、元件與狀態規範", "IX Flow／跨情境互動規格"] },
+      { n: "01", title: "盤點雙平台差異，建立一致的互動基準", body: "走查 iOS／Android 14 項關鍵流程，對比 4 種權限層級，整理平台間的介面與操作差異。重新設計聚焦防錯、權限與跨平台一致性：為不可逆操作加入確認與復原機制，以按鈕狀態與提示呈現權限限制，並依循兩平台規範統一核心互動邏輯。", figs: [xnMap, xnBefore] },
+      { n: "02", title: "透過使用者測試與競品分析，定義旅遊相簿的需求", body: "我參與游擊測試訪談 4 位使用者，並分析 8 項競品，了解使用者如何整理與回顧旅遊回憶。研究發現，使用者主要依靠「時間」與「地點」理解與整理照片，而旅遊照片也常被重新瀏覽。這些洞察讓旅遊相簿同時支援「快速搜尋」與「以旅程脈絡瀏覽內容」。", figs: [xnCompete, xnInterface] },
+      { n: "03", title: "從 0 到 1 設計「旅遊日程」資訊架構", body: "以「日期 × 地點」作為主要資訊維度，從 0 到 1 設計「旅遊日程」，重新組織多日行程的照片；搭配回憶關鍵字、旅遊備註、景點標籤與旅遊地圖功能，提供不同方式的回顧與瀏覽，以應對使用者在搜尋與整理時的不同情境。", figs: [xnTravel, xnShow1] },
+      { n: "04", title: "建立產品設計系統，支援後續功能擴充", body: "從色彩、Icon、元件狀態到跨平台操作規則建立共用規範，並整理日期、成員、Scroll 等情境的 IX Flow，形成設計、工程與業主共用的規格。日常、旅遊、寶貝三種相簿皆可沿用同一套模組與規則。", figs: [xnModular, xnShow2] },
     ],
     takeaways: [
       { h: "面對非設計背景的業主，溝通方式比術語更重要", points: [

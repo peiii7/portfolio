@@ -50,9 +50,10 @@ export const PG_WORKS: PgWork[] = [
   },
   {
     title: "Digital Nomads", eyebrow: "Data Visualisation | 2024", card: dnHero,
-    overview: ["A data-visualisation course project with UJN, uncovering narratives in existing data about the rise of digital nomads and their impact on local communities."],
+    overview: ["A data-journalism scrollytelling site made in a data-visualisation course with the Urban Journalist Network (UJN). Using open data, it examines the rise of digital nomads and their impact on local communities."],
+    block: { label: "What I did", text: "Research & framing — reviewed papers, reports and case studies to define “digital nomad” and back the story with evidence.\nData & visualisation — collected and structured data from multiple sources, then built charts and maps in Datawrapper and D3.js.\nVisual & story design — set the illustrated visual style and shaped the scrollytelling flow that guides readers through the story." },
     gallery: [dnShow1, dnShow2, dnShow3],
-    zh: { title: "數位遊牧", eyebrow: "資料視覺化 | 2024", overview: ["與 UJN 合作的資料視覺化課程專題，從既有資料中挖掘數位遊牧興起、以及他們對在地社群影響的敘事。"] },
+    zh: { title: "數位遊牧", eyebrow: "資料視覺化 | 2024", overview: ["一個在資料視覺化課程中、與城市記者網絡（Urban Journalist Network, UJN）合作完成的資料新聞 scrollytelling 網站。運用公開資料，檢視數位遊牧的興起，以及他們對在地社群的影響。"], block: { label: "我做了什麼", text: "研究與定位——爬梳論文、報告與案例研究，定義「數位遊牧」，並以證據支撐整個敘事。\n資料與視覺化——從多個來源蒐集並整理資料，以 Datawrapper 與 D3.js 製作圖表與地圖。\n視覺與敘事設計——定調插畫式視覺風格，規劃引導讀者的 scrollytelling 敘事流程。" } },
   },
   {
     title: "In Fact", eyebrow: "VR Interactive Experience | 2021–22", card: "https://www.youtube.com/embed/XOMniF4ePP8",

@@ -1,4 +1,4 @@
-import { useEffect, useId, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import gsap from "gsap";
 import { SplitText } from "gsap/SplitText";
@@ -21,12 +21,6 @@ import si4 from "/assets/skill-icon-4.png";
 import si5 from "/assets/skill-icon-5.png";
 import si6 from "/assets/skill-icon-6.png";
 import si7 from "/assets/skill-icon-7.png";
-import scrAbout from "/assets/scribble-about-me.svg";
-import scrTw from "/assets/scribble-made-in-tw.svg";
-import scrUnder from "/assets/scribble-underline.svg";
-import scrM1 from "/assets/scribble-mark1.svg";
-import scrM2 from "/assets/scribble-mark2.svg";
-import scrM3 from "/assets/scribble-mark3.svg";
 // shapes-me stamp carousels
 import ada1 from "/assets/adatable01.png";
 import ada2 from "/assets/adatable02.png";
@@ -46,7 +40,6 @@ const SANS = "'Inter','Noto Sans TC',system-ui,sans-serif";
 const DIM = "#767676";
 
 const HERO_W = 1440, HERO_H = 706;
-const CAVEAT = "'Caveat', cursive";
 
 const Reveal = ({ children, delay = 0 }: { children: React.ReactNode; delay?: number }) => (
   <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-80px" }} transition={{ duration: 0.8, ease: [0.22, 0.61, 0.36, 1], delay }}>
@@ -153,7 +146,7 @@ export default function About() {
   }, []);
 
   return (
-    <main style={{ fontFamily: SANS }}>
+    <main style={{ fontFamily: SANS, paddingTop: 84 }}>
       {/* ---------- Hero (Figma 15:31124, scaled 1440 canvas) ---------- */}
       <div ref={wrapRef} style={{ position: "relative", width: "100%", overflow: "hidden" }}>
         <div ref={stageRef} style={{ position: "relative", width: HERO_W, height: HERO_H, transformOrigin: "top left", margin: "0 auto" }}>
@@ -173,8 +166,7 @@ export default function About() {
             <a href="mailto:its.peichilin@gmail.com" style={{ display: "inline-flex", background: "#363636", color: "#fff", fontSize: 18, fontWeight: 500, padding: "12px 20px", borderRadius: 30, textDecoration: "none" }}>Contact me !</a>
           </div>
 
-          {/* tool-kit cluster — below the intro text (hover to fan out) + curved label */}
-          <TextOnPath text="Tool Kit" w={150} h={70} fontSize={30} d="M 6,50 Q 75,22 144,42" style={{ position: "absolute", left: 360, top: 372, transform: "rotate(-48deg)" }} />
+          {/* tool-kit cluster — below the intro text (hover to fan out) */}
           <div className="skills-cluster" style={{ position: "absolute", left: 376, top: 394 }}>
             <img className="skills-box" src={diceBox} alt="" />
             <img className="skills-icon si-1" src={si1} alt="" />
@@ -185,10 +177,6 @@ export default function About() {
             <img className="skills-icon si-6" src={si6} alt="" />
             <img className="skills-icon si-7" src={si7} alt="" />
           </div>
-
-          {/* curved labels around the photo (text on path) */}
-          <TextOnPath text="About me" w={150} h={70} fontSize={28} d="M 6,46 Q 75,10 144,32" style={{ position: "absolute", left: 1008, top: 80 }} />
-          <TextOnPath text="Made in Taiwan" w={200} h={64} fontSize={26} d="M 6,46 Q 100,12 194,36" style={{ position: "absolute", left: 862, top: 388, transform: "rotate(-55deg)" }} />
 
           {/* photo box 440×586 at (880,60) — draggable within a small range */}
           <div style={{ position: "absolute", left: 880, top: 60, width: 440, height: 586 }}>
@@ -264,21 +252,6 @@ function ListBlock({ label, rows }: { label: string; rows: { t: string; d: strin
 const Em = ({ children }: { children: React.ReactNode }) => (
   <span className="sh-word" style={{ fontFamily: SERIF, fontStyle: "italic", fontWeight: 500, fontSize: "1.4em", opacity: 0.18 }}>{children}</span>
 );
-
-/* Handwritten label following a curved path (text on path) */
-function TextOnPath({ text, w = 170, h = 80, fontSize = 26, d, color = "#f0f0f0", style }: { text: string; w?: number; h?: number; fontSize?: number; d: string; color?: string; style?: React.CSSProperties }) {
-  const id = "top-" + useId().replace(/:/g, "");
-  return (
-    <div style={{ width: w, height: h, pointerEvents: "none", ...style }}>
-      <svg viewBox={`0 0 ${w} ${h}`} width={w} height={h} style={{ overflow: "visible" }}>
-        <defs><path id={id} d={d} fill="none" /></defs>
-        <text fill={color} fontFamily={CAVEAT} fontSize={fontSize} fontWeight={600}>
-          <textPath href={`#${id}`} startOffset="2%">{text}</textPath>
-        </text>
-      </svg>
-    </div>
-  );
-}
 
 /* words() pre-splits a string into React-managed spans so GSAP can highlight
    them without SplitText mutating React's DOM (which crashes reconciliation). */

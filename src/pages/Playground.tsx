@@ -226,8 +226,10 @@ export default function Playground() {
               <div className="pgm-main">
                 <div className="pgm-hero">{renderHero(work.card, title)}</div>
                 <div className="pgm-copy">
-                  <p className="pgm-overview-heading">{lang === "zh" ? "專案概覽" : "Project Overview"}</p>
-                  <div className="pgm-overview">{overview.map((p, i) => <p key={i}>{p}</p>)}</div>
+                  <div className="pgm-section">
+                    <p className="pgm-overview-heading">{lang === "zh" ? "專案概覽" : "Overview"}</p>
+                    <div className="pgm-overview">{overview.map((p, i) => <p key={i}>{p}</p>)}</div>
+                  </div>
                   {block && (
                     <div className="pgm-block">
                       <p className="pgm-block-label">{block.label}</p>
