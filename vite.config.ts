@@ -11,7 +11,7 @@ export default defineConfig({
   optimizeDeps: { include: ["react", "react-dom", "react-router-dom", "framer-motion", "gsap", "gsap/SplitText", "gsap/ScrollTrigger", "gsap/Draggable", "gsap/InertiaPlugin"] },
   build: {
     rollupOptions: {
-      input: { main: resolve(__dirname, "index.html") },
+      input: { main: resolve(__dirname, "index.html"), password: resolve(__dirname, "password.html") },
     },
   },
 });
