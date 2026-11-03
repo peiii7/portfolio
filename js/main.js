@@ -57,48 +57,93 @@ function renderProjectDetail() {
   const root = document.getElementById("project-root");
   if (!root) return;
   const params = new URLSearchParams(window.location.search);
-  const base = getProject(params.get("slug")) || PROJECTS[0];
+  const slug = params.get("slug");
+  const base = getProject(slug) || PROJECTS[0];
   const p = projectView(base);
+  const meta = (typeof projectMeta === "function") ? projectMeta(base.slug) : null;
   const gallery = base.gallery || [];
-  const nF = p.features ? p.features.length : 0;
-  const nR = p.research ? p.research.length : 0;
-  const fI = gallery.slice(0, nF), rI = gallery.slice(nF, nF + nR), sI = gallery.slice(nF + nR);
 
-  const heroImg = base.hero ? `<div class="hero-image" data-reveal><img src="${base.hero}" alt="${p.title}"></div>` : "";
-  const feats = (p.features || []).map((f, i) => `
-    <div class="feature-block" data-reveal>
-      <div class="feature-text"><div class="num">${t("project.feature")} 0${i + 1}</div><h4>${f.title}</h4><p>${breaks(f.body)}</p></div>
-      ${fI[i] ? `<div class="feature-img"><img src="${fI[i]}" alt="${f.title}" loading="lazy"></div>` : ""}
-    </div>`).join("");
-  const res = (p.research || []).map((r, i) => `
-    <div class="research-block" data-reveal><h4>${r.title}</h4><p>${breaks(r.body)}</p>
-      ${rI[i] ? `<div class="research-img"><img src="${rI[i]}" alt="${r.title}" loading="lazy"></div>` : ""}
-    </div>`).join("");
-  const show = sI.length ? `<div class="showcase" data-reveal><span class="section-label">${t("project.showcase")}</span><div class="showcase-grid">${sI.map(s => `<img src="${s}" alt="showcase" loading="lazy">`).join("")}</div></div>` : "";
+  function fig(src, alt) {
+    return src
+      ? `<div class="cs-fig"><img src="${src}" alt="${alt || ""}" loading="lazy"></div>`
+      : `<div class="cs-fig"><div class="cs-img-empty">${t("project.feature")} — image coming soon</div></div>`;
+  }
+
+  // hero
+  const heroImg = `<div class="cs-hero-img" data-reveal>${base.hero
+    ? `<img src="${base.hero}" alt="${p.title}">`
+    : `<div class="cs-img-empty">Image coming soon</div>`}</div>`;
+
+  // metrics bar
+  const metricsHtml = (meta && meta.metrics && meta.metrics.length)
+    ? `<div class="cs-metrics" data-reveal>
+        <div class="cs-metrics-note">${breaks(p.solutionTitle)}</div>
+        <div class="cs-metrics-nums">${meta.metrics.map(m => `<div class="cs-metric"><span class="v">${m.v}</span><span class="k">${m.k}</span></div>`).join("")}</div>
+      </div>`
+    : "";
+
+  // numbered steps from features; distribute gallery images across them
+  const feats = p.features || [];
+  const imgs = gallery.slice();
+  const perStep = feats.length ? Math.max(1, Math.floor(imgs.length / feats.length)) : 0;
+  const steps = feats.map((f, i) => {
+    const slice = imgs.slice(i * perStep, (i === feats.length - 1) ? imgs.length : (i + 1) * perStep);
+    const figs = slice.length
+      ? slice.map(s => fig(s, f.title)).join("")
+      : fig(null, f.title);
+    const one = slice.length <= 1 ? " one" : "";
+    return `<div class="cs-step" data-reveal>
+      <div class="num">0${i + 1}</div>
+      <h3>${f.title}</h3>
+      <p>${breaks(f.body)}</p>
+      <div class="cs-step-imgs${one}">${figs}</div>
+    </div>`;
+  }).join("");
+
+  // take away from research
+  const takeaway = (p.research && p.research.length)
+    ? `<h2 class="cs-sec-title" data-reveal>${t("project.takeaway")}</h2>
+       <div class="cs-take" data-reveal>${p.research.map(r => `<div class="item"><h4>${r.title}</h4><p>${breaks(r.body)}</p></div>`).join("")}</div>`
+    : "";
+
+  // prev / next
+  const list = PROJECTS;
+  const curIdx = Math.max(0, list.findIndex(x => x.slug === base.slug));
+  const prev = projectView(list[(curIdx - 1 + list.length) % list.length]);
+  const next = projectView(list[(curIdx + 1) % list.length]);
+  const prevBase = list[(curIdx - 1 + list.length) % list.length];
+  const nextBase = list[(curIdx + 1) % list.length];
 
   document.title = `${(p.cardTitle || p.title)} · Peichi Design`;
 
   root.innerHTML = `
-    <div class="wrap">
-      <div class="project-meta-bar" data-reveal>
-        <div class="item"><span class="k">${t("project.industry")}</span><span class="v">${p.categoryLabel}</span></div>
-        ${p.client ? `<div class="item"><span class="k">${t("project.client")}</span><span class="v">${p.client}</span></div>` : ""}
-        <div class="item"><span class="k">${t("project.role")}</span><span class="v">${p.role}</span></div>
-        <div class="item"><span class="k">${t("project.timeline")}</span><span class="v">${p.timeline}</span></div>
+    <div class="cs">
+      <h1 class="cs-title" data-reveal>${p.title}</h1>
+      <div class="cs-metacols" data-reveal>
+        <div><span class="k">${t("project.industry")}</span><span class="v">${p.homeMeta || p.categoryLabel}</span></div>
+        <div><span class="k">${t("project.role")}</span><span class="v">${p.role}</span></div>
+        <div><span class="k">${t("project.timeline")}</span><span class="v">${p.timeline}</span></div>
+        <div><span class="k">${t("project.client")}</span><span class="v">${p.client || "—"}</span></div>
       </div>
-      <h1 class="project-title" data-reveal>${p.title}</h1>
-      <p class="project-intro" data-reveal>${breaks(p.intro)}</p>
       ${heroImg}
-      <div class="overview-head" data-reveal><span class="section-label">${t("project.overview")}</span></div>
-      <div class="two-col">
-        <div data-reveal><span class="k">${t("project.challenge")}</span><h3>${p.challengeTitle}</h3><p>${breaks(p.challengeBody)}</p></div>
-        <div data-reveal><span class="k">${t("project.solution")}</span><h3>${p.solutionTitle}</h3><p>${breaks(p.solutionBody)}</p></div>
+      ${metricsHtml}
+
+      <h2 class="cs-sec-title" data-reveal>${t("project.overview")}</h2>
+      <p class="cs-intro" data-reveal>${breaks(p.intro)}</p>
+      <div class="cs-pg" data-reveal>
+        <div><span class="k">${t("project.problem")}</span><p>${breaks(p.challengeBody)}</p></div>
+        <div><span class="k">${t("project.goal")}</span><p>${breaks(meta && meta.goalBody ? meta.goalBody : p.solutionBody)}</p></div>
       </div>
-      ${feats}
-      <div class="research-head" data-reveal><span class="section-label">${t("project.research")}</span></div>
-      ${res}
-      ${show}
-      <div class="back-row"><a class="more-link" href="work.html">${t("project.back")}</a></div>
+
+      <h2 class="cs-question" data-reveal>${p.challengeTitle}</h2>
+      ${steps}
+
+      ${takeaway}
+
+      <div class="cs-pager">
+        <a class="cs-prev" href="project.html?slug=${prevBase.slug}"><span class="lab">${t("project.prev")}</span><span class="ttl">${prev.cardTitle || prev.title}</span></a>
+        <a class="cs-next" href="project.html?slug=${nextBase.slug}"><span class="lab">${t("project.next")}</span><span class="ttl">${next.cardTitle || next.title}</span></a>
+      </div>
     </div>`;
 }
 

@@ -10,6 +10,8 @@ about.html
 work.html
 playground.html
 project.html
-
 # Local Claude Code session config
 .claude/
+node_modules/
+dist/
+.originkit/

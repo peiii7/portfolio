@@ -1,0 +1,39 @@
+import fubon from "/images/fubon-hero.jpg";
+import ctbc from "/images/ctbc-placeholder.svg"; // placeholder until the real CTBC hero arrives
+import tea from "/images/Vcu76U8qMwwfcPJzYDfgQcTDRk.jpg";
+import xnfun from "/images/kFalKp6RbAvnYP1zIhRxjWzIdOo.jpg";
+
+import type { Lang } from "../lang";
+
+export interface ProjectCard {
+  slug: string;
+  hero: string;
+  tag: Record<Lang, string>;
+  title: Record<Lang, string>;
+}
+
+// Order matches the Notion "2026作品集" deck: Fubon → CTBC → Tea → XnFun.
+export const PROJECTS: ProjectCard[] = [
+  {
+    slug: "fubon-life", hero: fubon,
+    tag: { en: "Finance & Insurance ｜ Website Redesign", zh: "金融保險 ｜ 官方網站改版" },
+    title: { en: "Visual retune and modular convergence of a sprawling site", zh: "從品牌定調視覺，模組化收斂龐大頁面" },
+  },
+  {
+    slug: "ctbc-bank", hero: ctbc,
+    tag: { en: "Banking & Finance ｜ Website Redesign", zh: "金融銀行 ｜ 官方網站改版" },
+    title: { en: "Repositioning the website experience for the AI era", zh: "重新定位 AI 時代的官網體驗" },
+  },
+  {
+    slug: "tea-island-tea-stories", hero: tea,
+    tag: { en: "Cultural Experience ｜ Service Design & Gamification", zh: "文化體驗 ｜ 服務設計與遊戲化系統" },
+    title: { en: "An immersive tea-house service, mapped from the service blueprint", zh: "從服務藍圖釐清需求，打造沉浸式茶館服務設計" },
+  },
+  {
+    slug: "xnfun-app", hero: xnfun,
+    tag: { en: "Cloud Storage ｜ Shared Album App", zh: "雲端儲存 ｜ 共享相簿 App" },
+    title: { en: "Refining a live system and building modular features from 0 to 1", zh: "優化既有系統，從 0 到 1 打造模組化新功能" },
+  },
+];
+
+export const getProject = (slug?: string) => PROJECTS.find((p) => p.slug === slug);
