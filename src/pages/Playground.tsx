@@ -23,6 +23,15 @@ gsap.registerPlugin(ScrollTrigger, Draggable, InertiaPlugin);
 
 const SNAP = 16; // grid cell the stickers snap to after an inertia throw
 
+// modal hero can be a video (.mp4), a YouTube link, or an image
+const ytId = (s: string) => { const m = s.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|watch\?v=))([\w-]{11})/); return m ? m[1] : null; };
+function renderHero(src: string, title: string) {
+  if (/\.(mp4|webm|mov)($|\?)/i.test(src)) return <video src={src} autoPlay muted loop playsInline />;
+  const id = ytId(src);
+  if (id) return <iframe src={`https://www.youtube.com/embed/${id}?rel=0&modestbranding=1`} title={title} allow="autoplay; encrypted-media; picture-in-picture" allowFullScreen />;
+  return <img src={src} alt={title} />;
+}
+
 const illustMods = import.meta.glob("/assets/illust-*.png", { eager: true, import: "default" });
 const ILLUSTS = Object.keys(illustMods).sort().map((k) => illustMods[k] as string);
 
@@ -156,9 +165,11 @@ export default function Playground() {
   return (
     <main>
       {/* ---- Lab Core (scattered dithered stickers) ---- */}
-      <section ref={labSectionRef} className="lab-core" style={{ position: "relative", padding: 0, minHeight: "100vh", display: "block", background: "#efefef" }}>
+      <section ref={labSectionRef} className="lab-core" style={{ position: "relative", padding: 0, minHeight: "100vh", display: "flex", flexDirection: "column", justifyContent: "center", background: "#efefef" }}>
         {/* grid decoration — full grid at Figma columns (160/480/800/1120…), aligned to the global grid */}
         <div ref={darkGridRef} aria-hidden style={{ position: "absolute", inset: 0, pointerEvents: "none", zIndex: 0, backgroundImage: `url(${gridDark})`, backgroundSize: "1440px auto", backgroundRepeat: "repeat", backgroundPosition: "top center" }} />
+        {/* scroll hint */}
+        <div className="pg-scroll-hint" aria-hidden><span>Scroll</span><span className="pg-scroll-arrow">↓</span></div>
         <div ref={labWrapRef} style={{ position: "relative", zIndex: 1, width: "100%", overflow: "hidden" }}>
           <div ref={labStageRef} style={{ position: "relative", width: LAB_W, height: LAB_H, transformOrigin: "top left", margin: "0 auto" }}>
             {/* watermark + subtitle */}
@@ -193,27 +204,34 @@ export default function Playground() {
       </section>
 
       {/* ---- detail modal ---- */}
-      {work && (
+      {work && (() => {
+        // Chinese mode shows the zh copy when available
+        const zh = lang === "zh" && work.zh;
+        const eyebrow = zh ? work.zh!.eyebrow : work.eyebrow;
+        const title = zh ? work.zh!.title : work.title;
+        const overview = zh ? work.zh!.overview : work.overview;
+        const block = zh ? work.zh!.block : work.block;
+        return (
         <div className="pg-modal">
           <div className="pg-modal-backdrop" onClick={() => setOpen(null)} />
           <div className="pg-modal-shell" role="dialog" aria-modal="true">
             <article className="pgm-panel">
               <header className="pgm-head">
                 <div className="pgm-titles">
-                  <p className="pgm-eyebrow">{work.eyebrow}</p>
-                  <h2 className="pgm-title">{work.title}</h2>
+                  <p className="pgm-eyebrow">{eyebrow}</p>
+                  <h2 className="pgm-title">{title}</h2>
                 </div>
                 <button className="pgm-close" type="button" onClick={() => setOpen(null)} aria-label="Close"><img src={closeIcon} alt="" /></button>
               </header>
               <div className="pgm-main">
-                <div className="pgm-hero"><img src={work.card} alt={work.title} /></div>
+                <div className="pgm-hero">{renderHero(work.card, title)}</div>
                 <div className="pgm-copy">
-                  <p className="pgm-overview-heading">Project Overview</p>
-                  <div className="pgm-overview">{work.overview.map((p, i) => <p key={i}>{p}</p>)}</div>
-                  {work.block && (
+                  <p className="pgm-overview-heading">{lang === "zh" ? "專案概覽" : "Project Overview"}</p>
+                  <div className="pgm-overview">{overview.map((p, i) => <p key={i}>{p}</p>)}</div>
+                  {block && (
                     <div className="pgm-block">
-                      <p className="pgm-block-label">{work.block.label}</p>
-                      <p className="pgm-block-text">{work.block.text}</p>
+                      <p className="pgm-block-label">{block.label}</p>
+                      <p className="pgm-block-text">{block.text}</p>
                     </div>
                   )}
                 </div>
@@ -229,7 +247,8 @@ export default function Playground() {
             </article>
           </div>
         </div>
-      )}
+        );
+      })()}
     </main>
   );
 }
