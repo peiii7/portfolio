@@ -165,7 +165,9 @@ export default function About() {
                 ? "I love experimenting with new media and tools, letting each project carry its own sense of experimentation and story, while turning complex information architecture into clear, modular systems — finding balance between freedom and structure."
                 : "我喜歡不斷嘗試新的媒材與工具，讓每個作品都帶點實驗性與故事感，同時也擅長把複雜的資訊架構，轉化為清晰、模組化的系統，在自由與規則之間找到平衡。"}
             </p>
-            <a href="mailto:its.peichilin@gmail.com" style={{ display: "inline-flex", background: "#363636", color: "#fff", fontSize: 18, fontWeight: 500, padding: "12px 20px", borderRadius: 30, textDecoration: "none" }}>Contact me !</a>
+            <a href="mailto:its.peichilin@gmail.com" className="arrow-btn"
+              onMouseEnter={() => setCursor("Let's go!")} onMouseLeave={() => setCursor(null)}
+              style={{ display: "inline-flex", background: "#363636", color: "#fff", fontSize: 18, fontWeight: 500, padding: "12px 20px", borderRadius: 30, textDecoration: "none" }}>Contact me !</a>
           </motion.div>
 
           {/* tool-kit cluster — below the intro text (hover to fan out) */}
