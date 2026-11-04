@@ -1,14 +1,14 @@
 import c1 from "/assets/pg-card-1.png";
 // Digital Nomads media (peichidesign.framer.website/work/cities-mapping-digital-nomads)
-import dnHero from "/images/Pn5gBOXaYtFSO4ljjnIStmigs.jpg";
-import dnShow1 from "/images/DHhCyOmMP948lkouiQh79v9IS2A.png";
-import dnShow2 from "/images/sqsMdk5nO5tPyLgwIENDB60Xw.png";
-import dnShow3 from "/images/FA3OMDPKG9LtI70yVabrXsKY64Y.jpg";
+import dnHero from "/images/nomad-hero.jpg";
+import dnShow1 from "/images/nomad-show1.png";
+import dnShow2 from "/images/nomad-show2.png";
+import dnShow3 from "/images/nomad-show3.jpg";
 // Fowl Justice media (peichidesign.framer.website/work/fowl-justice) — video hero
 import fjVideo from "/images/fowl-video.mp4";
-import fjHero from "/images/zg7TxwrcPaOD9Vh1vO7CKiC8oII.jpg";
-import fjChars from "/images/7RaER4SCg7SxNwy4j1XUoOFHeAU.jpg";
-import fjScenes from "/images/I8WxqRT6tvbmut8kqQug019NuXU.jpg";
+import fjHero from "/images/fowl-hero.jpg";
+import fjChars from "/images/fowl-chars.jpg";
+import fjScenes from "/images/fowl-scenes.jpg";
 // In Fact media (original portfolio) — YouTube hero
 import ifHero from "/images/infact-hero.jpg";
 import ifShow1 from "/images/infact-1.jpg";

@@ -1,7 +1,7 @@
 import fubon from "/images/fubon-hero.jpg";
 import ctbc from "/images/ctbc-placeholder.svg"; // placeholder until the real CTBC hero arrives
-import tea from "/images/Vcu76U8qMwwfcPJzYDfgQcTDRk.jpg";
-import xnfun from "/images/kFalKp6RbAvnYP1zIhRxjWzIdOo.jpg";
+import tea from "/images/tea-hero.jpg";
+import xnfun from "/images/xnfun-hero.jpg";
 
 import type { Lang } from "../lang";
 

@@ -3,26 +3,26 @@
    is filled in later; components fall back to zh when en is empty. */
 
 // Tea Island media (pulled from peichidesign.framer.website/work/tea-island-tea-stories)
-import teaBlueprint from "/images/EaeL9ZIxpeBQB3rdhgeoglldCI.jpg";
-import teaPersonas from "/images/5i5NClGJQNODUsE09RrnublxI.jpg";
-import teaVisual from "/images/HxBZFKZhDnJnEWG72VCYYgCmso.jpg";
-import teaGame1 from "/images/oWqsdRZp1XjEfR285hn2NxIGU.jpg";
-import teaGame2 from "/images/NdwizdYBJm7o7n2P6wVuwcMc13E.jpg";
-import teaPos from "/images/6JUrRP1XmafvZ17kv7HrqfSybMY.jpg";
-import teaShow1 from "/images/YXlfBhNXKQkGi7XTpbMidrZzA.png";
-import teaShow2 from "/images/u2ILkZQLoBsPqbTEAQazthgqKg.jpg";
-import teaShow3 from "/images/NBOLC0WKwyAAq9Gr1becTb267SE.jpg";
-import teaShow4 from "/images/ZP5evuPm18gMoRVfzhuK0GROCE.jpg";
+import teaBlueprint from "/images/tea-blueprint.jpg";
+import teaPersonas from "/images/tea-personas.jpg";
+import teaVisual from "/images/tea-visual.jpg";
+import teaGame1 from "/images/tea-game1.jpg";
+import teaGame2 from "/images/tea-game2.jpg";
+import teaPos from "/images/tea-pos.jpg";
+import teaShow1 from "/images/tea-show1.png";
+import teaShow2 from "/images/tea-show2.jpg";
+import teaShow3 from "/images/tea-show3.jpg";
+import teaShow4 from "/images/tea-show4.jpg";
 import teaVideo from "/images/tea-video.mp4";
 // XnFun media (peichidesign.framer.website/work/xnfun-app)
-import xnMap from "/images/Nr8M0YCrzJFzpaNq4tQgbTrN8.jpg";
-import xnBefore from "/images/53vv3yHapCpUoQxxeH6MvTFI.jpg";
-import xnCompete from "/images/H3SRRAaLihJ7L2BLiV4BOIBdGKs.jpg";
-import xnInterface from "/images/BXF0CBBHbIjtqRGd31BRMA1MXs.jpg";
-import xnTravel from "/images/wlmW6GhT9We1eR0y3oomWgr0.jpg";
-import xnShow1 from "/images/HsGblrcqPtNY08gwnZw4891Wjgs.jpg";
-import xnModular from "/images/fmJooqdkivF5L3ptvDbjQLnW4.jpg";
-import xnShow2 from "/images/Z7rG7G6Wrcz4GqraqoEhLDsnDo.jpg";
+import xnMap from "/images/xnfun-map.jpg";
+import xnBefore from "/images/xnfun-before.jpg";
+import xnCompete from "/images/xnfun-compete.jpg";
+import xnInterface from "/images/xnfun-interface.jpg";
+import xnTravel from "/images/xnfun-travel.jpg";
+import xnShow1 from "/images/xnfun-show1.jpg";
+import xnModular from "/images/xnfun-modular.jpg";
+import xnShow2 from "/images/xnfun-show2.jpg";
 
 export interface Metric { value: string; label: string; }
 export interface PG { h: string; p: string; }
