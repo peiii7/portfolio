@@ -2,7 +2,6 @@ import { Link, Outlet, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useLang, usePick } from "../lang";
 import { useIsMobile } from "../useIsMobile";
-import gridDeco from "/assets/grid-decoration-new.svg";
 import cvEn from "/assets/Peichi_Lin_Resume_2026_EN.pdf";
 import cvZh from "/assets/Peichi_Lin_Resume_2026_ZH.pdf";
 
@@ -105,8 +104,15 @@ export default function Layout() {
   useEffect(() => { window.scrollTo(0, 0); }, [pathname]);
   return (
     <div style={{ background: "#080808", color: "#F4F4F5", minHeight: "100vh", fontFamily: SANS, position: "relative" }}>
-      {/* grid decoration (Figma) — fixed faint backdrop */}
-      <div aria-hidden style={{ position: "fixed", inset: 0, backgroundImage: `url(${gridDeco})`, backgroundSize: "1440px auto", backgroundRepeat: "repeat-y", backgroundPosition: "top center", opacity: 0.5, pointerEvents: "none", zIndex: 0 }} />
+      {/* grid decoration (Figma) — 320px grid, aligned to the 1440 content
+          columns and extended to fill any width */}
+      <div aria-hidden style={{
+        position: "fixed", inset: 0, pointerEvents: "none", zIndex: 0,
+        backgroundImage:
+          "repeating-linear-gradient(to right, rgba(255,255,255,0.055) 0 1px, transparent 1px 320px)," +
+          "repeating-linear-gradient(to bottom, rgba(255,255,255,0.055) 0 1px, transparent 1px 320px)",
+        backgroundPosition: "calc(50% - 560px) 0, 0 160px",
+      }} />
       <div style={{ position: "relative", zIndex: 1 }}>
         <Header />
         <Outlet />

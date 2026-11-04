@@ -7,7 +7,7 @@ import { Draggable } from "gsap/Draggable";
 import { InertiaPlugin } from "gsap/InertiaPlugin";
 import { useLang } from "../lang";
 import { useIsMobile } from "../useIsMobile";
-import { useHoverCursor } from "../components/HoverCursor";
+import { useHoverCursor, useCursorSuppress } from "../components/HoverCursor";
 
 gsap.registerPlugin(SplitText, ScrollTrigger, Draggable, InertiaPlugin);
 
@@ -97,6 +97,8 @@ export default function About() {
   const en = lang === "en";
   const m = useIsMobile();
   const setCursor = useHoverCursor();
+  const suppress = useCursorSuppress();
+  const fade = (delay = 0) => ({ initial: { opacity: 0, y: 14 }, animate: { opacity: 1, y: 0 }, transition: { duration: 0.8, ease: [0.22, 0.61, 0.36, 1] as const, delay } });
 
   // scale the fixed 1440 hero canvas to the viewport (never "跑版")
   const wrapRef = useRef<HTMLDivElement>(null);
@@ -151,7 +153,7 @@ export default function About() {
       <div ref={wrapRef} style={{ position: "relative", width: "100%", overflow: "hidden" }}>
         <div ref={stageRef} style={{ position: "relative", width: HERO_W, height: HERO_H, transformOrigin: "top left", margin: "0 auto" }}>
           {/* text (section padding 60/120 per Figma 15:35303) */}
-          <div style={{ position: "absolute", left: 120, top: 108, width: 640 }}>
+          <motion.div {...fade(0)} style={{ position: "absolute", left: 120, top: 108, width: 640 }}>
             <p style={{ fontSize: 32, color: "#f0f0f0", margin: "0 0 20px" }}>{en ? "Hi, I'm Peichi" : "嗨～我是沛琪"}</p>
             <p style={{ fontSize: 16, lineHeight: 1.75, color: "rgba(240,240,240,0.9)", margin: "0 0 10px" }}>
               {en
@@ -164,10 +166,10 @@ export default function About() {
                 : "我喜歡不斷嘗試新的媒材與工具，讓每個作品都帶點實驗性與故事感，同時也擅長把複雜的資訊架構，轉化為清晰、模組化的系統，在自由與規則之間找到平衡。"}
             </p>
             <a href="mailto:its.peichilin@gmail.com" style={{ display: "inline-flex", background: "#363636", color: "#fff", fontSize: 18, fontWeight: 500, padding: "12px 20px", borderRadius: 30, textDecoration: "none" }}>Contact me !</a>
-          </div>
+          </motion.div>
 
           {/* tool-kit cluster — below the intro text (hover to fan out) */}
-          <div className="skills-cluster" style={{ position: "absolute", left: 376, top: 394 }}>
+          <motion.div {...fade(0.15)} className="skills-cluster" style={{ position: "absolute", left: 376, top: 394 }}>
             <img className="skills-box" src={diceBox} alt="" />
             <img className="skills-icon si-1" src={si1} alt="" />
             <img className="skills-icon si-2" src={si2} alt="" />
@@ -176,12 +178,14 @@ export default function About() {
             <img className="skills-icon si-5" src={si5} alt="" />
             <img className="skills-icon si-6" src={si6} alt="" />
             <img className="skills-icon si-7" src={si7} alt="" />
-          </div>
+          </motion.div>
 
-          {/* photo box 440×586 at (880,60) — draggable within a small range */}
-          <div style={{ position: "absolute", left: 880, top: 60, width: 440, height: 586 }}>
-            <img ref={photoRef} src={cutout} alt="Peichi Lin" draggable={false} style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "contain", transform: "rotate(0.19deg)", cursor: "grab", touchAction: "none" }} />
-          </div>
+          {/* photo box 440×586 at (880,60) — draggable within a small range; grab cursor on hover */}
+          <motion.div {...fade(0.3)} style={{ position: "absolute", left: 880, top: 60, width: 440, height: 586 }}>
+            <img ref={photoRef} src={cutout} alt="Peichi Lin" draggable={false}
+              onMouseEnter={() => suppress(true)} onMouseLeave={() => suppress(false)}
+              style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "contain", transform: "rotate(0.19deg)", cursor: "grab", touchAction: "none" }} />
+          </motion.div>
         </div>
       </div>
 

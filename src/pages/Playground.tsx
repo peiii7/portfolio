@@ -3,7 +3,6 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Draggable } from "gsap/Draggable";
 import { InertiaPlugin } from "gsap/InertiaPlugin";
-import UserCursor from "../components/originkit/usercursor";
 import { useHoverCursor } from "../components/HoverCursor";
 import { useLang } from "../lang";
 import { PG_WORKS } from "../data/playground";
@@ -17,7 +16,6 @@ import stNewspaper from "/assets/pg-newspaper-dithered.png";
 import stSkirt from "/assets/pg-skirt-dithered.png";
 import stFigure from "/assets/pg-figure-dithered.png";
 import skirtEyes from "/assets/pg-skirt-eyes.svg";
-import gridDark from "/assets/grid-decoration-dark.svg";
 
 gsap.registerPlugin(ScrollTrigger, Draggable, InertiaPlugin);
 
@@ -167,7 +165,7 @@ export default function Playground() {
       {/* ---- Lab Core (scattered dithered stickers) ---- */}
       <section ref={labSectionRef} className="lab-core" style={{ position: "relative", padding: 0, minHeight: "100vh", display: "flex", flexDirection: "column", justifyContent: "center", background: "#efefef" }}>
         {/* grid decoration — full grid at Figma columns (160/480/800/1120…), aligned to the global grid */}
-        <div ref={darkGridRef} aria-hidden style={{ position: "absolute", inset: 0, pointerEvents: "none", zIndex: 0, backgroundImage: `url(${gridDark})`, backgroundSize: "1440px auto", backgroundRepeat: "repeat", backgroundPosition: "top center" }} />
+        <div ref={darkGridRef} aria-hidden style={{ position: "absolute", inset: 0, pointerEvents: "none", zIndex: 0, backgroundImage: "repeating-linear-gradient(to right, rgba(8,8,8,0.08) 0 1px, transparent 1px 320px),repeating-linear-gradient(to bottom, rgba(8,8,8,0.08) 0 1px, transparent 1px 320px)", backgroundPosition: "calc(50% - 560px) 0, 0 160px" }} />
         {/* scroll hint */}
         <div className="pg-scroll-hint" aria-hidden><span>Scroll</span><span className="pg-scroll-arrow">↓</span></div>
         <div ref={labWrapRef} style={{ position: "relative", zIndex: 1, width: "100%", overflow: "hidden" }}>
@@ -193,13 +191,10 @@ export default function Playground() {
       {/* ---- illustration band (second screen: fades white → black on scroll) ---- */}
       <section ref={illustSectionRef} className="illust-section" style={{ position: "relative", background: "#efefef" }}>
         {/* dark grid shown while the band is still white; fades as it blackens */}
-        <div ref={illustGridRef} aria-hidden style={{ position: "absolute", inset: 0, pointerEvents: "none", zIndex: 0, backgroundImage: `url(${gridDark})`, backgroundSize: "1440px auto", backgroundRepeat: "repeat", backgroundPosition: "top center" }} />
+        <div ref={illustGridRef} aria-hidden style={{ position: "absolute", inset: 0, pointerEvents: "none", zIndex: 0, backgroundImage: "repeating-linear-gradient(to right, rgba(8,8,8,0.08) 0 1px, transparent 1px 320px),repeating-linear-gradient(to bottom, rgba(8,8,8,0.08) 0 1px, transparent 1px 320px)", backgroundPosition: "calc(50% - 560px) 0, 0 160px" }} />
         <div className="illust-stage" ref={stageRef} style={{ position: "relative", zIndex: 1 }}>
           {ILLUSTS.map((src, i) => (<div className="illust-item" key={i}><img src={src} alt="Illustration" /></div>))}
           <p className="illust-lead">In my free time, I also enjoy <em>illustrating</em></p>
-          <div style={{ position: "absolute", inset: 0, zIndex: 5 }}>
-            <UserCursor name="" showLabel={false} color="#f0f0f0" textColor="#080808" size={34} style={{ width: "100%", height: "100%" }} />
-          </div>
         </div>
       </section>
 

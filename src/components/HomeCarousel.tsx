@@ -41,7 +41,7 @@ export default function HomeCarousel({ slides, headline, sub, watermark = "Selec
 
   const state = useRef({
     targetP: 0, curP: 0, prevP: 0, vel: 0,
-    auto: true, lastAuto: 0, dragging: false, x0: 0, base: 0, raf: 0,
+    auto: true, lastAuto: 0, dragging: false, down: false, moved: false, x0: 0, base: 0, raf: 0,
     tmx: 0, tmy: 0, mx: 0, my: 0,
   });
 
@@ -142,14 +142,25 @@ export default function HomeCarousel({ slides, headline, sub, watermark = "Selec
       else if (!inside && hoverCount > 0) { hoverCount = 0; nameIdx = -1; s.auto = true; setCursor(null); }
     };
     const onDocLeave = () => { if (hoverCount) { hoverCount = 0; nameIdx = -1; s.auto = true; setCursor(null); } };
-    const down = (x: number) => { s.dragging = true; s.x0 = x; s.base = s.targetP; s.auto = false; };
-    const move = (x: number) => { if (s.dragging) s.targetP = s.base - (x - s.x0) / 320; };
-    const up = () => { if (!s.dragging) return; s.dragging = false; s.targetP = Math.round(s.targetP); s.lastAuto = performance.now(); setTimeout(() => (s.auto = true), 700); };
+    const down = (x: number) => { s.down = true; s.moved = false; s.x0 = x; s.base = s.targetP; s.auto = false; };
+    const move = (x: number) => { if (!s.down) return; if (!s.moved && Math.abs(x - s.x0) > 6) s.moved = true; if (s.moved) s.targetP = s.base - (x - s.x0) / 320; };
+    const up = (x?: number, y?: number) => {
+      if (!s.down) return; s.down = false;
+      if (s.moved) { s.dragging = true; s.targetP = Math.round(s.targetP); s.lastAuto = performance.now(); setTimeout(() => (s.auto = true), 700); return; }
+      // click (no drag): open the centred project when the click lands on the centre card
+      s.dragging = false; s.lastAuto = performance.now(); setTimeout(() => (s.auto = true), 700);
+      if (x != null && y != null) {
+        const el = cardRefs.current[centerIdx()];
+        if (el) { const r = el.getBoundingClientRect(); if (x >= r.left && x <= r.right && y >= r.top && y <= r.bottom) navigate(`/work/${slides[centerIdx()]?.slug}`); }
+      }
+    };
 
     const mdown = (e: MouseEvent) => down(e.clientX);
     const mmove = (e: MouseEvent) => move(e.clientX);
+    const mup = (e: MouseEvent) => up(e.clientX, e.clientY);
     const tstart = (e: TouchEvent) => down(e.touches[0].clientX);
     const tmove = (e: TouchEvent) => move(e.touches[0].clientX);
+    const tend = (e: TouchEvent) => { const t = e.changedTouches[0]; up(t?.clientX, t?.clientY); };
 
     layout();
     window.addEventListener("resize", layout);
@@ -157,10 +168,10 @@ export default function HomeCarousel({ slides, headline, sub, watermark = "Selec
     window.addEventListener("mousemove", onMouseMove, { passive: true });
     stage.addEventListener("mousedown", mdown);
     window.addEventListener("mousemove", mmove);
-    window.addEventListener("mouseup", up);
+    window.addEventListener("mouseup", mup);
     stage.addEventListener("touchstart", tstart, { passive: true });
     stage.addEventListener("touchmove", tmove, { passive: true });
-    stage.addEventListener("touchend", up);
+    stage.addEventListener("touchend", tend);
     document.addEventListener("mouseleave", onDocLeave);
 
     // expose arrow steppers
@@ -172,7 +183,7 @@ export default function HomeCarousel({ slides, headline, sub, watermark = "Selec
       window.removeEventListener("resize", layout);
       window.removeEventListener("mousemove", onMouseMove);
       window.removeEventListener("mousemove", mmove);
-      window.removeEventListener("mouseup", up);
+      window.removeEventListener("mouseup", mup);
       document.removeEventListener("mouseleave", onDocLeave);
     };
   }, [n]);
@@ -188,7 +199,7 @@ export default function HomeCarousel({ slides, headline, sub, watermark = "Selec
           <p style={{ fontFamily: "'Noto Sans TC','Inter',sans-serif", fontWeight: 300, fontSize: 16, lineHeight: 1.4, color: "rgba(255,255,255,0.7)", maxWidth: 659, margin: 0 }}>{sub}</p>
         </div>
         {/* watermark */}
-        <div style={{ position: "absolute", left: 566, top: 792, transform: "translateY(-50%)", fontFamily: "'Cormorant Garamond',serif", fontStyle: "italic", fontWeight: 500, fontSize: 150, lineHeight: "normal", color: "rgba(255,255,255,0.3)", opacity: 0.38, whiteSpace: "nowrap", pointerEvents: "none", userSelect: "none", zIndex: 1 }}>{watermark}</div>
+        <div style={{ position: "absolute", left: 566, top: 792, transform: "translateY(-50%) translateZ(-400px) scale(1.25)", transformOrigin: "50% 50%", fontFamily: "'Cormorant Garamond',serif", fontStyle: "italic", fontWeight: 500, fontSize: 150, lineHeight: "normal", color: "rgba(255,255,255,0.3)", opacity: 0.38, whiteSpace: "nowrap", pointerEvents: "none", userSelect: "none" }}>{watermark}</div>
 
         {slides.map((sl, i) => (
           <a
@@ -196,8 +207,9 @@ export default function HomeCarousel({ slides, headline, sub, watermark = "Selec
             href={`/work/${sl.slug}`}
             onClick={(e) => {
               e.preventDefault();
-              if (state.current.dragging) return;
-              navigate(`/work/${sl.slug}`);
+              // mouse clicks are handled by the stage (reliable over the 3D cards);
+              // keep keyboard activation working here
+              if (e.detail === 0 && !state.current.dragging) navigate(`/work/${sl.slug}`);
             }}
             ref={(el) => el && (cardRefs.current[i] = el)}
             style={{ position: "absolute", left: 0, top: 0, width: CARD_W, height: CARD_H, borderRadius: 24, overflow: "hidden", textDecoration: "none", transformStyle: "preserve-3d", willChange: "transform,opacity", boxShadow: "0 44px 110px -34px rgba(0,0,0,0.82)", cursor: "none" }}

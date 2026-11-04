@@ -12,6 +12,9 @@ type Theme = "dark" | "light"; // bg the cursor sits on → "dark" = white curso
 type Color = { bg: string; text: string };
 const Ctx = createContext<(name: string | null, theme?: Theme, color?: Color) => void>(() => {});
 export const useHoverCursor = () => useContext(Ctx);
+// suppress the custom cursor (show the native cursor, e.g. grab on a draggable)
+const SuppressCtx = createContext<(v: boolean) => void>(() => {});
+export const useCursorSuppress = () => useContext(SuppressCtx);
 
 const SIZE = 34;
 
@@ -19,6 +22,8 @@ export function HoverCursorProvider({ children }: { children: ReactNode }) {
   const [name, setName] = useState<string | null>(null);
   const [theme, setTheme] = useState<Theme>("dark");
   const [color, setColor] = useState<Color | null>(null);
+  const [suppressed, setSuppressed] = useState(false);
+  const suppress = useCallback((v: boolean) => setSuppressed(v), []);
   const setCursor = useCallback((n: string | null, t: Theme = "dark", c: Color | null = null) => { setName(n); if (n) { setTheme(t); setColor(c); } }, []);
   const arrowFill = color ? color.bg : theme === "light" ? "#111" : "#fff";
   const pillBg = color ? color.bg : theme === "light" ? "#111" : "#fff";
@@ -52,13 +57,14 @@ export function HoverCursorProvider({ children }: { children: ReactNode }) {
 
   return (
     <Ctx.Provider value={setCursor}>
+     <SuppressCtx.Provider value={suppress}>
       {children}
-      {!coarse && !nativeCursor && (
+      {!coarse && !nativeCursor && !suppressed && (
         <div style={{ position: "fixed", inset: 0, pointerEvents: "none", zIndex: 9998, opacity: visible ? 0 : 1, transition: "opacity .12s ease" }}>
           <MagicCursor label={false} enableStretch fillColor="#BEF3FE" enableGlow glowColor="#BEF3FE" glowIntensity={100} cursorSize={32} />
         </div>
       )}
-      {!coarse && (
+      {!coarse && !suppressed && (
         <div style={{ position: "fixed", inset: 0, pointerEvents: "none", zIndex: 9999, opacity: visible ? 1 : 0, transition: "opacity .14s ease" }}>
           <motion.div style={{ position: "absolute", top: 0, left: 0, x: labelX, y: labelY, background: pillBg, borderRadius: 999, padding: `${SIZE * 0.18}px ${SIZE * 0.42}px`, boxShadow: "0 4px 12px rgba(0,0,0,0.14), 0 1px 2px rgba(0,0,0,0.1)", color: pillText, fontSize: Math.max(10, SIZE * 0.42), fontWeight: 600, whiteSpace: "nowrap", fontFamily: "system-ui,-apple-system,sans-serif" }}>{name}</motion.div>
           <motion.div style={{ position: "absolute", top: 0, left: 0, x: ax, y: ay, width: SIZE, height: SIZE, transformOrigin: "0% 0%" }}>
@@ -68,6 +74,7 @@ export function HoverCursorProvider({ children }: { children: ReactNode }) {
           </motion.div>
         </div>
       )}
+     </SuppressCtx.Provider>
     </Ctx.Provider>
   );
 }
