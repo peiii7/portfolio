@@ -12,10 +12,11 @@ html, body { margin: 0; background: #080808; }
 .matcha-link { transition: color .25s ease; }
 .matcha-link:hover { color: #4a4a4a !important; }
 /* case-study pager — Previous/Next over the target project's image */
-.pgr-card { position: relative; display: flex; align-items: center; justify-content: center; min-height: 240px; padding: 48px 24px; text-decoration: none; background-size: cover; background-position: center; overflow: hidden; cursor: none; }
+.pgr-card { position: relative; display: flex; align-items: center; justify-content: center; min-height: 240px; padding: 48px 24px; text-decoration: none; background-size: cover; background-position: center; overflow: hidden; cursor: none; isolation: isolate; }
 .pgr-card::before { content: ""; position: absolute; inset: 0; background: rgba(8,8,8,0.68); transition: background .3s ease; }
 .pgr-card:hover::before { background: rgba(8,8,8,0.52); }
 .pgr-card > span { position: relative; z-index: 1; }
+.pgr-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -1; pointer-events: none; }
 
 /* ============================================================
    About — ported from the original site (css/site.css)
@@ -62,11 +63,14 @@ html, body { margin: 0; background: #080808; }
 }
 .shapes-carousel img {
   position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; opacity: 0;
+  will-change: opacity; backface-visibility: hidden;
 }
-.shapes-carousel.sc-3 img { animation: stamp3 3s linear infinite; }
-.shapes-carousel.sc-4 img { animation: stamp4 4s linear infinite; }
-@keyframes stamp3 { 0% { opacity: 1; } 28% { opacity: 1; } 34% { opacity: 0; } 100% { opacity: 0; } }
-@keyframes stamp4 { 0% { opacity: 1; } 21% { opacity: 1; } 27% { opacity: 0; } 100% { opacity: 0; } }
+/* 1s per stamp. The outgoing stamp fades out over the same 0.3s window in which the
+   next one fades in (a true crossfade), so there is never a blank gap → no flashing. */
+.shapes-carousel.sc-3 img { animation: stamp3 3s ease-in-out infinite; }
+.shapes-carousel.sc-4 img { animation: stamp4 4s ease-in-out infinite; }
+@keyframes stamp3 { 0% { opacity: 1; } 23.33% { opacity: 1; } 33.33% { opacity: 0; } 90% { opacity: 0; } 100% { opacity: 1; } }
+@keyframes stamp4 { 0% { opacity: 1; } 17.5% { opacity: 1; } 25% { opacity: 0; } 92.5% { opacity: 0; } 100% { opacity: 1; } }
 @media (prefers-reduced-motion: reduce) { .shapes-carousel img { animation: none; } .shapes-carousel img:first-child { opacity: 1; } }
 @media (prefers-reduced-motion: reduce) { .shapes-carousel:hover { transform: none; } }
 @media (max-width: 1024px) { .shapes-carousel { width: 111px; margin: 0 8px; } }
@@ -104,11 +108,22 @@ html, body { margin: 0; background: #080808; }
 .pg-sticker { cursor: none; }
 .pg-sticker:hover img { animation: pg-wobble 0.6s ease-in-out infinite; }
 @keyframes pg-wobble { 0%,100% { transform: rotate(-4deg); } 50% { transform: rotate(4deg); } }
-@media (prefers-reduced-motion: reduce) { .pg-sticker:hover img { animation: none; } }
+/* idle float: each sticker bobs ~8px and tilts slightly, on its own rhythm */
+.pg-float { position: absolute; inset: 0; display: block; animation: pg-float var(--float-dur, 4s) ease-in-out var(--float-delay, 0s) infinite; will-change: transform; }
+@keyframes pg-float {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-8px) rotate(var(--float-rot, 1.5deg)); }
+}
+@media (prefers-reduced-motion: reduce) { .pg-sticker:hover img, .pg-float { animation: none; } }
+
+/* Playground first screen: exactly one visible screen tall, content centred.
+   svh = the height with the phone browser's toolbars showing, so on real phones
+   the stickers sit in the middle of what you actually see (100vh is taller there). */
+.lab-core { min-height: 100vh; min-height: 100svh; }
 
 /* illustration band + cursor trail */
 .illust-section { position: relative; padding: 0; background: #080808; }
-.illust-stage { position: relative; width: 100%; aspect-ratio: 1440 / 580; display: flex; align-items: center; justify-content: center; cursor: none; }
+.illust-stage { position: relative; width: 100%; aspect-ratio: 1440 / 440; display: flex; align-items: center; justify-content: center; cursor: none; }
 .illust-item { position: absolute; width: clamp(160px, 17vw, 260px); opacity: 0; pointer-events: none; will-change: transform, opacity; }
 .illust-item img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .illust-lead { position: relative; z-index: 1; text-align: center; font-family: 'Noto Sans TC','Inter',sans-serif; font-weight: 400; font-size: clamp(20px, 2.5vw, 36px); margin: 0; padding: 0 24px; color: #f4f4f5; }
@@ -120,6 +135,22 @@ html, body { margin: 0; background: #080808; }
 /* visible panel fills one screen height, with the .pg-modal padding as the gutter */
 .pg-modal-shell { position: relative; width: min(1360px, 100%); height: 100%; background: #080808; border-radius: 12px; overflow-y: auto; overscroll-behavior: contain; }
 .pgm-panel { padding: 0 40px 40px; }
+/* open: panel fades in while the backdrop darkens and its blur grows 0 → 6px; close: the reverse */
+.pg-modal-backdrop { animation: pgm-backdrop-in .35s ease both; }
+.pg-modal-shell { animation: pgm-fade-in .35s ease both; }
+.pg-modal.is-closing .pg-modal-backdrop { animation: pgm-backdrop-out .3s ease both; }
+.pg-modal.is-closing .pg-modal-shell { animation: pgm-fade-out .3s ease both; }
+.pg-modal.is-closing { pointer-events: none; }
+@keyframes pgm-fade-in { from { opacity: 0; } to { opacity: 1; } }
+@keyframes pgm-fade-out { from { opacity: 1; } to { opacity: 0; } }
+@keyframes pgm-backdrop-in {
+  from { opacity: 0; -webkit-backdrop-filter: blur(0); backdrop-filter: blur(0); }
+  to { opacity: 1; -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); }
+}
+@keyframes pgm-backdrop-out {
+  from { opacity: 1; -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); }
+  to { opacity: 0; -webkit-backdrop-filter: blur(0); backdrop-filter: blur(0); }
+}
 /* modal aligned to Figma 303:1040 — LINE Seed → Inter/Noto Sans TC */
 .pgm-head { position: sticky; top: 0; background: #080808; display: flex; align-items: flex-start; justify-content: space-between; gap: 24px; padding: 40px 0; z-index: 1; }
 .pgm-titles { display: flex; flex-direction: column; gap: 16px; }
@@ -153,8 +184,9 @@ html, body { margin: 0; background: #080808; }
   .pgm-hero { flex: none; width: 100%; }
 }
 @media (max-width: 700px) {
-  .lab-core { min-height: 0; padding: 150px 24px 48px; }
-  .illust-stage { aspect-ratio: auto; display: grid; grid-template-columns: repeat(2,1fr); gap: 16px; padding: 60px 24px; cursor: auto; }
-  .illust-item { position: static; width: 100%; opacity: 1; }
-  .illust-lead { grid-column: 1 / -1; order: -1; margin-bottom: 8px; }
+  .illust-section { overflow: hidden; }   /* dropped illustrations stay inside the band */
+  /* phones: a short tap area (tap drops an illustration), so the band + the whole footer fit on one screen */
+  .illust-stage { aspect-ratio: auto; height: 300px; flex-direction: column; gap: 12px; cursor: auto; -webkit-tap-highlight-color: transparent; }
+  .illust-item { width: 130px; }
+  .illust-hint { position: relative; z-index: 1; margin: 0; font-family: 'Noto Sans TC','Inter',sans-serif; font-size: 14px; color: rgba(244,244,245,0.55); pointer-events: none; }
 }

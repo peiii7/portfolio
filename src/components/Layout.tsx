@@ -89,7 +89,6 @@ function Footer() {
       </div>
       <div style={{ display: "flex", flexDirection: m ? "row" : "column", gap: m ? 20 : 16, textAlign: m ? "left" : "right", flexWrap: "wrap" }}>
         <a href="http://www.linkedin.com/in/peichi-lin-463328235" target="_blank" rel="noopener" className="hover-blue" style={footLink}>LinkedIn ↗</a>
-        <a href="https://medium.com/@its.peichilin" target="_blank" rel="noopener" className="hover-blue" style={footLink}>Medium ↗</a>
         <a href="mailto:its.peichilin@gmail.com" className="hover-blue" style={footLink}>Email ↗</a>
       </div>
     </footer>

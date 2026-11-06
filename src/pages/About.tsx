@@ -13,6 +13,8 @@ gsap.registerPlugin(SplitText, ScrollTrigger, Draggable, InertiaPlugin);
 
 // hero assets (Figma 15:31124)
 import cutout from "/assets/about-cutout.png";
+import stampBeer from "/assets/about-stamp-beer.png";
+import stampLake from "/assets/about-stamp-lake.png";
 import diceBox from "/assets/toolkit-box-dithered.png";
 import si1 from "/assets/skill-icon-1.png";
 import si2 from "/assets/skill-icon-2.png";
@@ -104,10 +106,11 @@ export default function About() {
   const wrapRef = useRef<HTMLDivElement>(null);
   const stageRef = useRef<HTMLDivElement>(null);
   const photoRef = useRef<HTMLImageElement>(null);
+  const textRef = useRef<HTMLDivElement>(null);
 
   // draggable photo, constrained to a small range on the right
   useEffect(() => {
-    if (!photoRef.current) return;
+    if (!photoRef.current || m) return;   // phones: no drag (would block page scroll)
     const G = 16; // snap grid
     const d = Draggable.create(photoRef.current, {
       type: "x,y",
@@ -121,20 +124,27 @@ export default function About() {
         y: (v) => Math.round(v / G) * G,
       },
     });
-    return () => d[0]?.kill();
-  }, []);
+    return () => { d[0]?.kill(); if (photoRef.current) photoRef.current.style.transform = "rotate(0.19deg)"; };
+  }, [m]);
   useEffect(() => {
     const wrap = wrapRef.current, stage = stageRef.current;
     if (!wrap || !stage) return;
     const fit = () => {
+      if (m) { stage.style.transform = "none"; stage.style.height = "auto"; wrap.style.height = "auto"; return; }
       const scale = Math.min(1, wrap.clientWidth / HERO_W);
+      // canvas grows with the intro copy (EN is longer than ZH)
+      const t = textRef.current;
+      const h = Math.max(HERO_H, t ? t.offsetTop + t.offsetHeight + 60 : 0);
+      stage.style.height = h + "px";
       stage.style.transform = `scale(${scale})`;
-      wrap.style.height = HERO_H * scale + "px";
+      wrap.style.height = h * scale + "px";
     };
     fit();
+    const ro = new ResizeObserver(fit);
+    if (textRef.current) ro.observe(textRef.current);
     window.addEventListener("resize", fit);
-    return () => window.removeEventListener("resize", fit);
-  }, []);
+    return () => { ro.disconnect(); window.removeEventListener("resize", fit); };
+  }, [m]);
 
   // Language section dark → light fade as shapes-me enters
   const [lit, setLit] = useState(false);
@@ -149,51 +159,62 @@ export default function About() {
 
   return (
     <main style={{ fontFamily: SANS, paddingTop: 84 }}>
-      {/* ---------- Hero (Figma 15:31124, scaled 1440 canvas) ---------- */}
-      <div ref={wrapRef} style={{ position: "relative", width: "100%", overflow: "hidden" }}>
-        <div ref={stageRef} style={{ position: "relative", width: HERO_W, height: HERO_H, transformOrigin: "top left", margin: "0 auto" }}>
+      {/* ---------- Hero (desktop: Figma 15:31124, scaled 1440 canvas; phones: stacked — copy, button, then photo) ---------- */}
+      <div ref={wrapRef} style={{ position: "relative", width: "100%", overflow: "hidden", padding: m ? "16px 24px 8px" : 0, boxSizing: "border-box" }}>
+        <div ref={stageRef} style={m ? { position: "relative" } : { position: "relative", width: HERO_W, height: HERO_H, transformOrigin: "top left", margin: "0 auto" }}>
           {/* text (section padding 60/120 per Figma 15:35303) */}
-          <motion.div {...fade(0)} style={{ position: "absolute", left: 120, top: 108, width: 640 }}>
-            <p style={{ fontSize: 32, color: "#f0f0f0", margin: "0 0 20px" }}>{en ? "Hi, I'm Peichi" : "嗨～我是沛琪"}</p>
-            <p style={{ fontSize: 16, lineHeight: 1.75, color: "rgba(240,240,240,0.9)", margin: "0 0 10px" }}>
+          <motion.div {...fade(0)} ref={textRef} style={m ? { position: "relative" } : { position: "absolute", left: 120, top: 60, width: 640 }}>
+            <p style={{ fontSize: m ? 26 : 32, color: "#f0f0f0", margin: "0 0 20px" }}>{en ? "Hi there, it’s Peichi" : "嗨～我是 Peichi"}</p>
+            <p style={{ fontSize: m ? 15 : 16, lineHeight: 1.75, color: "rgba(240,240,240,0.9)", margin: "0 0 20px" }}>
               {en
-                ? "I'm a Product Designer specializing in visual, UI, and motion design, with 3+ years of experience across finance, insurance, and cross-disciplinary products. I studied Interaction Design and spent an exchange year in Interface Design at FHP, Germany — an experience that taught me to think beyond the frame and approach problems from different angles."
-                : "我是一名專注於視覺、UI 與動效設計的產品設計師，具備 3+ 年橫跨金融、保險與跨領域產品的實務經驗。我主修互動設計，曾前往德國 FHP 介面設計系交換，這段跨文化的經驗讓我在設計時更懂得跳脫框架，從不同角度思考問題。"}
+                ? "I'm a Product Designer focused on visual design, UI, and motion, with 3+ years of experience across finance, insurance, and other industries. I enjoy turning complex information architectures into clear and intuitive user experiences, while paying close attention to visual quality and interaction details."
+                : "我是一名專注於視覺、UI 與動效設計的產品設計師，具備 3+ 年橫跨金融、保險與跨領域產品的實務經驗。我擅長將複雜的資訊架構轉化為清晰、直覺的使用體驗，同時兼顧視覺品質與互動細節。"}
             </p>
-            <p style={{ fontSize: 16, lineHeight: 1.75, color: "rgba(240,240,240,0.9)", margin: "0 0 28px" }}>
-              {en
-                ? "I love experimenting with new media and tools, letting each project carry its own sense of experimentation and story, while turning complex information architecture into clear, modular systems — finding balance between freedom and structure."
-                : "我喜歡不斷嘗試新的媒材與工具，讓每個作品都帶點實驗性與故事感，同時也擅長把複雜的資訊架構，轉化為清晰、模組化的系統，在自由與規則之間找到平衡。"}
-            </p>
-            <a href="mailto:its.peichilin@gmail.com" className="arrow-btn"
+            {(en ? [{ h: "My Design Approach", p: "I like to start by understanding the problem and the context of use, then find the right balance between information architecture, interaction logic, and visual expression. Beyond interface design, I'm also interested in exploring the intersection of design and technology. I use AI tools to enhance my workflow and turn designs into code to build functional, interactive web experiences, bringing ideas from concept to reality." }, { h: "Exploration & Experimentation", p: "With a degree in Interaction Design, I also spent an exchange year at Fachhochschule Potsdam in Germany, studying Interface Design. My academic and hands-on experience has given me a deeper understanding of how design and code work together, as well as how to communicate and collaborate effectively across disciplines. I'm always curious to explore new tools, materials, and forms of interaction, from visual design to motion, and find new possibilities along the way." }] : [{ h: "My Design Approach", p: "我喜歡從理解問題與使用情境開始，在資訊架構、互動邏輯與視覺表現之間找到平衡。除了介面設計，我也樂於探索設計與技術的結合，善用 AI 工具輔助工作流程，並將設計轉化為程式碼，實際建構互動網頁，讓設計從概念走向落地。" }, { h: "Exploration & Experimentation", p: "我畢業於互動設計，曾赴德國 FHP 交換學習 Interface Design。過去的學習與實作經驗，讓我更理解設計與程式之間的關係，也培養了與跨領域夥伴協作、溝通的能力。我喜歡嘗試不同的媒材、工具與互動形式，從視覺設計到動效，持續探索設計的更多可能性。" }]).map((s) => (
+              <div key={s.h} style={{ margin: "0 0 20px" }}>
+                <p style={{ fontFamily: SERIF, fontStyle: "italic", fontWeight: 400, fontSize: m ? 20 : 24, lineHeight: 1.4, color: DIM, margin: "0 0 4px" }}>{s.h}</p>
+                <p style={{ fontSize: m ? 15 : 16, lineHeight: 1.75, color: "rgba(240,240,240,0.9)", margin: 0 }}>{s.p}</p>
+              </div>
+            ))}
+            {/* Contact button — marginTop collapses with the copy's 20px bottom margin → 24px gap */}
+            <div style={{ marginTop: 24 }}>
+              <a href="mailto:its.peichilin@gmail.com" className="arrow-btn"
               onMouseEnter={() => setCursor("Let's go!")} onMouseLeave={() => setCursor(null)}
-              style={{ display: "inline-flex", background: "#363636", color: "#fff", fontSize: 18, fontWeight: 500, padding: "12px 20px", borderRadius: 30, textDecoration: "none" }}>Contact me !</a>
+              style={{ display: "inline-flex", background: "#363636", color: "#fff", fontSize: m ? 16 : 18, fontWeight: 500, padding: m ? "10px 18px" : "12px 20px", borderRadius: 30, textDecoration: "none" }}>Contact me !</a>
+            </div>
           </motion.div>
 
-          {/* tool-kit cluster — below the intro text (hover to fan out) */}
-          <motion.div {...fade(0.15)} className="skills-cluster" style={{ position: "absolute", left: 376, top: 394 }}>
-            <img className="skills-box" src={diceBox} alt="" />
-            <img className="skills-icon si-1" src={si1} alt="" />
-            <img className="skills-icon si-2" src={si2} alt="" />
-            <img className="skills-icon si-3" src={si3} alt="" />
-            <img className="skills-icon si-4" src={si4} alt="" />
-            <img className="skills-icon si-5" src={si5} alt="" />
-            <img className="skills-icon si-6" src={si6} alt="" />
-            <img className="skills-icon si-7" src={si7} alt="" />
-          </motion.div>
-
-          {/* photo box 440×586 at (880,60) — draggable within a small range; grab cursor on hover */}
-          <motion.div {...fade(0.3)} style={{ position: "absolute", left: 880, top: 60, width: 440, height: 586 }}>
+          {/* photo box 440×586 at (880,60) — draggable within a small range; grab cursor on hover.
+              Phones: centred under the copy at ~57% width (per the mobile mock), no drag. */}
+          <motion.div {...fade(0.3)} style={m
+            ? { position: "relative", width: "57%", maxWidth: 440, aspectRatio: "440 / 586", margin: "28px auto 0" }
+            : { position: "absolute", left: 880, top: 60, width: 440, height: 586 }}>
+            {/* decorative dithered stamps behind the photo (positions from the cutout mock, as % of the 440×586 box) */}
+            <img src={stampLake} alt="" aria-hidden draggable={false}
+              style={{ position: "absolute", left: "47.27%", top: "3.58%", width: "43.41%", height: "40.61%", pointerEvents: "none" }} />
+            <img src={stampBeer} alt="" aria-hidden draggable={false}
+              style={{ position: "absolute", left: 0, top: "53.07%", width: "33.86%", height: "31.91%", pointerEvents: "none" }} />
             <img ref={photoRef} src={cutout} alt="Peichi Lin" draggable={false}
               onMouseEnter={() => suppress(true)} onMouseLeave={() => suppress(false)}
-              style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "contain", transform: "rotate(0.19deg)", cursor: "grab", touchAction: "none" }} />
+              style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "contain", transform: "rotate(0.19deg)", cursor: m ? "auto" : "grab", touchAction: m ? "auto" : "none" }} />
           </motion.div>
         </div>
       </div>
 
       {/* ---------- Experience / Award ---------- */}
       <section style={{ maxWidth: 1440, margin: "0 auto", padding: "40px clamp(24px,6.9vw,100px) 60px", display: "flex", flexDirection: "column", gap: 60 }}>
-        <ListBlock label="Experience" rows={en ? EXPERIENCE.en : EXPERIENCE.zh} />
+        <ListBlock label="Experience" rows={en ? EXPERIENCE.en : EXPERIENCE.zh} m={m}>
+          {/* tool-kit cluster (hover to fan out). Desktop: under the Experience heading.
+              Phones: shrunk to 50% and set beside the heading on the right, so the list sits close under the title. */}
+          <div style={m ? { width: 95, height: 112, marginTop: -28, flex: "none" } : { marginTop: 40, marginLeft: 150 }}>
+            <div className="skills-cluster" style={m ? { transform: "scale(0.5)", transformOrigin: "top left" } : undefined}>
+              <img className="skills-box" src={diceBox} alt="" />
+              {[si1, si2, si3, si4, si5, si6, si7].map((src, i) => (
+                <img key={i} className={`skills-icon si-${i + 1}`} src={src} alt="" />
+              ))}
+            </div>
+          </div>
+        </ListBlock>
         <ListBlock label="Award" rows={en ? AWARD.en : AWARD.zh} />
       </section>
 
@@ -237,11 +258,14 @@ export default function About() {
   );
 }
 
-function ListBlock({ label, rows }: { label: string; rows: { t: string; d: string }[] }) {
+function ListBlock({ label, rows, children, m = false }: { label: string; rows: { t: string; d: string }[]; children?: React.ReactNode; m?: boolean }) {
   return (
     <Reveal>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 40, flexWrap: "wrap" }}>
-        <h2 style={{ fontFamily: SERIF, fontStyle: "italic", fontWeight: 400, fontSize: 36, color: DIM, margin: 0 }}>{label}</h2>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: m && children ? 8 : 40, flexWrap: "wrap" }}>
+        <div style={m && children ? { width: "100%", display: "flex", justifyContent: "space-between", alignItems: "flex-start" } : undefined}>
+          <h2 style={{ fontFamily: SERIF, fontStyle: "italic", fontWeight: 400, fontSize: 36, color: DIM, margin: 0 }}>{label}</h2>
+          {children}
+        </div>
         <div style={{ width: 770, maxWidth: "100%", flex: "0 1 770px" }}>
           {rows.map((r, i) => (
             <div key={i} style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", gap: 24, padding: "20px 0", borderBottom: "1px solid rgba(255,255,255,0.4)" }}>

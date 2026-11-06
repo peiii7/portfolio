@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { getCaseStudy, CASE_STUDIES } from "../data/caseStudies";
+import { getCaseStudy, mergeLang, CASE_STUDIES, LOCKED, type CaseStudy as CaseStudyData, type CaseStudyEN } from "../data/caseStudies";
 import { getProject, PROJECTS } from "../data/projects";
 import { useLang } from "../lang";
 import { useIsMobile } from "../useIsMobile";
@@ -50,13 +50,41 @@ function Fig({ value, ratio = 1.5 }: { value?: string; ratio?: number }) {
   );
 }
 
+type LockedData = { zh: CaseStudyData; en: CaseStudyEN };
+
+/* Locked case study text comes from /api/case (password cookie checked there).
+   Not entered yet → full-page trip to the password page, which returns here.
+   In `npm run dev` there is no /api, so the private file is imported directly
+   (that branch is removed from the production build). */
+function useLockedCase(slug?: string) {
+  const [data, setData] = useState<LockedData | null>(null);
+  useEffect(() => {
+    setData(null);
+    if (!slug || !LOCKED[slug]) return;
+    let alive = true;
+    (async () => {
+      if (import.meta.env.DEV) {
+        const m = await import("../../api/_private/ctbc.js");
+        if (alive) setData(m.CTBC as unknown as LockedData);
+        return;
+      }
+      const r = await fetch(`/api/case?slug=${encodeURIComponent(slug)}`, { credentials: "same-origin" });
+      if (r.status === 401) { window.location.href = `/password.html?next=${encodeURIComponent(location.pathname)}`; return; }
+      if (r.ok && alive) setData(await r.json());
+    })();
+    return () => { alive = false; };
+  }, [slug]);
+  return data;
+}
+
 export default function CaseStudy() {
   const { slug } = useParams();
   const { lang } = useLang();
   const m = useIsMobile(900);
   const navigate = useNavigate();
   const setCursor = useHoverCursor();
-  const cs = getCaseStudy(slug);
+  const locked = useLockedCase(slug);
+  const cs = locked ? mergeLang(locked.zh, locked.en, lang) : getCaseStudy(slug, lang);
   const proj = getProject(slug);
   const [active, setActive] = useState("brief");
 
@@ -75,17 +103,23 @@ export default function CaseStudy() {
     );
     els.forEach((el) => io.observe(el));
     return () => io.disconnect();
-  }, [slug]);
+  }, [slug, !!cs]);
 
+  if (slug && LOCKED[slug] && !cs) return <main style={{ minHeight: "100vh" }} />;   // checking the password
   if (!cs) return <main style={{ padding: "160px 48px", maxWidth: 1120, margin: "0 auto" }}>Not found</main>;
 
   const order = PROJECTS.map((p) => p.slug);
   const idx = order.indexOf(cs.slug);
-  const prev = CASE_STUDIES[order[(idx - 1 + order.length) % order.length]];
-  const next = CASE_STUDIES[order[(idx + 1) % order.length]];
+  // neighbours: a locked one only exposes its public short name
+  const neighbour = (s: string) => {
+    const c = CASE_STUDIES[s];
+    return { slug: s, name: c ? (c.eyebrow ? c.eyebrow.split("｜")[0].trim() : c.title) : LOCKED[s]?.name || s };
+  };
+  const prev = neighbour(order[(idx - 1 + order.length) % order.length]);
+  const next = neighbour(order[(idx + 1) % order.length]);
   const prevHero = getProject(prev.slug)?.hero;
   const nextHero = getProject(next.slug)?.hero;
-  const shortName = (c: typeof prev) => (c.eyebrow ? c.eyebrow.split("｜")[0].trim() : c.title);
+  const shortName = (c: typeof prev) => c.name;
 
   const eyebrow = cs.eyebrow || "";
   const metaCols = [
@@ -148,7 +182,7 @@ export default function CaseStudy() {
                 const heroSrc = pickMedia(cs.hero, lang) || (proj?.hero && !proj.hero.endsWith(".svg") ? proj.hero : "");
                 const cover: React.CSSProperties = { width: "100%", height: "100%", objectFit: "cover", display: "block" };
                 return (
-                  <div style={{ borderRadius: 20, overflow: "hidden", background: "#141416", aspectRatio: m ? "1.4" : "2.2", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                  <div style={{ borderRadius: 20, overflow: "hidden", background: "#141416", aspectRatio: "16 / 9", display: "flex", alignItems: "center", justifyContent: "center" }}>
                     {!heroSrc ? <span style={{ color: "rgba(244,244,245,0.25)", fontSize: 14 }}>Image coming soon</span>
                       : isVideo(heroSrc) ? <video src={heroSrc} autoPlay muted loop playsInline style={cover} />
                       : <img src={heroSrc} alt="" style={cover} />}
@@ -199,7 +233,7 @@ export default function CaseStudy() {
             <Reveal>
               <div style={{ display: "grid", gridTemplateColumns: m ? "1fr" : "248px 1fr", gap: m ? 20 : 48, alignItems: "start", marginBottom: 80 }}>
                 <h2 style={{ fontFamily: SERIF, fontStyle: "italic", fontWeight: 500, fontSize: "clamp(1.9rem,2.6vw,2.4rem)", lineHeight: 1.1, color: DIM, margin: 0 }}>Project<br />Overview</h2>
-                <p style={{ fontSize: "clamp(15px,1.15vw,17px)", lineHeight: 1.85, color: "#F4F4F5", margin: 0, maxWidth: 780 }}>{cs.background}</p>
+                <p style={{ fontSize: "clamp(15px,1.15vw,17px)", lineHeight: 1.85, color: "#F4F4F5", margin: 0, maxWidth: 780, whiteSpace: "pre-line" }}>{cs.background}</p>
               </div>
             </Reveal>
             <Reveal>
@@ -224,10 +258,10 @@ export default function CaseStudy() {
             {cs.steps.map((s) => (
               <Reveal key={s.n}>
                 <div style={{ margin: "0 0 72px" }}>
-                  <div style={{ fontSize: 15, color: DIM, marginBottom: 14 }}>Outcome {s.n}</div>
+                  {!s.plain && <div style={{ fontSize: 15, color: DIM, marginBottom: 14 }}>Outcome {s.n}</div>}
                   <h3 style={{ fontFamily: SANS, fontWeight: 700, fontSize: "clamp(1.4rem,2.3vw,2rem)", lineHeight: 1.3, margin: "0 0 18px" }}>{s.title}</h3>
-                  <p style={{ fontSize: 15, lineHeight: 1.85, color: "rgba(244,244,245,0.82)", margin: "0 0 28px" }}>{s.body}</p>
-                  {(() => {
+                  <p style={{ fontSize: 15, lineHeight: 1.85, color: "rgba(244,244,245,0.82)", margin: "0 0 28px", whiteSpace: "pre-line" }}>{s.body}</p>
+                  {!s.plain && (() => {
                     const figs = (s.figs && s.figs.length ? s.figs : [""]).map((f) => pickMedia(f, lang));
                     const single = figs.length === 1;
                     return (
@@ -268,12 +302,14 @@ export default function CaseStudy() {
 
       {/* pager — full-bleed Previous / Next over the target project's image */}
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 0, width: "100vw", position: "relative", left: "50%", right: "50%", marginLeft: "-50vw", marginRight: "-50vw", marginTop: 96 }}>
-        <Link to={`/work/${prev.slug}`} className="pgr-card" style={prevHero ? { backgroundImage: `url(${prevHero})` } : undefined}
+        <Link to={`/work/${prev.slug}`} className="pgr-card" style={prevHero && !isVideo(prevHero) ? { backgroundImage: `url(${prevHero})` } : undefined}
           onMouseEnter={() => setCursor(shortName(prev), "dark")} onMouseLeave={() => setCursor(null)}>
+          {prevHero && isVideo(prevHero) && <video className="pgr-video" src={prevHero} autoPlay muted loop playsInline preload="metadata" />}
           <span className="hover-blue" style={pagerTtl}>Previous</span>
         </Link>
-        <Link to={`/work/${next.slug}`} className="pgr-card" style={nextHero ? { backgroundImage: `url(${nextHero})` } : undefined}
+        <Link to={`/work/${next.slug}`} className="pgr-card" style={nextHero && !isVideo(nextHero) ? { backgroundImage: `url(${nextHero})` } : undefined}
           onMouseEnter={() => setCursor(shortName(next), "dark")} onMouseLeave={() => setCursor(null)}>
+          {nextHero && isVideo(nextHero) && <video className="pgr-video" src={nextHero} autoPlay muted loop playsInline preload="metadata" />}
           <span className="hover-blue" style={pagerTtl}>Next</span>
         </Link>
       </div>

@@ -1,13 +1,14 @@
-import fubon from "/images/fubon-hero.jpg";
-import ctbc from "/images/ctbc-placeholder.svg"; // placeholder until the real CTBC hero arrives
-import tea from "/images/tea-hero.jpg";
-import xnfun from "/images/xnfun-hero.jpg";
+// card media = the case study's hero (image or video), so home card and hero always match
+const fubon = "/case/fubon/hero.webm";
+const ctbc = "/case/ctbc/hero.webm";
+const tea = "/case/tea/hero.mp4";
+const xnfun = "/case/xnfun/hero.jpg";
 
 import type { Lang } from "../lang";
 
 export interface ProjectCard {
   slug: string;
-  hero: string;
+  hero: string;                        // image or video (.mp4/.webm/.mov)
   tag: Record<Lang, string>;
   title: Record<Lang, string>;
 }
@@ -22,7 +23,7 @@ export const PROJECTS: ProjectCard[] = [
   {
     slug: "ctbc-bank", hero: ctbc,
     tag: { en: "Banking & Finance ｜ Website Redesign", zh: "金融銀行 ｜ 官方網站改版" },
-    title: { en: "Repositioning the website experience for the AI era", zh: "重新定位 AI 時代的官網體驗" },
+    title: { en: "Repositioning the website experience for the AI era", zh: "AI 時代的官網體驗" },
   },
   {
     slug: "tea-island-tea-stories", hero: tea,

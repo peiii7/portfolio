@@ -1,7 +1,9 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, type ReactNode } from "react";
 import { useNavigate } from "react-router-dom";
 import { useHoverCursor } from "./HoverCursor";
 import { useLang } from "../lang";
+import { useIsMobile } from "../useIsMobile";
+import { expandCardToPage } from "./expandCard";
 
 const CURSOR_NAME: Record<string, { en: string; zh: string }> = {
   "fubon-life": { en: "Fubon Life Website Redesign", zh: "富邦人壽官網改版" },
@@ -18,26 +20,31 @@ const CURSOR_NAME: Record<string, { en: string; zh: string }> = {
    Bulge feel on this layout. Advanced by auto-rotate + arrows + drag. */
 
 export interface HomeSlide {
-  image: string;
+  image: string;                        // image or video (.mp4/.webm/.mov)
   slug: string;
   tag: string;
   title: string;
 }
 
-const DESIGN_W = 1440, DESIGN_H = 1040;
-// card box (centre card size); floats are the same box scaled down
-const CARD_W = 680, CARD_H = 480;
-// diagonal track: centre point of each anchor in design coords
-const CENTER = { x: 716, y: 562 };            // 376+340, 322+240
-const STEP = { x: 583.5, y: -222.5 };         // half of (next − prev)
+/* Two compositions on the same diagonal track:
+   desktop — 1440×1040 canvas (Figma 286:921);
+   mobile (≤760px) — 390-wide canvas from the phone mock: big centre card,
+   floats bleeding off the top-right / bottom-left edges, wrapped headline. */
+interface Geo { W: number; H: number; cw: number; ch: number; cx: number; cy: number; sx: number; sy: number; }
+const DESKTOP: Geo = { W: 1440, H: 1040, cw: 680, ch: 425, cx: 716, cy: 562, sx: 583.5, sy: -222.5 }; // card 16:10
+const MOBILE: Geo = { W: 390, H: 700, cw: 345, ch: 216, cx: 195, cy: 430, sx: 124, sy: -126 };       // card 16:10
 const AUTO = 4600;
+const WM_RIGHT = 40;                          // desktop: "Selected Works" gap to the viewport's right edge (px)
+const WM_BOTTOM = 40;                         // desktop: "Selected Works" gap to the bottom of the first screen (px)
+const WM_M_LEFT = 69, WM_M_BASE = 663;        // mobile: watermark left / letter baseline in canvas px (overflows right)
 
-export default function HomeCarousel({ slides, headline, sub, watermark = "Selected Works" }: { slides: HomeSlide[]; headline: string; sub: string; watermark?: string }) {
+export default function HomeCarousel({ slides, headline, sub, watermark = "Selected Works" }: { slides: HomeSlide[]; headline: ReactNode; sub: ReactNode; watermark?: string }) {
   const stageRef = useRef<HTMLDivElement>(null);
   const wrapRef = useRef<HTMLDivElement>(null);
   const cardRefs = useRef<HTMLAnchorElement[]>([]);
   const metaRefs = useRef<HTMLDivElement[]>([]);
   const imgRefs = useRef<HTMLDivElement[]>([]);
+  const wmRef = useRef<HTMLDivElement>(null);
 
   const state = useRef({
     targetP: 0, curP: 0, prevP: 0, vel: 0,
@@ -51,6 +58,8 @@ export default function HomeCarousel({ slides, headline, sub, watermark = "Selec
   const { lang } = useLang();
   const langRef = useRef(lang);
   langRef.current = lang;
+  const mobile = useIsMobile(760);
+  const G = mobile ? MOBILE : DESKTOP;
 
   useEffect(() => {
     const stage = stageRef.current!, wrap = wrapRef.current!;
@@ -66,10 +75,45 @@ export default function HomeCarousel({ slides, headline, sub, watermark = "Selec
 
     function layout() {
       const w = wrap.clientWidth;
-      const scale = Math.min(1, w / DESIGN_W);
-      const offset = Math.max(0, (w - DESIGN_W * scale) / 2);
+      const scale = mobile ? w / G.W : Math.min(1, w / G.W);
+      const offset = Math.max(0, (w - G.W * scale) / 2);
       stage.style.transform = `translateX(${offset.toFixed(1)}px) scale(${scale})`;
-      wrap.style.height = DESIGN_H * scale + "px";
+      // desktop: at least one full screen tall, so the watermark can sit near the screen bottom
+      const wrapTop = wrap.getBoundingClientRect().top + window.scrollY;
+      wrap.style.height = (mobile ? G.H * scale : Math.max(G.H * scale, window.innerHeight - wrapTop)) + "px";
+      // watermark: right edge sits WM_RIGHT px from the viewport's right edge.
+      // It lives in the scaled 3D stage, so measure its projected box at two
+      // positions (x maps linearly at a fixed depth) and solve for `left`.
+      const wm = wmRef.current;
+      if (wm) {
+        const wr = wrap.getBoundingClientRect();
+        // desktop: right edge WM_RIGHT from the viewport edge; mobile: left edge fixed, overflowing right
+        const edge = (r: DOMRect) => (mobile ? r.left : r.right);
+        const target = mobile ? wr.left + offset + WM_M_LEFT * scale : wr.right - WM_RIGHT;
+        wm.style.left = "0px";
+        const r0 = edge(wm.getBoundingClientRect());
+        wm.style.left = "1000px";
+        const k = (edge(wm.getBoundingClientRect()) - r0) / 1000;
+        wm.style.left = (k > 0 ? (target - r0) / k : 566).toFixed(1) + "px";
+        // bottom: WM_BOTTOM px above the bottom of the first screen
+        // align the letters' visible bottom, not the line box (which reserves
+        // descender space below "Works")
+        const ctx = document.createElement("canvas").getContext("2d");
+        let gapBelowInk = 0; // design px between ink bottom and box bottom
+        if (ctx) {
+          const cs = getComputedStyle(wm);
+          ctx.font = `${cs.fontStyle} ${cs.fontWeight} ${cs.fontSize} ${cs.fontFamily}`;
+          const m = ctx.measureText(watermark);
+          gapBelowInk = m.fontBoundingBoxDescent - m.actualBoundingBoxDescent;
+        }
+        const bottom = mobile ? wr.top + WM_M_BASE * scale : window.innerHeight - window.scrollY - WM_BOTTOM;
+        wm.style.top = "0px";
+        const box0 = wm.getBoundingClientRect();
+        const ink0 = box0.bottom - gapBelowInk * (box0.height / wm.offsetHeight);
+        wm.style.top = "1000px";
+        const ky = (wm.getBoundingClientRect().bottom - box0.bottom) / 1000;
+        wm.style.top = (ky > 0 ? (bottom - ink0) / ky : 792).toFixed(1) + "px";
+      }
     }
 
     function paint() {
@@ -77,8 +121,8 @@ export default function HomeCarousel({ slides, headline, sub, watermark = "Selec
       for (let i = 0; i < n; i++) {
         const r = wrapRel(i - s.curP);
         const ar = Math.abs(r);
-        const x = CENTER.x + r * STEP.x;
-        const y = CENTER.y + r * STEP.y;
+        const x = G.cx + r * G.sx;
+        const y = G.cy + r * G.sy;
         const scale = clamp(1 - ar * 0.177, 0.5, 1);
         const depthZ = -Math.min(ar, 2) * 150;
         const bulgeZ = (1 - Math.min(ar, 1)) * bulge * 160;   // moving cards pop forward
@@ -89,7 +133,7 @@ export default function HomeCarousel({ slides, headline, sub, watermark = "Selec
         const z = depthZ + bulgeZ;
         const card = cardRefs.current[i];
         card.style.transform =
-          `translate(${(x - CARD_W / 2 + px).toFixed(1)}px,${(y - CARD_H / 2 + py).toFixed(1)}px) ` +
+          `translate(${(x - G.cw / 2 + px).toFixed(1)}px,${(y - G.ch / 2 + py).toFixed(1)}px) ` +
           `translateZ(${z.toFixed(1)}px) rotateY(${ry.toFixed(2)}deg) rotateX(${rx.toFixed(2)}deg) scale(${scale.toFixed(4)})`;
         card.style.zIndex = String(Math.round(200 - ar * 20));
         card.style.opacity = (ar <= 1.4 ? 1 : clamp(1 - (ar - 1.4) / 0.5, 0, 1)).toFixed(3);
@@ -126,6 +170,15 @@ export default function HomeCarousel({ slides, headline, sub, watermark = "Selec
       s.raf = requestAnimationFrame(tick);
     }
 
+    // centre card → grows to full screen, then opens its case study
+    const openCard = (i: number) => {
+      const el = cardRefs.current[i], slug = slides[i]?.slug;
+      if (!el || !slug) return;
+      s.auto = false; setCursor(null);
+      expandCardToPage(el, () => navigate(`/work/${slug}`));
+    };
+    (stage as any).__open = openCard;
+
     const step = (d: number) => { s.targetP = Math.round(s.targetP) + d; s.lastAuto = performance.now(); };
 
     const onMouseMove = (e: MouseEvent) => {
@@ -151,7 +204,7 @@ export default function HomeCarousel({ slides, headline, sub, watermark = "Selec
       s.dragging = false; s.lastAuto = performance.now(); setTimeout(() => (s.auto = true), 700);
       if (x != null && y != null) {
         const el = cardRefs.current[centerIdx()];
-        if (el) { const r = el.getBoundingClientRect(); if (x >= r.left && x <= r.right && y >= r.top && y <= r.bottom) navigate(`/work/${slides[centerIdx()]?.slug}`); }
+        if (el) { const r = el.getBoundingClientRect(); if (x >= r.left && x <= r.right && y >= r.top && y <= r.bottom) openCard(centerIdx()); }
       }
     };
 
@@ -186,20 +239,28 @@ export default function HomeCarousel({ slides, headline, sub, watermark = "Selec
       window.removeEventListener("mouseup", mup);
       document.removeEventListener("mouseleave", onDocLeave);
     };
-  }, [n]);
+  }, [n, mobile]);
 
   const step = (d: number) => (stageRef.current as any)?.__step?.(d);
 
   return (
     <div ref={wrapRef} style={{ position: "relative", width: "100%", overflow: "hidden", perspective: 1600, perspectiveOrigin: "50% 44%" }}>
-      <div ref={stageRef} style={{ position: "relative", width: DESIGN_W, height: DESIGN_H, transformOrigin: "top left", transformStyle: "preserve-3d", cursor: "grab" }}>
-        {/* headline (Figma 107,152) */}
-        <div style={{ position: "absolute", left: 107, top: 152, zIndex: 250, pointerEvents: "none" }}>
-          <h1 style={{ fontFamily: "'Cormorant Garamond','Noto Sans TC',serif", fontWeight: 400, fontSize: 56, lineHeight: "normal", color: "#fff", margin: "0 0 9px", whiteSpace: "nowrap" }}>{headline}</h1>
-          <p style={{ fontFamily: "'Noto Sans TC','Inter',sans-serif", fontWeight: 300, fontSize: 16, lineHeight: 1.4, color: "rgba(255,255,255,0.7)", maxWidth: 659, margin: 0 }}>{sub}</p>
+      <div ref={stageRef} style={{ position: "relative", width: G.W, height: G.H, transformOrigin: "top left", transformStyle: "preserve-3d", cursor: "grab" }}>
+        {/* headline (desktop: Figma 107,152; mobile: wraps, arrows stacked below) */}
+        <div style={mobile
+          ? { position: "absolute", left: 23, top: 84, width: 344, zIndex: 250, pointerEvents: "none" }
+          : { position: "absolute", left: 107, top: 152, zIndex: 250, pointerEvents: "none" }}>
+          <h1 style={{ fontFamily: "'Cormorant Garamond','Noto Sans TC',serif", fontWeight: 400, fontSize: mobile ? 26 : 48, lineHeight: mobile ? 1.15 : "normal", color: "#fff", margin: mobile ? "0 0 8px" : "0 0 9px", whiteSpace: mobile ? "normal" : "nowrap" }}>{headline}</h1>
+          <p style={{ fontFamily: "'Inter','Noto Sans TC',sans-serif", fontWeight: 300, fontSize: mobile ? 14 : 20, lineHeight: 1.4, letterSpacing: "0.02em", color: "rgba(255,255,255,0.7)", margin: 0, whiteSpace: "nowrap" }}>{sub}</p>
+          {mobile && (
+            <div style={{ display: "flex", gap: 12, marginTop: 16, pointerEvents: "auto" }}>
+              <button onClick={() => step(-1)} aria-label="Previous" className="arrow-btn" style={arrowStyle}>←</button>
+              <button onClick={() => step(1)} aria-label="Next" className="arrow-btn" style={arrowStyle}>→</button>
+            </div>
+          )}
         </div>
         {/* watermark */}
-        <div style={{ position: "absolute", left: 566, top: 792, transform: "translateY(-50%) translateZ(-400px) scale(1.25)", transformOrigin: "50% 50%", fontFamily: "'Cormorant Garamond',serif", fontStyle: "italic", fontWeight: 500, fontSize: 150, lineHeight: "normal", color: "rgba(255,255,255,0.3)", opacity: 0.38, whiteSpace: "nowrap", pointerEvents: "none", userSelect: "none" }}>{watermark}</div>
+        <div ref={wmRef} style={{ position: "absolute", left: 566, top: 792, transform: "translateY(-50%) translateZ(-400px) scale(1.25)", transformOrigin: "50% 50%", fontFamily: "'Cormorant Garamond',serif", fontStyle: "italic", fontWeight: 500, fontSize: mobile ? 80 : 150, lineHeight: "normal", color: "rgba(255,255,255,0.3)", opacity: 0.38, whiteSpace: "nowrap", pointerEvents: "none", userSelect: "none" }}>{watermark}</div>
 
         {slides.map((sl, i) => (
           <a
@@ -209,28 +270,34 @@ export default function HomeCarousel({ slides, headline, sub, watermark = "Selec
               e.preventDefault();
               // mouse clicks are handled by the stage (reliable over the 3D cards);
               // keep keyboard activation working here
-              if (e.detail === 0 && !state.current.dragging) navigate(`/work/${sl.slug}`);
+              if (e.detail === 0 && !state.current.dragging) (stageRef.current as any)?.__open?.(i);
             }}
             ref={(el) => el && (cardRefs.current[i] = el)}
-            style={{ position: "absolute", left: 0, top: 0, width: CARD_W, height: CARD_H, borderRadius: 24, overflow: "hidden", textDecoration: "none", transformStyle: "preserve-3d", willChange: "transform,opacity", boxShadow: "0 44px 110px -34px rgba(0,0,0,0.82)", cursor: "none" }}
+            style={{ position: "absolute", left: 0, top: 0, width: G.cw, height: G.ch, borderRadius: mobile ? 16 : 24, overflow: "hidden", textDecoration: "none", transformStyle: "preserve-3d", willChange: "transform,opacity", boxShadow: "0 44px 110px -34px rgba(0,0,0,0.82)", cursor: "none" }}
           >
             <div ref={(el) => el && (imgRefs.current[i] = el)} style={{ position: "absolute", inset: 0, background: "#202020" }}>
-              <img src={sl.image} alt="" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} draggable={false} />
+              {/\.(mp4|webm|mov)($|\?)/i.test(sl.image)
+                ? <video src={sl.image} autoPlay muted loop playsInline preload="metadata" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", pointerEvents: "none" }} />
+                : <img src={sl.image} alt="" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} draggable={false} />}
               <div className="cv-dots" style={{ position: "absolute", inset: 0, pointerEvents: "none", mixBlendMode: "soft-light", backgroundImage: "radial-gradient(rgba(255,255,255,0.9) 32%, transparent 33%)", backgroundSize: "3px 3px", opacity: 0 }} />
               <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,0.8) 4.5%, rgba(0,0,0,0) 30%)" }} />
             </div>
-            <div ref={(el) => el && (metaRefs.current[i] = el)} style={{ position: "absolute", left: 32, right: 32, bottom: 24, display: "flex", flexDirection: "column", gap: 8 }}>
-              <span style={{ fontFamily: "'Inter','Noto Sans TC',sans-serif", fontSize: 16, color: "#fff" }}>{sl.tag}</span>
-              <span style={{ fontFamily: "'Inter','Noto Sans TC',sans-serif", fontSize: 24, color: "#f0f0f0", lineHeight: 1.25 }}>{sl.title}</span>
+            <div ref={(el) => el && (metaRefs.current[i] = el)} style={mobile
+              ? { position: "absolute", left: 16, right: 16, bottom: 14, display: "flex", flexDirection: "column", gap: 4 }
+              : { position: "absolute", left: 32, right: 32, bottom: 24, display: "flex", flexDirection: "column", gap: 8 }}>
+              <span style={{ fontFamily: "'Inter','Noto Sans TC',sans-serif", fontSize: mobile ? 12 : 16, color: "#fff" }}>{sl.tag}</span>
+              <span style={{ fontFamily: "'Inter','Noto Sans TC',sans-serif", fontSize: mobile ? 15 : 24, color: "#f0f0f0", lineHeight: 1.25 }}>{sl.title}</span>
             </div>
           </a>
         ))}
 
         {/* arrows (Figma 286:921 — below the sub text, left-aligned) */}
-        <div style={{ position: "absolute", left: 107, top: 300, display: "flex", gap: 16, zIndex: 300 }}>
-          <button onClick={() => step(-1)} aria-label="Previous" className="arrow-btn" style={arrowStyle}>←</button>
-          <button onClick={() => step(1)} aria-label="Next" className="arrow-btn" style={arrowStyle}>→</button>
-        </div>
+        {!mobile && (
+          <div style={{ position: "absolute", left: 107, top: 300, display: "flex", gap: 16, zIndex: 300 }}>
+            <button onClick={() => step(-1)} aria-label="Previous" className="arrow-btn" style={arrowStyle}>←</button>
+            <button onClick={() => step(1)} aria-label="Next" className="arrow-btn" style={arrowStyle}>→</button>
+          </div>
+        )}
       </div>
     </div>
   );

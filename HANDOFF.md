@@ -9,9 +9,12 @@ pushed to GitHub `peiii7/portfolio` (branch `main`).
 - framer-motion; GSAP 3 (ScrollTrigger, Draggable, InertiaPlugin, SplitText).
 - Dev server: `npm run dev` (port 5173, see `.claude/launch.json` → `portfolio-vite`).
   Build: `npm run build` → `dist/`. Figma file key `jp87CiDbsjx7MViAzzRWFr`.
-- Deploy: Vercel, config in `vercel.json` (Vite + SPA rewrite). A password gate
-  lives in `password.html` + `middleware.js` + `api/auth.js` (keeps the site
-  out of search while unfinished). Confirm the repo is linked in the Vercel
+- Deploy: Vercel, config in `vercel.json` (Vite + SPA rewrite). The site is public;
+  only the CTBC case study is password-locked: `middleware.js` (guards
+  `/work/ctbc-bank` + `/case/ctbc/*` except `hero.webm`), `password.html`,
+  `api/auth.js` (checks Vercel env `SITE_PASSWORD`, sets a hashed cookie),
+  `api/case.js` (serves the CTBC text from `api/_private/ctbc.js`, which is kept
+  out of the browser bundle). Edit CTBC copy in `api/_private/ctbc.js`. Confirm the repo is linked in the Vercel
   dashboard so pushes to `main` auto-deploy.
 
 ## Routes / pages (`src/pages`)
@@ -32,7 +35,7 @@ pushed to GitHub `peiii7/portfolio` (branch `main`).
   `playground.ts` — 5 playground works, each with `zh` copy + `gallery`.
 
 ## Media
-- Framer-hash images live in `images/` (imported in data files).
+- Remaining hashed images in `images/` (home cards, Fowl Justice). Everything else lives in `public/case/{fubon,ctbc,tea,xnfun,playground}/`, copied from `~/Documents/case`.
 - Fubon/CTBC case-study video+images in `public/case/{fubon,ctbc}/` (referenced
   by `/case/...` path strings). Fubon hero = video; CTBC O1 uses zh/en `.webm`.
 - To pull a project's media from Framer: open
@@ -51,7 +54,6 @@ pushed to GitHub `peiii7/portfolio` (branch `main`).
   About fade-in + grab cursor; Contact me hover feedback + "Let's go!" cursor.
 
 ## TODO
-- **裙子底下有… (Under the Skirt)** playground work still on a placeholder — needs media.
 - `public/case/fubon/o1.mov` is 23 MB — compress to webm/mp4.
 - Case study / About English copy is partial in places.
 - Optional: squash git history to a single v2 commit (destructive force-push).
