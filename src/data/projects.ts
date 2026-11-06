@@ -23,7 +23,7 @@ export const PROJECTS: ProjectCard[] = [
   {
     slug: "ctbc-bank", hero: ctbc,
     tag: { en: "Banking & Finance ｜ Website Redesign", zh: "金融銀行 ｜ 官方網站改版" },
-    title: { en: "Repositioning the website experience for the AI era", zh: "AI 時代的官網體驗" },
+    title: { en: "Repositioning the Website Experience in the AI Era,  From Visual Direction to a Site-Wide Accessible System", zh: " AI 時代的官網體驗，從視覺定調到全站無障礙設計系統" },
   },
   {
     slug: "tea-island-tea-stories", hero: tea,
