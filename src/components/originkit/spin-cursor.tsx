@@ -32,8 +32,8 @@ const CLICK_EFFECT = true;
 const GLOW_CORE_PX = 6;
 const GLOW_BLOOM_PX = 18;
 
-const FOLLOW_TAU = 0.02;
-const VELOCITY_TAU = 0.05;
+const FOLLOW_TAU = 0.035;
+const VELOCITY_TAU = 0.08;
 
 const ARROW = "M0,0 L18,11 L9,13 L6,21 Z";
 const ARROW_W = 18;
@@ -165,9 +165,9 @@ function __OriginkitBase_MagicCursor({
 
       const speed = Math.hypot(vx, vy);
 
-      if (speed > 40) {
+      if (speed > 80) {
         const target = Math.atan2(vy, vx) - ARROW_REST;
-        angle += angleDelta(angle, target) * (1 - Math.exp(-dt / 0.06));
+        angle += angleDelta(angle, target) * (1 - Math.exp(-dt / 0.09));
       }
 
       const stretch = p.enableStretch ? 1 + Math.min(speed / 3000, 0.35) : 1;
