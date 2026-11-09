@@ -216,12 +216,17 @@ export default function CaseStudy() {
                 <div>
                   <span style={labelStyle}>Impact</span>
                   <div style={{ display: "flex", flexWrap: "wrap", gap: "28px 56px", marginTop: 20 }}>
-                    {cs.metrics.map((mt, i) => (
+                    {cs.metrics.map((mt, i) => {
+                      // Short Latin figures (84, AA, 180K) read smaller than CJK/long
+                      // words at the same font-size, so scale the latter down to match.
+                      const heavy = /[㐀-鿿]/.test(mt.value) || [...mt.value].length > 3;
+                      const vSize = heavy ? "clamp(1.9rem,2.8vw,2.4rem)" : "clamp(2.4rem,4vw,3.4rem)";
+                      return (
                       <div key={i}>
-                        <div style={{ fontFamily: SERIF, fontWeight: 500, fontSize: "clamp(2.4rem,4vw,3.4rem)", lineHeight: 1, color: "#F4F4F5" }}>{mt.value}</div>
+                        <div style={{ fontFamily: SERIF, fontWeight: 500, fontSize: vSize, lineHeight: 1.1, color: "#F4F4F5" }}>{mt.value}</div>
                         <div style={{ marginTop: 12, fontSize: 14, color: DIM, lineHeight: 1.5 }}>{mt.label}</div>
                       </div>
-                    ))}
+                    );})}
                   </div>
                 </div>
               </div>
