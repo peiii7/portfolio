@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import gsap from "gsap";
 import { SplitText } from "gsap/SplitText";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -88,10 +88,10 @@ const AWARD = {
   ],
 };
 const LANGS = [
-  { zh: "中文", en: "Mandarin", d: "Native" },
-  { zh: "英文", en: "English", d: "Fluent in professional and academic settings" },
-  { zh: "日文", en: "Japanese", d: "Comfortable with reading and listening" },
-  { zh: "德文", en: "German", d: "Familiar with basic phrases and expressions" },
+  { zh: "中文", en: "Mandarin", d: "Native", dz: "母語" },
+  { zh: "英文", en: "English", d: "Fluent in professional and academic settings", dz: "能流暢應用於專業與學術情境" },
+  { zh: "日文", en: "Japanese", d: "Comfortable with reading and listening", dz: "能順暢閱讀與聽取" },
+  { zh: "德文", en: "German", d: "Familiar with basic phrases and expressions", dz: "熟悉基礎詞彙與日常用語" },
 ];
 
 export default function About() {
@@ -107,10 +107,13 @@ export default function About() {
   const stageRef = useRef<HTMLDivElement>(null);
   const photoRef = useRef<HTMLImageElement>(null);
   const textRef = useRef<HTMLDivElement>(null);
+  const [showHey, setShowHey] = useState(true); // drag affordance bubble, hides after first drag
+  const [showPlead, setShowPlead] = useState(false); // 🥺 reaction while/after dragging
+  const pleadTimer = useRef<number>();
 
   // draggable photo, constrained to a small range on the right
   useEffect(() => {
-    if (!photoRef.current || m) return;   // phones: no drag (would block page scroll)
+    if (!photoRef.current) return;   // drag enabled on both desktop & mobile (photo has touchAction:none)
     const G = 16; // snap grid
     const d = Draggable.create(photoRef.current, {
       type: "x,y",
@@ -119,6 +122,8 @@ export default function About() {
       cursor: "grab",
       activeCursor: "grabbing",
       inertia: true,
+      onDragStart: () => { setShowHey(false); window.clearTimeout(pleadTimer.current); setShowPlead(true); },
+      onDragEnd: () => { pleadTimer.current = window.setTimeout(() => setShowPlead(false), 1100); },
       snap: {
         x: (v) => Math.round(v / G) * G,
         y: (v) => Math.round(v / G) * G,
@@ -196,7 +201,41 @@ export default function About() {
               style={{ position: "absolute", left: 0, top: "53.07%", width: "33.86%", height: "31.91%", pointerEvents: "none" }} />
             <img ref={photoRef} src={cutout} alt="Peichi Lin" draggable={false}
               onMouseEnter={() => suppress(true)} onMouseLeave={() => suppress(false)}
-              style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "contain", transform: "rotate(0.19deg)", cursor: m ? "auto" : "grab", touchAction: m ? "auto" : "none" }} />
+              style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "contain", transform: "rotate(0.19deg)", cursor: m ? "auto" : "grab", touchAction: "none" }} />
+            {/* drag affordance — "Hey~" bubble, bobs gently, disappears once you drag */}
+            <AnimatePresence>
+              {showHey && (
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.6, y: 6 }}
+                  animate={{ opacity: 1, scale: 1, y: [0, -9, 0] }}
+                  exit={{ opacity: 0, scale: 0.6, y: 6, transition: { duration: 0.25 } }}
+                  transition={{ opacity: { duration: 0.4, delay: 0.5 }, scale: { duration: 0.45, delay: 0.5, ease: [0.34, 1.56, 0.64, 1] }, y: { duration: 1.8, repeat: Infinity, ease: "easeInOut", delay: 0.9 } }}
+                  style={{ position: "absolute", left: "28%", top: 10, zIndex: 3, pointerEvents: "none", transformOrigin: "bottom center" }}
+                >
+                  <div style={{ position: "relative", background: "#F4F4F5", color: "#141416", fontFamily: SERIF, fontStyle: "italic", fontSize: 26, lineHeight: 1, padding: "12px 20px", borderRadius: 18, whiteSpace: "nowrap", boxShadow: "0 8px 24px rgba(0,0,0,0.35)" }}>
+                    Hey~
+                    <span style={{ position: "absolute", left: 30, bottom: -8, width: 0, height: 0, borderLeft: "9px solid transparent", borderRight: "9px solid transparent", borderTop: "10px solid #F4F4F5" }} />
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+            {/* reaction while being dragged */}
+            <AnimatePresence>
+              {showPlead && (
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.5, y: 6 }}
+                  animate={{ opacity: 1, scale: 1, y: 0 }}
+                  exit={{ opacity: 0, scale: 0.5, y: 6, transition: { duration: 0.2 } }}
+                  transition={{ duration: 0.3, ease: [0.34, 1.56, 0.64, 1] }}
+                  style={{ position: "absolute", left: "28%", top: 10, zIndex: 3, pointerEvents: "none", transformOrigin: "bottom center" }}
+                >
+                  <div style={{ position: "relative", background: "#F4F4F5", fontSize: 24, lineHeight: 1, padding: "10px 16px", borderRadius: 18, whiteSpace: "nowrap", boxShadow: "0 8px 24px rgba(0,0,0,0.35)" }}>
+                    🥺
+                    <span style={{ position: "absolute", left: 30, bottom: -8, width: 0, height: 0, borderLeft: "9px solid transparent", borderRight: "9px solid transparent", borderTop: "10px solid #F4F4F5" }} />
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </motion.div>
         </div>
       </div>
@@ -229,7 +268,7 @@ export default function About() {
             {LANGS.map((l) => (
               <div key={l.en} style={{ borderLeft: "1.5px solid rgba(255,255,255,0.3)", paddingLeft: 12, color: "#fff" }}>
                 <p style={{ fontSize: 20, margin: "0 0 8px" }}>{en ? l.en : l.zh}</p>
-                <p style={{ fontSize: 16, margin: 0, opacity: 0.8 }}>{l.d}</p>
+                <p style={{ fontSize: 16, margin: 0, opacity: 0.8 }}>{en ? l.d : l.dz}</p>
               </div>
             ))}
           </div>
